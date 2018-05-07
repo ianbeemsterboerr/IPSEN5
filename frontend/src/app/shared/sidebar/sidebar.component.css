@@ -1,0 +1,55 @@
+nav {
+  position: relative;
+  display: inline-block;
+
+  overflow:hidden;
+
+  /*padding: .5rem 1rem;*/
+}
+
+#navHead {
+  pointer-events: none;
+  position: absolute;
+
+  font-size: .75rem;
+  text-align: center;
+
+  width: 100%;
+}
+
+nav > hr {
+  border-top-color: #ccc;
+}
+
+nav > ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  /*width: 9.5rem;*/
+
+  line-height: 2rem;
+}
+
+nav > ul > li:not(:last-child) {
+  border-bottom: 1px solid #888;
+}
+
+.navItem {
+  height: auto;
+}
+
+.navItem > a {
+  display: block;
+  white-space: nowrap;
+  padding: 0 1rem;
+  font-weight: bold;
+}
+
+#navClose {
+  padding-left: 1rem;
+}
+
+.item-name {
+  display: inline-block;
+}

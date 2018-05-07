@@ -1,0 +1,19 @@
+<nav>
+  <span id="navHead" [hidden]="state == 'inactive'">Navigatie</span>
+  <a title="Back" id="navClose" (click)="toggleState()">
+    <fa style="color:#ccc;" name="arrow-left" *ngIf="state == 'active'"></fa>
+    <fa style="color:#ccc;" name="bars" *ngIf="state == 'inactive'"></fa>
+  </a>
+
+  <ul>
+    <li class="navItem">
+      <a><fa name="home" style="color: dodgerblue;"></fa> <div class="item-name" [@expanded]="state">Home</div></a>
+    </li>
+    <li class="navItem">
+      <a><fa name="flag-checkered" style="color: lawngreen;"></fa> <div class="item-name" [@expanded]="state">Toernooien</div></a>
+    </li>
+    <li class="navItem">
+      <a><fa name="trophy" style="color: yellow;"></fa> <div class="item-name" [@expanded]="state">Hall Of Fame</div></a>
+    </li>
+  </ul>
+</nav>
