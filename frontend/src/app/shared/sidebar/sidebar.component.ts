@@ -37,7 +37,6 @@ export class SidebarComponent implements OnInit {
     this.state = this.state === 'active' ? 'inactive' : 'active';
   }
   goTournamentHome() {
-    console.log('adasdsad');
     this.router.navigate(['tournamentHome']);
   }
 }

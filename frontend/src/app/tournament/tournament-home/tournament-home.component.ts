@@ -13,7 +13,6 @@ export class TournamentHomeComponent implements OnInit {
   }
 
   goTournamentNew() {
-    console.log('go new tourny');
     this.router.navigate(['tournamentNew']);
   }
 
