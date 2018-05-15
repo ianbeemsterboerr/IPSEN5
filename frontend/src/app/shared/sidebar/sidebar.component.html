@@ -9,7 +9,7 @@
     <li class="navItem">
       <a><fa name="home" style="color: dodgerblue;"></fa> <div class="item-name" [@expanded]="state">Home</div></a>
     </li>
-    <li class="navItem">
+    <li class="navItem" (click)="goTournamentHome()" >
       <a><fa name="flag-checkered" style="color: lawngreen;"></fa> <div class="item-name" [@expanded]="state">Toernooien</div></a>
     </li>
     <li class="navItem">

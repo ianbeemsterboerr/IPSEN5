@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {animate, state, style, transition, trigger} from "@angular/animations";
+import { Router } from '@angular/router';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-sidebar',
@@ -27,12 +28,16 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 export class SidebarComponent implements OnInit {
   public state = 'active';
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   toggleState() {
     this.state = this.state === 'active' ? 'inactive' : 'active';
+  }
+  goTournamentHome() {
+    console.log('adasdsad');
+    this.router.navigate(['tournamentHome']);
   }
 }
