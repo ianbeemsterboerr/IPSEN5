@@ -1,7 +1,8 @@
 #tournament_inputs{
   color: #cccccc;
+  margin-left: 50px;
 }
 #descriptionBox{
-  height: 200px;
+  height: 80px;
   width: 400px;
 }

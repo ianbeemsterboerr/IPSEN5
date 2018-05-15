@@ -39,4 +39,7 @@ export class SidebarComponent implements OnInit {
   goTournamentHome() {
     this.router.navigate(['tournamentHome']);
   }
+  goHome() {
+    this.router.navigate(['']);
+  }
 }
