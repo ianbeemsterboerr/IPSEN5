@@ -14,6 +14,6 @@ class UserController extends Controller
      */
     public function getAll()
     {
-        return app('db')->select("SELECT * FROM users");
+        return app('db')->select("SELECT * FROM user");
     }
 }
