@@ -7,12 +7,14 @@ import {AppRoutingModule} from './app-routing.module';
 import {HomeModule} from './home/home.module';
 import {SharedModule} from './shared/shared.module';
 import { TournamentHomeComponent } from './tournament/tournament-home/tournament-home.component';
+import { TournamentNewComponent } from './tournament/tournament-new/tournament-new.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TournamentHomeComponent
+    TournamentHomeComponent,
+    TournamentNewComponent
   ],
   imports: [
     BrowserModule,
