@@ -7,12 +7,16 @@ import {AppRoutingModule} from "./app-routing.module";
 import {HomeModule} from "./home/home.module";
 import {SharedModule} from "./shared/shared.module";
 import { LoginComponent } from './login/login.component';
+import { CreateaccountComponent } from './createaccount/createaccount.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    CreateaccountComponent,
+    ForgotpasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -11,9 +11,9 @@
   <br><br>
   <button (click)="logIn()">Log in</button>
 <br>
-<a href="url">Forgot password?</a>
+<a [routerLink]="['/forgotpassword']">Forgot password?</a>
 <br>
-<a href="url">No account? Register here</a>
+<a [routerLink]="['/createaccount']">No account yet? Register here.</a>
 
 </form>
 </div> 
