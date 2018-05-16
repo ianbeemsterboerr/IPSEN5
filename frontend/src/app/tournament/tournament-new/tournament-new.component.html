@@ -1,23 +1,52 @@
 <div id="tournament_inputs">
   <form>
-    Tournament name:<br><input type="text" name="name"><br>
-    Date:<br><input type="date" name="date"><br>
-    Type: <br><select>
-            <option value="Single elimination"> Single elimination</option>
-            <option value="Double elimination"> Double elimination</option>
-            <option value="Poules"> Poules</option>
-          </select><br>
-    Allow teams:<br><input type="checkbox" name="allowTeams"><br>
-    Signup type: <br><select>
-            <option value="Invite only"> Invite only</option>
-            <option value="User"> User</option>
-            <option value="Guest"> Guest</option>
-          </select><br>
-    Signup start:<br><input type="date" name="signupStart"><br>
-    Signup end:<br><input type="date" name="signupEnd"><br>
-    Description:<br><input type="text" name="description" id="descriptionBox"><br>
+    <div class="row">
+      <label for="name">Tournament name:</label>
+      <input type="text" id="name" name="name"><br>
+    </div>
+    <div class="row">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date"><br>
+    </div>
+    <div class="row">
+      <label for="type">Type:</label>
+      <select id="type">
+        <option value="Single elimination"> Single elimination</option>
+        <option value="Double elimination"> Double elimination</option>
+        <option value="Poules"> Poules</option>
+      </select><br>
+    </div>
+    <div class="row">
+      <label for="teams">Allow teams:</label>
+      <select id="teams">
+        <option value="Yes"> Yes</option>
+        <option value="No"> No</option>
+      </select><br>
+    </div>
+    <div id="signupOptions">
+      <div class="row">
+        <label for="signupType">Signup type:</label>
+        <select id="signupType">
+          <option value="Invite only"> Invite only</option>
+          <option value="User"> User</option>
+          <option value="Guest"> Guest</option>
+        </select><br>
+      </div>
+      <div class="row">
+        <label for="signupStart">Signup start:</label>
+        <input type="date" id="signupStart" name="signupStart"><br>
+      </div>
+      <div class="row">
+        <label for="signupEnd">Signup end:</label>
+        <input type="date" id=signupEnd name="signupEnd"><br>
+      </div>
+    </div>
+    <div class="row">
+      <label for="description">Description:</label>
+      <input type="text" name="description" id="description"><br>
+    </div>
 
-    <br><input type="submit" name="submit"><br>
+    <input type="submit" id="submit" name="submit" value="Submit"><br>
 
   </form>
 
