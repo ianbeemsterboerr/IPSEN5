@@ -42,12 +42,12 @@ nav > ul > li:not(:last-child) {
 .navItem > a {
   display: block;
   white-space: nowrap;
-  padding: 0 1rem;
-  font-weight: bold;
+  padding: 0 .5rem;
+  /*font-weight: bold;*/
 }
 
 #navClose {
-  padding-left: 1rem;
+  padding: 0 .5rem;
 }
 
 .item-name {
