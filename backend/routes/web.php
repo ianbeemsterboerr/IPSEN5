@@ -15,6 +15,10 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/getusers', 'UserController@getAll');
 
+
+$router->group(['middleware' => 'auth'], function () use ($router) {
+
+    $router->get('/getusers', 'UserController@getAll');
+});
 
