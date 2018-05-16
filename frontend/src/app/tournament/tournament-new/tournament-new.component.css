@@ -5,18 +5,6 @@
   background: #cccccc;
   border-radius: 25px;
 }
-#description{
-  height: 50px;
-}
-
-#signupOptions{
-  margin-bottom: 20px;
-  margin-top: 20px;
-}
-
-.row{
-  padding: 5px;
-}
 
 input, select{
   padding: 5px;
@@ -25,12 +13,25 @@ input, select{
   width: 80%
 }
 
-
-#submit{
-  width: 15%;
-}
-
 label{
   width: 20%;
   float:left;
 }
+
+.row{
+  padding: 5px;
+}
+
+#signupOptions{
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+#description{
+  height: 50px;
+}
+
+#submit{
+  width: 100px;
+}
+

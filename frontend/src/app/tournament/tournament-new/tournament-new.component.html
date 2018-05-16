@@ -1,5 +1,5 @@
 <div id="tournament_inputs">
-  <form>
+  <form id="form">
     <div class="row">
       <label for="name">Tournament name:</label>
       <input type="text" id="name" name="name"><br>
@@ -46,7 +46,7 @@
       <input type="text" name="description" id="description"><br>
     </div>
 
-    <input type="submit" id="submit" name="submit" value="Submit"><br>
+    <input type="button" id="submit" name="submit" value="Submit" (click)="submitForm()"><br>
 
   </form>
 

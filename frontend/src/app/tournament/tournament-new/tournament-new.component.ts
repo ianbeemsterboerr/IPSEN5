@@ -13,5 +13,9 @@ export class TournamentNewComponent implements OnInit {
 
   ngOnInit() {
   }
+  submitForm() {
+    const values = document.getElementById('form');
+    console.log('Submitting tournament: ' + values[0].value);
+  }
 
 }
