@@ -24,5 +24,7 @@ $router->group([ 'prefix => api/v1'], function($router){
 
         $router->get('/getusers', 'UserController@getAll');
     });
+
+    $router->get('/login', 'UserController@login');
 });
 

@@ -17,4 +17,22 @@ class UserController extends Controller
     {
         return app('db')->select("SELECT * FROM user");
     }
+
+    public function login(Request $request)
+    {
+        //$user = DB::table('user')->where('user_username', $request->header('user_username')->first());
+        $username = $request->header('user_username');
+        //$password = $request->header('user_password');
+
+
+        $user = User::where('user_username', $username);
+        //app('db')->select("SELECT * FROM user WHERE user_username = '$username'");
+        
+        //$passwordFromDb = $user->user_password;
+
+        
+        //todo: password en/decoding.
+        //todo: return JWT instead of model.
+        return $user;
+    }
 }
