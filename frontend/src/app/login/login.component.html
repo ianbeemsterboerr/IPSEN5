@@ -4,12 +4,12 @@
 <div class="centertext">
 <form>
   Username<br>
-  <input type="text" name="firstname" value="Mickey">
+  <input [(ngModel)] = "user_username" type="text" name="user_username" value="Username" >
   <br>
  Password<br>
-  <input type="password" name="lastname" value="Mouse">
+  <input [(ngModel)] = "user_password" type="password" name="user_password" value="Password" >
   <br><br>
-  <button (click)="logIn()">Log in</button>
+  <button (click)="login()">Log in</button>
 <br>
 <a [routerLink]="['/forgotpassword']">Forgot password?</a>
 <br>
