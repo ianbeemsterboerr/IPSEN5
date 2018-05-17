@@ -10,15 +10,19 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+$router->group([ 'prefix => api/v1'], function($router){
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+    $router->get('/', function () use ($router) {
+        return $router->app->version();
+    });
+
+    $router->get('/getusersunsafe', 'UserController@getAll');
 
 
 
-$router->group(['middleware' => 'auth'], function () use ($router) {
+    $router->group(['middleware' => 'auth'], function () use ($router) {
 
-    $router->get('/getusers', 'UserController@getAll');
+        $router->get('/getusers', 'UserController@getAll');
+    });
 });
 

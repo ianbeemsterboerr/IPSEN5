@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -12,7 +13,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function getAll()
+    public function getAll(Request $request)
     {
         return app('db')->select("SELECT * FROM user");
     }
