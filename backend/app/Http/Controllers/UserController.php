@@ -22,17 +22,20 @@ class UserController extends Controller
     {
         //$user = DB::table('user')->where('user_username', $request->header('user_username')->first());
         $username = $request->header('user_username');
-        //$password = $request->header('user_password');
+        $password = $request->header('user_password');
 
 
-        $user = User::where('user_username', $username);
-        //app('db')->select("SELECT * FROM user WHERE user_username = '$username'");
+        $user = User::where('user_username', $username)->first();
         
-        //$passwordFromDb = $user->user_password;
+        
+        $passwordFromDb = $user->user_password;
 
         
         //todo: password en/decoding.
-        //todo: return JWT instead of model.
-        return $user;
+        //todo: return JWT instead of model
+        if($password == $passwordFromDb){
+        return json_decode($user, true);
+        }
+        else return 'xd';
     }
 }
