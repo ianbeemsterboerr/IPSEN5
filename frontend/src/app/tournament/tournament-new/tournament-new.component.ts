@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Params} from '@angular/router';
 
 @Component({
   selector: 'app-tournament-new',
@@ -9,13 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TournamentNewComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
   }
   submitForm() {
     const values = document.getElementById('form');
-    console.log('Submitting tournament: ' + values[0].value);
+    console.log('Submitting tournament: ' + values[0].value)
   }
 
 }

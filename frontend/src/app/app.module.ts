@@ -9,6 +9,8 @@ import {SharedModule} from './shared/shared.module';
 import { TournamentHomeComponent } from './tournament/tournament-home/tournament-home.component';
 import { TournamentNewComponent } from './tournament/tournament-new/tournament-new.component';
 
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { TournamentNewComponent } from './tournament/tournament-new/tournament-n
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    HomeModule
+    HomeModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
