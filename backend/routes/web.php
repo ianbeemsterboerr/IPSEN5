@@ -21,3 +21,18 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->post('/joke', function (Request $request) use ($router) {
+    $joke = "Which pet makes the most noise? A trumpet.";
+
+
+//    $name = $request->input('name');
+//    $date = $request->input('date');
+//
+//    echo $name;
+//    echo $date;
+
+    $input = $request->all();
+    echo implode(" ", $input);
+
+    return $joke;
+});

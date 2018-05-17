@@ -16,7 +16,21 @@ export class TournamentNewComponent implements OnInit {
   }
   submitForm() {
     const values = document.getElementById('form');
-    console.log('Submitting tournament: ' + values[0].value)
+    console.log('Submitting tournament: ' + values[0].value);
+
+    let Params = new HttpParams();
+    Params = Params.append('name', values[0].value);
+    Params = Params.append('date', values[1].value);
+    Params = Params.append('type', values[2].value);
+    Params = Params.append('allowTeams', values[3].value);
+    Params = Params.append('signupType', values[4].value);
+    Params = Params.append('signupStart', values[5].value);
+    Params = Params.append('signupEnd', values[6].value);
+    Params = Params.append('description', values[7].value);
+
+    this.http.post('http://localhost:8080/joke', Params, {responseType: 'text'}).subscribe(res => {
+      console.log(res);
+    });
   }
 
 }
