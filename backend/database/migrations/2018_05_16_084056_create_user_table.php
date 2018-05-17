@@ -28,6 +28,7 @@ class CreateUserTable extends Migration
             $table->boolean('user_guest');
             $table->timestamps();
             $table->string('user_webtoken');
+            $table->boolean('user_isadmin');
         });
     }
 

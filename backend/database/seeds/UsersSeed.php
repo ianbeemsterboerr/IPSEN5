@@ -25,7 +25,8 @@ class UsersSeed extends Seeder
             'user_force_pw_change' => 0,
             'user_force_name_change' => 0,
             'user_guest' => 0, 
-            'user_webtoken' => str_random(255)
+            'user_webtoken' => str_random(255),
+            'user_isadmin' => 1
         ]);
     }
     }
