@@ -18,6 +18,7 @@ $router->group([ 'middleware => cors'], function($router){
 
     $router->get('/getusersunsafe', 'UserController@getAll');
 
+    $router->post('/testpost', 'UserController@testpost');
 
 
     $router->group(['middleware' => 'auth'], function () use ($router) {

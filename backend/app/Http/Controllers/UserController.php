@@ -20,20 +20,28 @@ class UserController extends Controller
         return User::all();
     }
 
-    public function login(Request $request)
-    {
-        $username = $request->json()->get('user_username');
-        $password = $request->json()->get('user_password');
-        // return $username;
-        $user = User::where('user_username', $username)->first();
-        $passwordFromDb = $user([user_password]);
 
+
+    public function login(Request $request){
+        if($request->has('user_username', 'user_password'))
+        {
+            $user = User::where('user_username', $request->input('user_username'))->first();
+        }   
         
-        //todo: password en/decoding.
-        //todo: return JWT instead of model
-        if($password == $passwordFromDb){
-        return json_decode($user, true);
+        else
+        {
+            return 'No password or username sent.';
         }
-        else return 'xd';
+
+        if($user->user_password == $request->input('user_password'))
+        {
+            return $user;
+        } 
+
+        else
+        {
+            return 'Wrong password.';
+        }
+        return null;
     }
 }
