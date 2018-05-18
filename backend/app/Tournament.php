@@ -28,6 +28,30 @@ class Tournament
 
         $this->generatePlacementMatches($this->brackets, $this->teams);
         $this->connectMatches();
+        $this->generateMatches($this->brackets);
+    }
+
+    private function generateMatches(&$brackets) {
+        $teamCount = $this->next_pow(count($this->teams)) / 2;
+        $bracketCount = log($teamCount, 2);
+
+        for ($i = 0; $i < $bracketCount - 1; $i++) {
+            $lastBracket = end($brackets);
+
+            $matchCount = $teamCount / 2 / pow(2, $i + 1);
+            $bracket = new Bracket([]);
+
+            for ($a = 0; $a < $matchCount; $a++) {
+                $match = new Match([$this->placeholderTeam, $this->placeholderTeam], $this);
+
+                $match->connect($lastBracket->matches[$a * 2]);
+                $match->connect($lastBracket->matches[$a * 2 + 1]);
+
+                array_push($bracket->matches, $match);
+            }
+
+            array_push($brackets, $bracket);
+        }
     }
 
     private function generatePlacementMatches(&$brackets, $teams) {

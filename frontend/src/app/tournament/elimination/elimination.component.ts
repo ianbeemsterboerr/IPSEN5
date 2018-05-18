@@ -13,7 +13,7 @@ export class EliminationComponent implements OnInit {
   constructor(private api: ApiService) { }
 
   ngOnInit() {
-    this.api.get('tournament/dummy', {teams: 7}).subscribe(
+    this.api.get('tournament/dummy', {teams: 32}).subscribe(
       next=> {
         this.tournament = next;
       }
