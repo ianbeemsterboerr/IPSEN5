@@ -70,6 +70,18 @@ class Tournament
         }
     }
 
+    private function placeholderCount(Match $match) {
+        $count = 0;
+
+        foreach ($match->teams as $team) {
+            if ($team == $this->placeholderTeam) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
+
     private function connectMatches() {
         /* @var $bracket Bracket */
         foreach ($this->brackets as $key => $bracket) {
@@ -84,7 +96,8 @@ class Tournament
             foreach ($bracket->matches as $match) {
                 /* @var $nextMatch Match */
                 foreach ($nextBracket->matches as $nextMatch) {
-                    if (count($nextMatch->previousMatches) < 2) {
+                    $spots = 2 - count($nextMatch->teams) - count($nextMatch->previousMatches) + $this->placeholderCount($nextMatch);
+                    if ($spots > 0) {
                         //Spot available here
                         $nextMatch->connect($match);
 

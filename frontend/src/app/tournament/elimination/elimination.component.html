@@ -2,9 +2,15 @@
   elimination works!
 </p>
 
-<table>
-  <thead>
-  <tr>
-  </tr>
-  </thead>
-</table>
+<div *ngIf="tournament">
+  <div class="bracket" *ngFor="let bracket of tournament.brackets; let bracketIndex = index">
+    <div>{{'bracket ' + bracketIndex}}</div>
+
+    <div class="match" *ngFor="let match of bracket.matches">
+      <div>Match {{match.matchID}}</div>
+      <div>{{match.teams[0].name}} vs {{match.teams[1].name}}</div>
+      <div>Next match: {{match.nextMatch}}</div>
+    </div>
+  </div>
+</div>
+
