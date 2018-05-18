@@ -63,6 +63,8 @@ app-sidebar {
     #2e2e2e 5px,
     #2e2e2e 6px
   );
+
+  overflow-x: scroll;
 }
 
 .content {

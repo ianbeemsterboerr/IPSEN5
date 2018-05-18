@@ -7,7 +7,6 @@ import {AppRoutingModule} from "./app-routing.module";
 import {HomeModule} from "./home/home.module";
 import {SharedModule} from "./shared/shared.module";
 import {FormsModule} from "@angular/forms";
-import {CalendarModule} from "angular-calendar";
 import { LoginComponent } from './login/login.component';
 import { CreateaccountComponent } from './createaccount/createaccount.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
