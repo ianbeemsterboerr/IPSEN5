@@ -8,7 +8,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {HomeModule} from "./home/home.module";
 import {SharedModule} from "./shared/shared.module";
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { LoginComponent } from './login/login.component';
 import { CreateaccountComponent } from './createaccount/createaccount.component';
@@ -28,9 +28,10 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
     SharedModule,
     HomeModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
-  providers: [ApiService],
+  providers: [ApiService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

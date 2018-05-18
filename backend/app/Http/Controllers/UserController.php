@@ -22,11 +22,11 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $username = $request->header('user_username');
-        $password = $request->header('user_password');
-
+        $username = $request->json()->get('user_username');
+        $password = $request->json()->get('user_password');
+        // return $username;
         $user = User::where('user_username', $username)->first();
-        $passwordFromDb = $user->user_password;
+        $passwordFromDb = $user([user_password]);
 
         
         //todo: password en/decoding.
