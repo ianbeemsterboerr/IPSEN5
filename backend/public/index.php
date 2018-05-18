@@ -1,5 +1,8 @@
 <?php
-
+header("Access-Control-Allow-Origin: http://localhost:4200");
+header('Access-Control-Allow-Methods: GET, POST, DELETE, PUT, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization, X-Request-With');
+header('Access-Control-Allow-Credentials: true');
 /*
 |--------------------------------------------------------------------------
 | Create The Application

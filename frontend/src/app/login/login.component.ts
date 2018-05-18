@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     console.log(this.user_password, this.user_username);
     this.api.login(this.user_username, this.user_password).subscribe(
       data =>{console.log(data)},
-      err =>{console.log(err)},
+      err =>{console.log(err.status)},
       () =>{console.log('donezo')}
     );
   }

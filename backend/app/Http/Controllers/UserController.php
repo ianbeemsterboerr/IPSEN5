@@ -42,6 +42,6 @@ class UserController extends Controller
         {
             return 'Wrong password.';
         }
-        return null;
+        return 'niks doet het.';
     }
 }
