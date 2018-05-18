@@ -28,4 +28,8 @@ class TournamentController extends Controller
 
         return $tournament->serialize();
     }
+
+    public function createTournament(Request $request) {
+        return 'haha';
+    }
 }
