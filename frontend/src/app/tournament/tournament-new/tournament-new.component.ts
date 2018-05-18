@@ -16,7 +16,7 @@ export class TournamentNewComponent implements OnInit {
   }
   submitForm() {
     const values = document.getElementById('form');
-    console.log('Submitting tournament: ' + values[0].value);
+    console.log('Submitting  tournament: ' + values[0].value);
 
     let Params = new HttpParams();
     Params = Params.append('name', values[0].value);

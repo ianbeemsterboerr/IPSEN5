@@ -34,8 +34,6 @@ class TournamentController extends Controller
 
         $joke = "Which pet makes the most noise? A trumpet.";
 
-        $input = $request->all();
-
 
 
         $results = \DB::select("SELECT * FROM tournament");
@@ -75,21 +73,19 @@ class TournamentController extends Controller
 
         $organizer_userID = "1";
         $gamename = 'FIFA';
-        $tournament_typename = $input[2];
-        $signup_typename = "Invite";
-        $name = "Tourn";
-        $description = "Fun";
+        $tournament_typename = $request->input('type');;
+        $signup_typename = $request->input('signupType');
+        $name = $request->input('name');
+        $description = $request->input('description');
         $max_team_size = '2';
-        $signup_start = '2000-01-01';
-        $signup_end = '2000-01-01';
+        $signup_start = $request->input('signupStart');
+        $signup_end = $request->input('signupStart');
         $locked = true;
-        $tournament_start = '2000-01-01';
+        $tournament_start = $request->input('date');
 
         $statement->execute();
 
 
-
-        echo implode(" ", $input);
 
         var_dump($results);
 
