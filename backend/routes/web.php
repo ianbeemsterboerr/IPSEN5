@@ -38,3 +38,8 @@ $router->post('/joke', function (Request $request) use ($router) {
 $router->post('/tournament', function () use ($router) {
     return $router->app->version();
 });
+
+$router->group(['prefix' => 'tournament'], function () use ($router) {
+    $router->get('dummy', 'TournamentController@createDummyTournament');
+    $router->post('new', 'TournamentController@createTournament');
+});
