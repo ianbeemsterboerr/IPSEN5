@@ -11,19 +11,24 @@ namespace App;
 
 class Match
 {
+    public $matchID;
     public $teams = [];
     public $nextMatch;
+    public $previousMatches = [];
 
     /**
      * Match constructor.
      * @param array $teams
-     * @param $nextMatch
+     * @param Tournament $tournament
      */
-    public function __construct(array $teams, $nextMatch)
+    public function __construct(array $teams, Tournament $tournament)
     {
         $this->teams = $teams;
-        $this->nextMatch = $nextMatch;
+        $this->matchID = $tournament->getMatchID();
     }
 
-
+    public function connect(Match &$other) {
+        array_push($this->previousMatches, $other->matchID);
+        $other->nextMatch = $this->matchID;
+    }
 }

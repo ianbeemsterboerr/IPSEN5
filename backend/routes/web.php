@@ -15,6 +15,12 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/getusers', 'UserController@getAll');
+$router->group(['prefix' => 'api'], function () use ($router) {
+    $router->group(['prefix' => 'users'], function () use ($router) {
+        $router->get('all', 'UserController@getAll');
+    });
 
-
+    $router->group(['prefix' => 'tournament'], function () use ($router) {
+        $router->get('dummy', 'TournamentController@createDummyTournament');
+    });
+});

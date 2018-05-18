@@ -17,12 +17,14 @@
 <div id="content-wrapper">
   <app-sidebar></app-sidebar>
 
-
-  <div id="router-wrapper" class="content container-fluid">
+  <div id="router-wrapper" class="content w-100">
     <div class="w-100" id="login-warning">
       Je bent momenteel niet ingelogd. <a routerLink="/login">Klik hier</a> om in te loggen.
     </div>
-    <router-outlet></router-outlet>
+
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
 

@@ -11,6 +11,7 @@ import {CalendarModule} from "angular-calendar";
 import { LoginComponent } from './login/login.component';
 import { CreateaccountComponent } from './createaccount/createaccount.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
+import {TournamentModule} from "./tournament/tournament.module";
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
     AppRoutingModule,
     SharedModule,
     HomeModule,
+    TournamentModule,
     FormsModule
   ],
   providers: [],
