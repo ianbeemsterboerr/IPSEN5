@@ -1,3 +1,36 @@
-<p>
-  home works!
-</p>
+<main class="container pt-5">
+  <div class="card mb-5">
+    <div class="card-header">Tournament</div>
+    <div class="card-block p-0">
+      <table class="table table-bordered table-sm m-0">
+        <thead class="">
+        <tr>
+          <th>Deelnemer</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ul>
+          <li *ngFor="let participant of participants">
+            <tr>
+              <td>{{participant.name}}</td>
+            </tr>
+            </li>
+        </ul>
+        </tbody>
+      </table>
+      <thead class="">
+      <tr>
+        <th>Naam</th>
+      </tr>
+      <tr>
+        <th> <input type="text" class="form-control" id="usr"></th>
+      </tr>
+      </thead>
+      <th colspan="4">
+        <button class="btn btn-default" (click)="addParticipant()">Deelnemer toevoegen</button>
+        <button class="btn btn-default" (click)="removeParticipant()">Deelnemer verwijderen</button>
+        <button class="btn btn-primary float-right" (click)="approve()">Akkoord</button>
+      </th>
+    </div>
+  </div>
+</main>

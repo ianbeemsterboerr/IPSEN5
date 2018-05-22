@@ -8,9 +8,11 @@ import {HomeModule} from "./home/home.module";
 import {SharedModule} from "./shared/shared.module";
 
 
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+
   ],
   imports: [
     BrowserModule,
