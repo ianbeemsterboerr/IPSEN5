@@ -30,8 +30,7 @@ export class TournamentNewComponent implements OnInit {
     Params = Params.append('signupEnd', values[6].value);
     Params = Params.append('description', values[7].value);
 
-
-    this.api.post('tournament/new', Params, {responseType: 'text/plain'}).subscribe(res => {
+    this.api.post('tournament/new', Params).subscribe(res => {
       console.log(res);
     });
 

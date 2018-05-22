@@ -40,52 +40,49 @@ class TournamentController extends Controller
 
 
 
-        $results = \DB::select("SELECT * FROM tournaments");
-//
-//        $servername = "127.0.0.1";
-//        $username = "homestead";
-//        $database = "homestead";
-//
-//        $connection = new PDO("mysql:host=$servername;dbname=$database", $username);
-//
-//
-//        $statement = $connection->prepare("INSERT INTO tournaments (organizer_userID, gamename,
-//          tournament_typename, signup_typename, name, description, max_team_size, signup_start,
-//          signup_end, tournament_start) VALUES (:organizer_userID, :gamename,
-//          :tournament_typename, :signup_typename, :name, :description, :max_team_size, :signup_start,
-//          :signup_end, :tournament_start)");
-//
-//
-//        $statement->bindParam(':organizer_userID', $organizer_userID);
-//        $statement->bindParam(':gamename', $gamename);
-//        $statement->bindParam(':tournament_typename', $tournament_typename);
-//        $statement->bindParam(':signup_typename', $signup_typename);
-//        $statement->bindParam(':name', $name);
-//        $statement->bindParam(':description', $description);
-//        $statement->bindParam(':max_team_size', $max_team_size);
-//        $statement->bindParam(':signup_start', $signup_start);
-//        $statement->bindParam(':signup_end', $signup_end);
-//        $statement->bindParam(':tournament_start', $tournament_start);
-//
-//
-//        $organizer_userID = "1"; // ??
-//        $gamename = 'FIFA'; // gebruik games_service getActiveGame
-//        $tournament_typename = $request->input('type');;
-//        $signup_typename = $request->input('signupType');
-//        $name = $request->input('name');
-//        $description = $request->input('description');
-//        $max_team_size = $request->input('teamSize');
-//        $signup_start = $request->input('signupStart');
-//        $signup_end = $request->input('signupStart');
-//        $tournament_start = $request->input('date');
-//
-//        $statement->execute();
-//
-//
+//        $results = \DB::select("SELECT * FROM tournaments");
 
-//        var_dump($results);
+        $servername = "127.0.0.1";
+        $username = "homestead";
+        $password = "secret";
+        $database = "homestead";
 
-        return "aa";
+        $connection = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+
+
+        $statement = $connection->prepare("INSERT INTO tournaments (organizer_userID, gamename,
+          tournament_typename, signup_typename, name, description, max_team_size, signup_start,
+          signup_end, tournament_start) VALUES (:organizer_userID, :gamename,
+          :tournament_typename, :signup_typename, :name, :description, :max_team_size, :signup_start,
+          :signup_end, :tournament_start)");
+
+
+        $statement->bindParam(':organizer_userID', $organizer_userID);
+        $statement->bindParam(':gamename', $gamename);
+        $statement->bindParam(':tournament_typename', $tournament_typename);
+        $statement->bindParam(':signup_typename', $signup_typename);
+        $statement->bindParam(':name', $name);
+        $statement->bindParam(':description', $description);
+        $statement->bindParam(':max_team_size', $max_team_size);
+        $statement->bindParam(':signup_start', $signup_start);
+        $statement->bindParam(':signup_end', $signup_end);
+        $statement->bindParam(':tournament_start', $tournament_start);
+
+
+        $organizer_userID = "1"; // get active user
+        $gamename = 'FIFA'; // gebruik games_service getActiveGame
+        $tournament_typename = $request->input('type');;
+        $signup_typename = $request->input('signupType');
+        $name = $request->input('name');
+        $description = $request->input('description');
+        $max_team_size = $request->input('teamSize');
+        $signup_start = $request->input('signupStart');
+        $signup_end = $request->input('signupStart');
+        $tournament_start = $request->input('date');
+
+        $statement->execute();
+
+        return json_encode("Tournament submitted.");
 
     }
 
