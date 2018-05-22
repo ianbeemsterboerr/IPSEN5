@@ -44,12 +44,6 @@ class TournamentController extends Controller
 
         $connection = new PDO("mysql:host=$servername;dbname=$database", $username);
 
-//        $statement = $connection->prepare("INSERT INTO tournament (name, description) VALUES (:name, :description)");
-//        $statement->bindParam(':name', $name);
-//        $statement->bindParam(':description', $description);
-//
-//        $name = 'Nieuw Toernooi';
-//        $description = 'Leuk';
 
         $statement = $connection->prepare("INSERT INTO tournament (organizer_userID, gamename,
           tournament_typename, signup_typename, name, description, max_team_size, signup_start,
@@ -71,16 +65,16 @@ class TournamentController extends Controller
         $statement->bindParam(':tournament_start', $tournament_start);
 
 
-        $organizer_userID = "1";
-        $gamename = 'FIFA';
+        $organizer_userID = "1"; // ??
+        $gamename = 'FIFA'; // gebruik games_service getActiveGame
         $tournament_typename = $request->input('type');;
         $signup_typename = $request->input('signupType');
         $name = $request->input('name');
         $description = $request->input('description');
-        $max_team_size = '2';
+        $max_team_size = $request->input('teamSize');
         $signup_start = $request->input('signupStart');
         $signup_end = $request->input('signupStart');
-        $locked = true;
+        $locked = true; // todo remove
         $tournament_start = $request->input('date');
 
         $statement->execute();

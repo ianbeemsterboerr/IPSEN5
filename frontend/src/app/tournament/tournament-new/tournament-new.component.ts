@@ -22,7 +22,7 @@ export class TournamentNewComponent implements OnInit {
     Params = Params.append('name', values[0].value);
     Params = Params.append('date', values[1].value);
     Params = Params.append('type', values[2].value);
-    Params = Params.append('allowTeams', values[3].value);
+    Params = Params.append('teamSize', values[3].value);
     Params = Params.append('signupType', values[4].value);
     Params = Params.append('signupStart', values[5].value);
     Params = Params.append('signupEnd', values[6].value);
