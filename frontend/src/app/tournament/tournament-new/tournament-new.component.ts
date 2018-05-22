@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Params} from '@angular/router';
 import {ApiService} from '../../shared/api.service';
+import {Tournament} from '../../shared/model/tournament';
 
 @Component({
   selector: 'app-tournament-new',
@@ -29,9 +30,6 @@ export class TournamentNewComponent implements OnInit {
     Params = Params.append('signupEnd', values[6].value);
     Params = Params.append('description', values[7].value);
 
-    // this.http.post('compufifi.test/api/tournament/new', Params, {responseType: 'text'}).subscribe(res => {
-    //   console.log(res);
-    // });
 
     this.api.post('tournament/new', Params).subscribe(res => {
       console.log(res);
