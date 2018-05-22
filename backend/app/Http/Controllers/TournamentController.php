@@ -12,7 +12,9 @@ namespace App\Http\Controllers;
 use App\Team;
 use Illuminate\Http\Request;
 use App\Tournament;
+
 use PDO;
+
 
 class TournamentController extends Controller
 {
@@ -29,6 +31,7 @@ class TournamentController extends Controller
 
         return $tournament->serialize();
     }
+
 
     public function createTournament(Request $request) {
 
@@ -86,4 +89,5 @@ class TournamentController extends Controller
         return $joke;
 
     }
+
 }

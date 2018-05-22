@@ -1,8 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import {AngularFontAwesomeModule} from 'angular-font-awesome';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+import {AngularFontAwesomeModule} from "angular-font-awesome";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {HttpClientModule} from "@angular/common/http";
+import {HttpModule} from "@angular/http";
+import {ApiService} from "./api.service";
+
 
 @NgModule({
   declarations: [
@@ -11,7 +16,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   imports: [
     CommonModule,
     AngularFontAwesomeModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   exports: [SidebarComponent]
 })

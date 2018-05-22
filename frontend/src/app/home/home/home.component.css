@@ -1,0 +1,39 @@
+.item {
+  position: relative;
+  background-color: #464646;
+
+  padding: .5rem;
+  margin: .5rem 0 0 0;
+
+  border: 5px solid #353535;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.half-width {
+  width: 50%;
+}
+
+#item-container {
+  display: flex;
+  flex-flow: row wrap;
+
+  color: #FFFFFF;
+}
+
+.centered {
+  width: 100%;
+  text-align: center;
+}
+
+#trophy-image {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+}
+
+#trophy-container {
+  min-height: 120px;
+}

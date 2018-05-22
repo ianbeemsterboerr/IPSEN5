@@ -5,8 +5,6 @@
 
 header {
   position: relative;
-
-  background: url('/assets/img/header_image.png') no-repeat;
   background-size: cover;
 
   width: 100%;
@@ -44,11 +42,11 @@ header {
 
 #content-wrapper {
   display: flex;
-  height: 100vh;
+  min-height: calc(100vh - 6rem);
 }
 
 app-sidebar {
-  height: 100%;
+  min-height: 100%;
 
   background-color: #111111;
   color: #ccc;
@@ -65,9 +63,15 @@ app-sidebar {
     #2e2e2e 5px,
     #2e2e2e 6px
   );
+
+  overflow-x: scroll;
 }
 
 .content {
   flex-direction: column;
 }
 
+#login-warning {
+  background-color: #c04654;
+  text-align: center;
+}
