@@ -10,7 +10,7 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-$router->group([ 'middleware => cors'], function($router){
+$router->group(['prefix' => 'api' ], function() use ($router){
 
     $router->get('/', function () use ($router) {
         return $router->app->version();

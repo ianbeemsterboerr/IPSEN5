@@ -18,6 +18,7 @@ export class ApiService {
 
   login(user_username:string, user_password:string){
     let body = JSON.stringify({user_username, user_password});
-    return this.http.get('localhost:8000/getusersunsafe', httpOptions);
+
+    return this.http.post<string>('/api/login', body); 
   }
 }

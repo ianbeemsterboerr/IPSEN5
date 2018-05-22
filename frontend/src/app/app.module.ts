@@ -8,6 +8,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {HomeModule} from "./home/home.module";
 import {SharedModule} from "./shared/shared.module";
 
+import { JwtInterceptor } from './interceptors/jwt-interceptor'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { LoginComponent } from './login/login.component';
@@ -31,6 +32,11 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
     FormsModule,
   ],
   providers: [ApiService,
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtInterceptor,
+    multi:true
+    }
   ],
   bootstrap: [AppComponent]
 })
