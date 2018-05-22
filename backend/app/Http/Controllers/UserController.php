@@ -42,10 +42,11 @@ class UserController extends Controller
                 "aud" => "angularClient",
                 "iat" => 1356999524,
                 "nbf" => 1357000000,
-                "isadmin" => $user->user_isadmin
+                "isadmin" => $user->user_isadmin,
+                "user_username" => $user->user_username
             );
             $jwt = JWT::encode($token, $key, 'HS256');
-            
+            //TO DO: FIX BEARER SYSTEM
             $jwtstring = array(
                 "bearer" => $jwt
             );

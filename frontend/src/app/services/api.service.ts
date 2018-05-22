@@ -21,4 +21,8 @@ export class ApiService {
 
     return this.http.post<string>('/api/login', body); 
   }
+
+  getUsers(){
+    return this.http.get('/api/getusers');
+  }
 }

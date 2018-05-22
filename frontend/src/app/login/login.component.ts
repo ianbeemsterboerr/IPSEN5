@@ -31,6 +31,8 @@ export class LoginComponent implements OnInit {
       () =>{console.log('donezo')}
     );
     console.log(localStorage.getItem('token'));
+
+    console.log(this.api.getUsers());
   }
 
 }
