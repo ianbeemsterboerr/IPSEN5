@@ -6,27 +6,65 @@
 
         <g *ngFor="let match of bracket.matches">
 
-            <!--match rectangle-->
+            <!--Match rectangle-->
             <rect [attr.x]="matchesX[match.matchID]"
                   [attr.y]="matchesY[match.matchID]"
                   [attr.width]="match_width"
                   [attr.height]="match_height"
-                  fill="#222222">
+                  fill="#000">
             </rect>
+
+            <!--Match scores rectangle-->
+            <rect [attr.x]="matchesX[match.matchID] + match_width - score_width"
+                  [attr.y]="matchesY[match.matchID]"
+                  [attr.width]="score_width"
+                  [attr.height]="match_height"
+                  fill="#aaa">
+            </rect>
+
+            <line [attr.x1]="matchesX[match.matchID]"
+                  [attr.y1]="matchesY[match.matchID] + match_height/2"
+                  [attr.x2]="matchesX[match.matchID] + match_width"
+                  [attr.y2]="matchesY[match.matchID] + match_height/2"
+                  style="stroke: #222; stroke-width:2px"
+            >
+            </line>
 
             <!--Upper team name-->
             <text fill="#FFFFFF"
-                  [attr.x]="matchesX[match.matchID] + 10"
-                  [attr.y]="matchesY[match.matchID] + 20">
+                  [attr.x]="matchesX[match.matchID] + 5"
+                  [attr.y]="matchesY[match.matchID] + match_font_size"
+                  class="match-text"
+                  [ngStyle]="{'font-size': match_font_size + 'px'}">
                 {{match.teams[0].name}}
             </text>
 
+            <!--Upper team score-->
+            <text fill="000"
+                  [attr.x]="matchesX[match.matchID] + match_width - score_width/2"
+                  [attr.y]="matchesY[match.matchID] + match_font_size"
+                  class="match-text"
+                  [ngStyle]="{'font-size': match_font_size + 'px'}"
+                  text-anchor="middle"
+            >0</text>
+
             <!--Lower team name-->
             <text fill="#FFFFFF"
-                    [attr.x]="matchesX[match.matchID] + 10"
-                    [attr.y]="matchesY[match.matchID] + 40">
+                  [attr.x]="matchesX[match.matchID] + 5"
+                  [attr.y]="matchesY[match.matchID] + match_height/2 + match_font_size"
+                  class="match-text"
+                  [ngStyle]="{'font-size': match_font_size + 'px'}">
                 {{match.teams[1].name}}
             </text>
+
+            <!--Lower team score-->
+            <text fill="000"
+                  [attr.x]="matchesX[match.matchID] + match_width - score_width/2"
+                  [attr.y]="matchesY[match.matchID] + match_height/2 + match_font_size"
+                  class="match-text"
+                  [ngStyle]="{'font-size': match_font_size + 'px'}"
+                  text-anchor="middle"
+            >0</text>
 
             <!--Connection line to next match-->
             <polyline *ngIf="match.nextMatch"
