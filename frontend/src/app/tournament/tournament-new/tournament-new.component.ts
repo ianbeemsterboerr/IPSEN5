@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Params} from '@angular/router';
+import {ApiService} from '../../shared/api.service';
 
 @Component({
   selector: 'app-tournament-new',
@@ -10,13 +11,13 @@ import {Params} from '@angular/router';
 })
 export class TournamentNewComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private api: ApiService) { }
 
   ngOnInit() {
   }
   submitForm() {
     const values = document.getElementById('form');
-    console.log('Submitting  tournament: ' + values[0].value);
+    console.log('Submitting tournament: ' + values[0].value);
 
     let Params = new HttpParams();
     Params = Params.append('name', values[0].value);
@@ -28,9 +29,14 @@ export class TournamentNewComponent implements OnInit {
     Params = Params.append('signupEnd', values[6].value);
     Params = Params.append('description', values[7].value);
 
-    this.http.post('http://localhost:8080/api/tournament/new', Params, {responseType: 'text'}).subscribe(res => {
+    // this.http.post('compufifi.test/api/tournament/new', Params, {responseType: 'text'}).subscribe(res => {
+    //   console.log(res);
+    // });
+
+    this.api.post('tournament/new', Params).subscribe(res => {
       console.log(res);
     });
+
   }
 
 }

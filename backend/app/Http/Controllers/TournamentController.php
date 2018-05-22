@@ -18,6 +18,8 @@ use PDO;
 
 class TournamentController extends Controller
 {
+
+
     public function createDummyTournament(Request $request) {
         $team_count = $request->get('teams');
         $teams = [];
