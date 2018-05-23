@@ -25,8 +25,8 @@ export class LoginComponent implements OnInit {
       data =>{
         console.log('Received data (JWT): '+data['bearer']);
         let result = data['bearer'];
-        localStorage.removeItem('token');
-        localStorage.setItem('token', result);
+        localStorage.removeItem('bearer');
+        localStorage.setItem('bearer', result);
       },
       err =>{console.log('error: '+err)},
       () =>{console.log('Succesvol ingelogd.')}
@@ -34,16 +34,16 @@ export class LoginComponent implements OnInit {
     /*
     For testing purposes:
     */
-    // console.log('Localstorage bearer: '+localStorage.getItem('token'));
-    // this.api.getUsers().subscribe(
-    //   data =>{
-    //     console.log(data);
-    //   }, err=>{
-    //     console.log(err);
-    //   }, ()=>{
-    //     console.log('Users succesvol geget.')
-    //   }
-    // )
+    console.log('Localstorage bearer: '+localStorage.getItem('bearer'));
+    this.api.getUsers().subscribe(
+      data =>{
+        console.log(data);
+      }, err=>{
+        console.log(err);
+      }, ()=>{
+        console.log('Users succesvol geget.')
+      }
+    )
   }
 
 }
