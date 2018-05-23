@@ -15,8 +15,9 @@ console.log("intercepted request ... ");
 let authReq;
 
 if (localStorage.getItem('bearer') != null){
-    authReq = req.clone({ headers: req.headers.set("bearer", localStorage.getItem('bearer'))});
+    authReq = req.clone({ headers: req.headers.set('bearer', localStorage.getItem('bearer'))});
 } else{
+    console.log('No JWT found in localstorage');
     authReq = req;
 }
 

@@ -23,6 +23,6 @@ export class ApiService {
   }
 
   getUsers(){
-    return this.http.get('/api/users/getusers');
+    return this.http.get('/api/users/all');
   }
 }
