@@ -16,6 +16,7 @@ import {ForgotpasswordComponent} from './forgotpassword/forgotpassword.component
 import {FormsModule} from "@angular/forms";
 import {TournamentModule} from "./tournament/tournament.module";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
         FormsModule,
         HttpClientModule,
         TournamentModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        ToastrModule.forRoot()
     ],
     providers: [ApiService,
         {
