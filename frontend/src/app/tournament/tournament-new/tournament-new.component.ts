@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpParams} from '@angular/common/http';
 import {Params} from '@angular/router';
 import {ApiService} from '../../shared/api.service';
+import {GameService} from '../../games/game.service';
 import {Tournament} from '../../shared/model/tournament';
 
 @Component({
@@ -12,25 +13,43 @@ import {Tournament} from '../../shared/model/tournament';
 })
 export class TournamentNewComponent implements OnInit {
 
-  constructor(private http: HttpClient, private api: ApiService) { }
+  constructor(private api: ApiService, private gameService: GameService) { }
+
+  submitDisabled = true;
 
   ngOnInit() {
+  }
+  updateButton() {
+    let valid = true;
+    const values = document.getElementById('form');
+    for (let i = 0; i < values.children.length - 1; i++) {
+      if (values[i].value.length === 0) {
+        valid = false;
+      }
+    }
+
+    console.log(valid.valueOf())
+
+    this.submitDisabled = !valid;
   }
   submitForm() {
     const values = document.getElementById('form');
     console.log('Submitting tournament: ' + values[0].value);
 
-    let Params = new HttpParams();
-    Params = Params.append('name', values[0].value);
-    Params = Params.append('date', values[1].value);
-    Params = Params.append('type', values[2].value);
-    Params = Params.append('teamSize', values[3].value);
-    Params = Params.append('signupType', values[4].value);
-    Params = Params.append('signupStart', values[5].value);
-    Params = Params.append('signupEnd', values[6].value);
-    Params = Params.append('description', values[7].value);
 
-    this.api.post('tournament/new', Params).subscribe(res => {
+    let params = new HttpParams();
+    params = params.append('name', values[0].value);
+    params = params.append('date', values[1].value);
+    params = params.append('type', values[2].value);
+    params = params.append('teamSize', values[3].value);
+    params = params.append('signupType', values[4].value);
+    params = params.append('signupStart', values[5].value);
+    params = params.append('signupEnd', values[6].value);
+    params = params.append('description', values[7].value);
+    params = params.append('game', this.gameService.getActiveGame().title);
+    params = params.append('organizer_ID', '1'); // fix with active user ID
+
+    this.api.post('tournament/new', params).subscribe(res => {
       console.log(res);
     });
 

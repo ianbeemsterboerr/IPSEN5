@@ -69,8 +69,8 @@ class TournamentController extends Controller
         $statement->bindParam(':tournament_start', $tournament_start);
 
 
-        $organizer_userID = "1"; // get active user
-        $gamename = 'FIFA'; // gebruik games_service getActiveGame
+        $organizer_userID = $request->input('organizer_ID');
+        $gamename = $request->input('game');
         $tournament_typename = $request->input('type');;
         $signup_typename = $request->input('signupType');
         $name = $request->input('name');
