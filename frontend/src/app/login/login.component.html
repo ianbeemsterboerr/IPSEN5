@@ -1,22 +1,26 @@
-<div class="center">
-<div class="card">
-  <div class="card-body"><h2>Log in</h2></div>
-<div class="centertext">
-<form>
-  Username<br>
-  <input type="text" name="firstname" value="Mickey">
-  <br>
- Password<br>
-  <input type="password" name="lastname" value="Mouse">
-  <br><br>
-  <button (click)="logIn()">Log in</button>
-<br>
-<a [routerLink]="['/forgotpassword']">Forgot password?</a>
-<br>
-<a [routerLink]="['/createaccount']">No account yet? Register here.</a>
+<div class="col">
+    <div class="mx-auto w-50">
+        <form class="rounded p-3">
+            <h2>Login</h2>
 
-</form>
-</div> 
+            <div class="form-group">
+                <label for="usernameInput" class="">Username</label>
+                <input id="usernameInput" class="form-control" [(ngModel)]="user_username" type="text" name="user_username" value="Username">
+            </div>
 
-</div>
+            <div class="form-group ">
+                <label for="passwordInput" class="">Password</label>
+                <input id="passwordInput" class="form-control" [(ngModel)]="user_password" type="password" name="user_password" value="Password">
+            </div>
+
+            <button class="btn btn-primary" (click)="login()">Log in</button>
+
+            <br>
+            <a [routerLink]="['/forgotpassword']">Forgot password?</a>
+            <br>
+            <a [routerLink]="['/createaccount']">No account yet? Register here!</a>
+
+        </form>
+    </div>
+
 </div>

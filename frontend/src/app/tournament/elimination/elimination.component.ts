@@ -17,6 +17,9 @@ export class EliminationComponent implements OnInit {
 
   match_width = 120;
   match_height = 50;
+  match_font_size = this.match_height/2 - 5;
+
+  score_width = 30;
 
   bracket_width = 150;
   bracket_spacing = this.bracket_width - this.match_width;
@@ -29,7 +32,7 @@ export class EliminationComponent implements OnInit {
   constructor(private api: ApiService) { }
 
   ngOnInit() {
-    this.api.get<Tournament>('tournament/dummy', {teams: 28}).subscribe(
+    this.api.get<Tournament>('tournament/dummy', {teams: 20}).subscribe(
       next=> {
         this.onTournamentLoaded(next);
         this.tournament = next;

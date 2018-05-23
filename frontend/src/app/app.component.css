@@ -1,77 +1,79 @@
-@font-face {
-  font-family: Blockletter;
-  src: url('/assets/Blockletter.woff');
-}
-
 header {
-  position: relative;
-  background-size: cover;
+    position: relative;
+    background-size: cover;
 
-  width: 100%;
-  height: 6rem;
+    width: 100%;
+    height: 6rem;
 }
 
 #header-content {
-  margin-top: auto;
-  margin-bottom: auto;
+    margin-top: auto;
+    margin-bottom: auto;
 
-  position: absolute;
-  top: 0; bottom: 0;
-  width: 100%;
-  height: 3rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3rem;
 
-  padding-left: 1rem;
-  padding-right: 3rem;
+    padding-left: 1rem;
+    padding-right: 3rem;
 }
 
-#header_image {
-  float: left;
-  height: 3rem;
+#logo {
+    position: absolute;
+    left: 10px;
+    height: 3rem;
 }
 
 #header_title {
-  color: white;
-  font-family: Blockletter, serif;
+    color: white;
+    font-family: Blockletter, serif;
 
-  float: right;
+    position: absolute;
+    right: 10px;
 }
 
 #header_title > * {
-  display: inline;
+    display: inline;
 }
 
 #content-wrapper {
-  display: flex;
-  min-height: calc(100vh - 6rem);
+    display: flex;
+    min-height: calc(100vh - 6rem);
 }
 
 app-sidebar {
-  min-height: 100%;
+    min-height: 100%;
 
-  background-color: #111111;
-  color: #ccc;
+    background-color: #111111;
+    color: #ccc;
+}
+
+#content-container {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+
+    background: repeating-linear-gradient(
+            -45deg,
+            #353535,
+            #353535 5px,
+            #2e2e2e 5px,
+            #2e2e2e 6px
+    );
+}
+
+#content-container > * {
+    margin-bottom: 10px;
 }
 
 #router-wrapper {
-  display: inline-block;
-  /*flex: 1;*/
-
-  background: repeating-linear-gradient(
-    -45deg,
-    #353535,
-    #353535 5px,
-    #2e2e2e 5px,
-    #2e2e2e 6px
-  );
-
-  overflow-x: scroll;
-}
-
-.content {
-  flex-direction: column;
+    flex-grow: 1;
+    overflow-x: auto;
 }
 
 #login-warning {
-  background-color: #c04654;
-  text-align: center;
+    background-color: #c04654;
+    text-align: center;
 }

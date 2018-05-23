@@ -27,6 +27,8 @@ class CreateUserTable extends Migration
             $table->boolean('user_force_name_change');
             $table->boolean('user_guest');
             $table->timestamps();
+            $table->string('user_webtoken');
+            $table->boolean('user_isadmin');
         });
     }
 
