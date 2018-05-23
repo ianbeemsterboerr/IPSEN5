@@ -21,10 +21,11 @@ class TournamentController extends Controller
           signup_end, tournament_start) VALUES (:organizer_userID, :gamename,
           :tournament_typename, :signup_typename, :name, :description, :max_team_size, :signup_start,
           :signup_end, :tournament_start)");
-          
+
         $statement->bindParam(':score', $score);
         $statement->bindParam(':MatchID', $matchID);
         $statement->bindParam(':TeamID', $teamID);
         $statement->execute();
         return json_encode("Results submitted.");
     }
+}
