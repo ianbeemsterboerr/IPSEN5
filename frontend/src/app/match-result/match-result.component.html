@@ -1,0 +1,10 @@
+<div class="popup">
+  <div class="wrap">
+    <form (submit)="sendResults()">
+      {{player1Name}} <input [(ngModel)]="team1score" type="text" name="player1" value="{{team1score}}"> - <input [(ngModel)]="team2score" type="text" name="player2" value="{{team2score}}"> {{player2Name}}<br>
+      <button>Accept</button>
+    </form>
+  </div>
+</div>
+<button (click)="setNames ('Bart','Nart')">Set Name</button><br>
+<button (click)="test()">Set 1Name</button><br>
