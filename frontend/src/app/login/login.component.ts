@@ -23,16 +23,27 @@ export class LoginComponent implements OnInit {
   login(){
     this.api.login(this.user_username, this.user_password).subscribe(
       data =>{
+        console.log('Received data: '+data);
         let result = data['bearer'];
         localStorage.removeItem('token');
         localStorage.setItem('token', result);
       },
-      err =>{console.log(err)},
+      err =>{console.log('error: '+err)},
       () =>{console.log('donezo')}
     );
-    console.log(localStorage.getItem('token'));
-
-    console.log(this.api.getUsers());
+    /*
+    For testing purposes:
+    */
+    console.log('Localstorage bearer: '+localStorage.getItem('token'));
+    this.api.getUsers().subscribe(
+      data =>{
+        console.log(data);
+      }, err=>{
+        console.log(err);
+      }, ()=>{
+        console.log('Users succesvol geget.')
+      }
+    )
   }
 
 }

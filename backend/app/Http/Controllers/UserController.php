@@ -31,7 +31,7 @@ class UserController extends Controller
 
         if ($user === null)
         {
-            abort(401);
+            abort(401,'User doesnt exist');
         }
 
         if ($user_password == $user->user_password)
@@ -40,8 +40,6 @@ class UserController extends Controller
             $token = array(
                 "iss" => "compufifi.test",
                 "aud" => "angularClient",
-                "iat" => 1356999524,
-                "nbf" => 1357000000,
                 "isadmin" => $user->user_isadmin,
                 "user_username" => $user->user_username
             );
@@ -51,6 +49,7 @@ class UserController extends Controller
                 "bearer" => $jwt
             );
             return json_encode($jwtstring);
+            // return json_encode(JWT::decode($jwt, $key, array('HS256')));
         }
         else
         {
