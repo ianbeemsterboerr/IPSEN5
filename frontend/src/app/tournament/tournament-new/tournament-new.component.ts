@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import {HttpParams} from '@angular/common/http';
-import {Params} from '@angular/router';
+import {Params, Router} from '@angular/router';
 import {ApiService} from '../../shared/api.service';
 import {GameService} from '../../games/game.service';
 import {Tournament} from '../../shared/model/tournament';
@@ -13,7 +13,7 @@ import {Tournament} from '../../shared/model/tournament';
 })
 export class TournamentNewComponent implements OnInit {
 
-  constructor(private api: ApiService, private gameService: GameService) { }
+  constructor(private api: ApiService, private gameService: GameService, private router: Router) { }
 
   submitDisabled = true;
 
@@ -27,8 +27,6 @@ export class TournamentNewComponent implements OnInit {
         valid = false;
       }
     }
-
-    console.log(valid.valueOf())
 
     this.submitDisabled = !valid;
   }
@@ -52,6 +50,7 @@ export class TournamentNewComponent implements OnInit {
     this.api.post('tournament/new', params).subscribe(res => {
       console.log(res);
     });
+    this.router.navigate(['tournamentHome']);
 
   }
 
