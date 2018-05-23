@@ -13,4 +13,14 @@ class Bracket
 {
     public $matches = [];
 
+    /**
+     * Bracket constructor.
+     * @param array $matches
+     */
+    public function __construct(array $matches)
+    {
+        $this->matches = $matches;
+    }
+
+
 }
