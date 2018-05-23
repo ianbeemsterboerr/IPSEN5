@@ -31,7 +31,7 @@ class UserController extends Controller
 
         if ($user === null)
         {
-            abort(401,'User doesnt exist');
+            abort(401,'Unauthorized, User doesnt exist');
         }
 
         if ($user_password == $user->user_password)
@@ -46,7 +46,8 @@ class UserController extends Controller
             $jwt = JWT::encode($token, $key, 'HS256');
             //TO DO: FIX BEARER SYSTEM
             $jwtstring = array(
-                "bearer" => $jwt
+                "bearer" => $jwt,
+                "activeUserId" => $user->user_id
             );
             return json_encode($jwtstring);
             // return json_encode(JWT::decode($jwt, $key, array('HS256')));
@@ -55,6 +56,9 @@ class UserController extends Controller
         {
             abort(401);
         }
+    }
 
+    public function get(int $id){
+        return User::where('user_id', $id)->first();
     }
 }

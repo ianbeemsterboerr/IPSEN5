@@ -21,10 +21,14 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->group(['prefix' => 'users'], function () use ($router) {
 
             $router->get('all', 'UserController@getAll');
+            $router->get('get/{id}', 'UserController@get');
+            
         });
 
+
+
         $router->group(['prefix' => 'tournaments'], function () use ($router) {
-            
+
         });
 
     });
@@ -38,6 +42,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     /**
      * Testing routes (unsafe).
      */
+    $router->group(['prefix' => 'users'], function () use ($router) {
+        $router->get('getusersunsafe', 'UserController@getAll');
+    });
     $router->group(['prefix' => 'tournament'], function () use ($router) {
         $router->get('dummy', 'TournamentController@createDummyTournament');
     });
