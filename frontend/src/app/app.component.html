@@ -1,31 +1,32 @@
 <header class="page-header" [ngStyle]="{ 'background-image': 'url(' + gameservice.getActiveGame().header_img + ')'}">
-  <div id="header-content">
+    <div id="header-content">
 
-    <!--<select class='form-control bg-dark' id="game-picker" [(ngModel)]='activeGame' (ngModelChange)='onGameChanged($event)' title="game">-->
-      <!--<option class='option' *ngFor='let game of gameservice.availableGames' [ngValue]="game">{{game.title}}</option>-->
-    <!--</select>-->
+        <!--Game selection select-->
+        <!--<select class='form-control bg-dark' id="game-picker" [(ngModel)]='activeGame' (ngModelChange)='onGameChanged($event)' title="game">-->
+        <!--<option class='option' *ngFor='let game of gameservice.availableGames' [ngValue]="game">{{game.title}}</option>-->
+        <!--</select>-->
 
-    <img id="logo" src="/assets/img/computest.png"/>
+        <img id="logo" src="/assets/img/computest.png"/>
 
-    <div id="header_title">
-      <h1>Matchmaker</h1>
-      <sub>v0.1</sub>
+        <div id="header_title">
+            <h1>Matchmaker</h1>
+            <sub>v0.1</sub>
+        </div>
     </div>
-  </div>
 </header>
 
 <div id="content-wrapper">
-  <app-sidebar></app-sidebar>
+    <app-sidebar></app-sidebar>
 
-  <div id="content-container" class="w-100">
-    <div id="login-warning">
-      Je bent momenteel niet ingelogd. <a routerLink="/login">Klik hier</a> om in te loggen.
-    </div>
+    <div id="content-container" class="w-100">
+        <div id="login-warning">
+            Je bent momenteel niet ingelogd. <a routerLink="/login">Klik hier</a> om in te loggen.
+        </div>
 
-    <div id="router-wrapper" class="container-fluid">
-      <router-outlet></router-outlet>
+        <div id="router-wrapper" class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
     </div>
-  </div>
 </div>
 
 
