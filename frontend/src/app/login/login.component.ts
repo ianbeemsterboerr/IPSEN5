@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     }
 
     login(user_username: string, user_password: string) {
-        this.api.post('login', JSON.stringify({user_username, user_password})).subscribe(
+        this.api.post('login', {'user_username': user_username, 'user_password': user_password}).subscribe(
             data => {
                 console.log('Received data (JWT): ' + data['bearer']);
                 console.log('ActiveUser from JSON: ' + data['activeUserId']);
