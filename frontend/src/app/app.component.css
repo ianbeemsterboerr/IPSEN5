@@ -64,6 +64,10 @@ app-sidebar {
     );
 }
 
+#content-container > * {
+    margin-bottom: 10px;
+}
+
 #router-wrapper {
     flex-grow: 1;
     overflow-x: auto;
