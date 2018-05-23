@@ -7,6 +7,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
 import {HttpModule} from "@angular/http";
 import {ApiService} from "./api.service";
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {ApiService} from "./api.service";
     CommonModule,
     AngularFontAwesomeModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   exports: [SidebarComponent]
 })

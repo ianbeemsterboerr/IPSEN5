@@ -26,12 +26,8 @@ $app = new Laravel\Lumen\Application(
 
 $app->withFacades();
 
-<<<<<<< HEAD
 
-// $app->withEloquent();
-=======
 $app->withEloquent();
->>>>>>> dev
 
 /*
 |--------------------------------------------------------------------------

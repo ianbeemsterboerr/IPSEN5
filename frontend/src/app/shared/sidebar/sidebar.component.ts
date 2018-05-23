@@ -36,9 +36,7 @@ export class SidebarComponent implements OnInit {
   toggleState() {
     this.state = this.state === 'active' ? 'inactive' : 'active';
   }
-  goTournamentHome() {
-    this.router.navigate(['tournamentHome']);
-  }
+
   goHome() {
     this.router.navigate(['']);
   }
