@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../services/api.service';
+import { ApiService } from '../shared/api.service';
 import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-login',
@@ -19,31 +19,29 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     
   }
-
-  login(){
-    this.api.login(this.user_username, this.user_password).subscribe(
+  login(user_username:string, user_password:string){
+    this.api.post('/login', JSON.stringify({user_username, user_password})).subscribe(
       data =>{
         console.log('Received data (JWT): '+data['bearer']);
-        let result = data['bearer'];
+        console.log('ActiveUser from JSON: ' +data['activeUserId']);
+        let JSONWebToken = data['bearer'];
+        let activeUserId = data['activeUserId'];
+
         localStorage.removeItem('bearer');
-        localStorage.setItem('bearer', result);
+        localStorage.setItem('bearer', JSONWebToken);
+
+        localStorage.removeItem('activeUserId');
+        localStorage.setItem('activeUserId', activeUserId);
+
+        console.log('Active User from localstorage: '+JSON.parse(localStorage.getItem('activeUserId')));
       },
       err =>{console.log('error: '+err)},
       () =>{console.log('Succesvol ingelogd.')}
     );
-    /*
-    For testing purposes:
-    */
-    console.log('Localstorage bearer: '+localStorage.getItem('bearer'));
-    this.api.getUsers().subscribe(
-      data =>{
-        console.log(data);
-      }, err=>{
-        console.log(err);
-      }, ()=>{
-        console.log('Users succesvol geget.')
-      }
-    )
   }
 
+  logout(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('avtiveUserId');
+  }
 }

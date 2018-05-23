@@ -9,7 +9,7 @@
  Password<br>
   <input [(ngModel)] = "user_password" type="password" name="user_password" value="Password" >
   <br><br>
-  <button (click)="login()">Log in</button>
+  <button (click)="login(user_username, user_password)">Log in</button>
 <br>
 <a [routerLink]="['/forgotpassword']">Forgot password?</a>
 <br>
