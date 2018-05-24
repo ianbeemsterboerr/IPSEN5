@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {GameService} from "./games/game.service";
 import {Game} from "./games/game";
+import { ActiveaccountService } from './services/activeaccount.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent {
   title = 'app';
   activeGame: Game;
 
-  constructor (public gameservice: GameService) {
+  constructor (public gameservice: GameService, public activeAccountService: ActiveaccountService) {
     this.activeGame = gameservice.getActiveGame();
   }
 

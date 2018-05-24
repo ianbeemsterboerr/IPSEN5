@@ -20,6 +20,7 @@ import {FormsModule} from "@angular/forms";
 import {TournamentModule} from "./tournament/tournament.module";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ToastrModule} from "ngx-toastr";
+import { ActiveaccountService } from './services/activeaccount.service';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import {ToastrModule} from "ngx-toastr";
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
             multi: true
-        }
+        },
+        ActiveaccountService
     ],
     bootstrap: [AppComponent]
 })
