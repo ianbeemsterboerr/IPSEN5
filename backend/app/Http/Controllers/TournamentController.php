@@ -35,6 +35,15 @@ class TournamentController extends Controller
     }
 
 
+    public function getNames(Request $request){
+
+
+        $results = \DB::select("SELECT name FROM tournaments");
+
+        return json_encode($results);
+    }
+
+
     public function createTournament(Request $request) {
 
 
