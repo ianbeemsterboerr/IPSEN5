@@ -55,12 +55,10 @@ class TournamentController extends Controller
 
 
 
-//        $results = \DB::select("SELECT * FROM tournaments");
-
-        $servername = "127.0.0.1";
-        $username = "homestead";
-        $password = "secret";
-        $database = "homestead";
+        $servername = $_ENV['DB_HOST'];
+        $username = $_ENV['DB_USERNAME'];
+        $password = $_ENV['DB_PASSWORD'];
+        $database = $_ENV['DB_DATABASE'];
 
         $connection = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
 
