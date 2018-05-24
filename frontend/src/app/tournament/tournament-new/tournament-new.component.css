@@ -3,6 +3,11 @@ form{
   margin: 10px;
 }
 
+.form-group{
+  margin-right: 0px;
+}
+
+
 #description{
   height: 50px;
 }
