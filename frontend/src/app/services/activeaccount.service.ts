@@ -2,15 +2,34 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ActiveaccountService {
-  public isLoggedIn:boolean = false;
-  constructor() { }
+  public loggedIn:boolean = false;
 
+  constructor() {
+    this.checkLoggedIn();
+   }
+
+   public isLoggedIn(){
+    if(this.loggedIn){
+      return true;
+    }
+    else{
+      return false;
+    }
+   }
   public setLoggedIn(value:boolean){
-    this.isLoggedIn = value;
+    this.loggedIn = value;
+  }
+  public checkLoggedIn(){
+    if(!localStorage.getItem('activeUserId')){
+      this.loggedIn = false;
+    }
+    else{
+      this.loggedIn = true;
+    }
   }
 
   public getActiveUserId(){
-    if (!this.isLoggedIn)
+    if (!this.loggedIn)
     {
       return null;
     }
@@ -21,7 +40,7 @@ export class ActiveaccountService {
   }
 
   public getActiveUser(){
-    if (!this.isLoggedIn)
+    if (!this.loggedIn)
     {
       return null;
     }

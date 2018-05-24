@@ -19,7 +19,7 @@
     <app-sidebar></app-sidebar>
 
     <div id="content-container" class="w-100">
-        <div *ngIf="activeAccountService.isLoggedIn == false" id="login-warning">
+        <div *ngIf="activeAccountService.loggedIn == false" id="login-warning">
             Je bent momenteel niet ingelogd. <a routerLink="/login">Klik hier</a> om in te loggen.
         </div>
 
