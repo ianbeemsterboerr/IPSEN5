@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../shared/api.service';
 import {FormsModule} from '@angular/forms';
 import {ToastrService} from "ngx-toastr";
+import { Router } from '@angular/router';
+import { ActiveaccountService } from '../services/activeaccount.service';
 
 @Component({
     selector: 'app-login',
@@ -14,12 +16,12 @@ export class LoginComponent implements OnInit {
     user_username: string;
     user_password: string;
 
-    constructor(private api: ApiService, private toastr : ToastrService) {
+    constructor(private api: ApiService, private toastr : ToastrService, private router: Router, public activeAccountService:ActiveaccountService) {
 
     }
 
     ngOnInit() {
-
+       
     }
 
     login(user_username: string, user_password: string) {
@@ -37,6 +39,8 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('activeUserId', activeUserId);
 
                 console.log('Active User from localstorage: ' + JSON.parse(localStorage.getItem('activeUserId')));
+                this.activeAccountService.setLoggedIn(true);
+                this.router.navigate(['/']);
             },
             err => {
                 console.log('error: ' + JSON.stringify(err.error));
@@ -49,7 +53,8 @@ export class LoginComponent implements OnInit {
     }
 
     logout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('avtiveUserId');
+        localStorage.removeItem('bearer');
+        localStorage.removeItem('activeUserId');
+        localStorage.removeItem('activeUser');
     }
 }
