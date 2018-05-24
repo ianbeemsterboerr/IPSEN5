@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from "../../shared/api.service";
-import {Tournament} from "../../shared/model/tournament";
+import {Dummy_tournament} from "../../shared/model/dummy_tournament";
 import {Match} from "../../shared/model/match";
 import {Bracket} from "../../shared/model/bracket";
 
@@ -10,7 +10,7 @@ import {Bracket} from "../../shared/model/bracket";
   styleUrls: ['./elimination.component.css']
 })
 export class EliminationComponent implements OnInit {
-  tournament: Tournament;
+  tournament: Dummy_tournament;
 
   matchesY: number[] =[];
   matchesX: number[] =[];
@@ -32,7 +32,7 @@ export class EliminationComponent implements OnInit {
   constructor(private api: ApiService) { }
 
   ngOnInit() {
-    this.api.get<Tournament>('tournament/dummy', {teams: 20}).subscribe(
+    this.api.get<Dummy_tournament>('tournament/dummy', {teams: 200}).subscribe(
       next=> {
         this.onTournamentLoaded(next);
         this.tournament = next;
@@ -40,7 +40,7 @@ export class EliminationComponent implements OnInit {
     )
   }
 
-  onTournamentLoaded(tournament: Tournament) {
+  onTournamentLoaded(tournament: Dummy_tournament) {
     this.tournament_width = this.bracket_width * tournament.brackets.length;
 
     for (let bracket of tournament.brackets) {
@@ -54,7 +54,7 @@ export class EliminationComponent implements OnInit {
     }
   }
 
-  getNextBracket(bracket: Bracket, tournament: Tournament) {
+  getNextBracket(bracket: Bracket, tournament: Dummy_tournament) {
     const current_index = tournament.brackets.indexOf(bracket);
 
     if (current_index == tournament.brackets.length - 1) {
@@ -64,7 +64,7 @@ export class EliminationComponent implements OnInit {
     return tournament.brackets[current_index + 1];
   }
 
-  nextBracketBigger(bracket: Bracket, tournament: Tournament): boolean {
+  nextBracketBigger(bracket: Bracket, tournament: Dummy_tournament): boolean {
     const nextBracket = this.getNextBracket(bracket, tournament);
 
     if (nextBracket == null) {
@@ -84,11 +84,11 @@ export class EliminationComponent implements OnInit {
     return null;
   }
 
-  getMatchXPosition(match: Match, bracket: Bracket, tournament: Tournament) {
+  getMatchXPosition(match: Match, bracket: Bracket, tournament: Dummy_tournament) {
     return tournament.brackets.indexOf(bracket) * this.bracket_width;
   }
 
-  getMatchYPosition(match: Match, bracket: Bracket, tournament: Tournament) {
+  getMatchYPosition(match: Match, bracket: Bracket, tournament: Dummy_tournament) {
     if (!this.nextBracketBigger(bracket, tournament)) {
       const availableSpace = this.tournament_height - bracket.matches.length * this.match_height;
       const spacing = availableSpace / bracket.matches.length;

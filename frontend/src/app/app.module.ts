@@ -29,8 +29,6 @@ import { ActiveaccountService } from './services/activeaccount.service';
         LoginComponent,
         CreateaccountComponent,
         ForgotpasswordComponent,
-        TournamentHomeComponent,
-        TournamentNewComponent
     ],
     imports: [
         BrowserModule,

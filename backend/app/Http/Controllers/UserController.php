@@ -29,12 +29,14 @@ class UserController extends Controller
 
         $user = User::where('user_username', $user_username)->first();
 
-
-        if ($user === null) {
-            return response()->json(array(
-                'status' => 'error',
-                'message' => 'Unauthorized, User doesnt exist'
-            ), 401);
+        if (is_null($user)) {
+            return response()->json(
+                array(
+                    'status' => 'error',
+                    'message' => 'Unauthorized, User doesnt exist'
+                ),
+                401
+            );
         }
 
         if ($user_password == $user->user_password) {
