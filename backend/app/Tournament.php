@@ -9,8 +9,20 @@
 namespace App;
 
 
-class Tournament
+use Illuminate\Database\Eloquent\Model;
+
+class Tournament extends Model
 {
+    protected $table = 'tournaments';
+    protected $fillable = [
+        'organizer_userID', 'gamename', 'tournament_typename', 'signup_typename', 'name', 'description', 'max_team_size', 'signup_start', 'signup_end', 'tournament_start'
+    ];
+
+    public $timestamps = true;
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
+
+
     public $matchCounter = 0;
 
 
@@ -19,11 +31,7 @@ class Tournament
 
     private $placeholderTeam;
 
-    public function __construct($teams)
-    {
-        $this->placeholderTeam = new Team(null, '?');
-
-        $this->teams = $teams;
+    public function start() {
         shuffle($this->teams);
 
         $this->generatePlacementMatches($this->brackets, $this->teams);

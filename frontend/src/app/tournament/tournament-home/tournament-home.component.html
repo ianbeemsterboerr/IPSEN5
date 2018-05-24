@@ -2,7 +2,7 @@
 
 <div id="buttons">
     <button class="btn btn-success" [routerLink]="['/tournaments/new']">
-        <fa style="color:#ccc;" name="add"></fa>
+        <fa style="color:#fff;" name="plus"></fa>
         Toernooi aanmaken
     </button>
 </div>
@@ -32,18 +32,19 @@
             <tr>
                 <th>X</th>
                 <th>Naam</th>
-                <th>Datum</th>
-                <th>Deelnemers</th>
+                <th>Type</th>
+                <th>Signup einde</th>
                 <th>Acties</th>
             </tr>
             </thead>
 
             <tbody>
-            <tr *ngFor="let tournament of [{name: 'TestA', date: '24/5/18', participants: 10}, {name: 'TestB', date: '24/5/18', participants: 200}]">
+            <tr *ngFor="let tournament of tournaments">
                 <td><input type="checkbox"></td>
                 <td>{{tournament.name}}</td>
-                <td>{{tournament.date}}</td>
-                <td>{{tournament.participants}}</td>
+                <td>{{tournament.tournament_typename}}</td>
+                <td>{{tournament.signup_end}}</td>
+                <td></td>
             </tr>
             </tbody>
         </table>

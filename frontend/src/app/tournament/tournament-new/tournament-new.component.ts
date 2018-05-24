@@ -4,7 +4,6 @@ import {HttpParams} from '@angular/common/http';
 import {Params, Router} from '@angular/router';
 import {ApiService} from '../../shared/api.service';
 import {GameService} from '../../games/game.service';
-import {Tournament} from '../../shared/model/tournament';
 
 @Component({
   selector: 'app-tournament-new',
@@ -30,6 +29,7 @@ export class TournamentNewComponent implements OnInit {
 
     this.submitDisabled = !valid;
   }
+
   submitForm() {
     const values = document.getElementById('form');
     console.log('Submitting tournament: ' + values[0].value);
@@ -50,7 +50,7 @@ export class TournamentNewComponent implements OnInit {
     this.api.post('tournament/new', params).subscribe(res => {
       console.log(res);
     });
-    this.router.navigate(['tournamentHome']);
+    this.router.navigate(['/tournaments']);
 
   }
 

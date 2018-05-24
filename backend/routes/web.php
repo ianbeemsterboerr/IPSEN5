@@ -52,6 +52,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('getusersunsafe', 'UserController@getAll');
     });
     $router->group(['prefix' => 'tournament'], function () use ($router) {
+        $router->get('all', 'TournamentController@getAll');
         $router->get('dummy', 'TournamentController@createDummyTournament');
         $router->post('new', 'TournamentController@createTournament');
         $router->get('names', 'TournamentController@getNames');

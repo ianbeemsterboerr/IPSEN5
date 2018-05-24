@@ -29,7 +29,9 @@ class TournamentController extends Controller
             array_push($teams, new Team(null, 'Team ' . $i));
         }
 
-        $tournament = new Tournament($teams);
+        $tournament = new Tournament();
+        $tournament->teams = $teams;
+        $tournament->start();
 
         return $tournament->serialize();
     }
@@ -41,6 +43,10 @@ class TournamentController extends Controller
         $results = \DB::select("SELECT name FROM tournaments");
 
         return json_encode($results);
+    }
+
+    public function getAll() {
+        return Tournament::all();
     }
 
 
@@ -91,7 +97,7 @@ class TournamentController extends Controller
 
         $statement->execute();
 
-        return json_encode("Tournament submitted.");
+        return json_encode("Dummy_tournament submitted.");
 
     }
 
