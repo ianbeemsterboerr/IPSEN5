@@ -1,5 +1,52 @@
-<p>
-  tournament-home works!
-</p>
+<h1 class="text-light">Tournaments</h1>
 
-<p (click)="goTournamentNew()"> Toernooi aanmaken</p>
+<div id="buttons">
+    <button class="btn btn-success" [routerLink]="['/tournaments/new']">
+        <fa style="color:#ccc;" name="add"></fa>
+        Toernooi aanmaken
+    </button>
+</div>
+
+<div id="tournament-list" class="mx-auto w-75 rounded p-1">
+    <form class="p-1">
+        <h3>Filter</h3>
+        <div class="row">
+            <div class="col">
+                <label for="typeSelect" class="">Game: </label>
+                <select id="typeSelect" class="form-control">
+                    <option *ngFor="let game of getGames()">{{game.title}}</option>
+                </select>
+            </div>
+
+            <div class="col">
+                <label for="dateField" class="">After: </label>
+                <input id="dateField" type="date" class="form-control"/>
+            </div>
+        </div>
+    </form>
+
+    <!--<h4>Tournaments</h4>-->
+    <div class="p-1">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>X</th>
+                <th>Naam</th>
+                <th>Datum</th>
+                <th>Deelnemers</th>
+                <th>Acties</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr *ngFor="let tournament of [{name: 'TestA', date: '24/5/18', participants: 10}, {name: 'TestB', date: '24/5/18', participants: 200}]">
+                <td><input type="checkbox"></td>
+                <td>{{tournament.name}}</td>
+                <td>{{tournament.date}}</td>
+                <td>{{tournament.participants}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

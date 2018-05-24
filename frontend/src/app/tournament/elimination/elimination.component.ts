@@ -32,7 +32,7 @@ export class EliminationComponent implements OnInit {
   constructor(private api: ApiService) { }
 
   ngOnInit() {
-    this.api.get<Tournament>('tournament/dummy', {teams: 20}).subscribe(
+    this.api.get<Tournament>('tournament/dummy', {teams: 200}).subscribe(
       next=> {
         this.onTournamentLoaded(next);
         this.tournament = next;

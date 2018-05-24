@@ -28,8 +28,6 @@ import {ToastrModule} from "ngx-toastr";
         LoginComponent,
         CreateaccountComponent,
         ForgotpasswordComponent,
-        TournamentHomeComponent,
-        TournamentNewComponent
     ],
     imports: [
         BrowserModule,

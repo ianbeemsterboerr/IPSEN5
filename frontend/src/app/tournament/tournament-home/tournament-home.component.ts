@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {GameService} from "../../games/game.service";
+import {Game} from "../../games/game";
 @Component({
   selector: 'app-tournament-home',
   templateUrl: './tournament-home.component.html',
@@ -7,13 +9,13 @@ import { Router } from '@angular/router';
 })
 export class TournamentHomeComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private gameService : GameService) { }
 
   ngOnInit() {
   }
 
-  goTournamentNew() {
-    this.router.navigate(['tournamentNew']);
+  getGames(): Game[] {
+    return this.gameService.availableGames;
   }
 
 }
