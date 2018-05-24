@@ -28,14 +28,15 @@ export class MatchResultComponent implements OnInit {
   sendResults(){
     let results = new HttpParams();
     results = results.append('TournamentId', '0');
-    results = results.append('Team1Name', 'Bart');
+    results = results.append('MatchId', '0')
+    results = results.append('Team1Id', 'Bart');
     results = results.append('Team1score','3');
-    results = results.append('Team2Name', 'Nart');
+    results = results.append('Team2Id', 'Nart');
     results = results.append('Team2Score','5');
 
    console.log(results);
 
-    this.http.post('http://localhost:8080/results', results, {responseType: 'text'}).subscribe(res => {
+    this.http.post('http://localhost:8000/results', results, {responseType: 'text'}).subscribe(res => {
       
     });
   }
