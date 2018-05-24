@@ -1,0 +1,26 @@
+<div class="col">
+    <div class="mx-auto w-50">
+        <form class="rounded p-3">
+            <h2>Login</h2>
+
+            <div class="form-group">
+                <label for="usernameInput" class="">Username</label>
+                <input id="usernameInput" class="form-control" [(ngModel)]="user_username" type="text" name="user_username" value="Username">
+            </div>
+
+            <div class="form-group ">
+                <label for="passwordInput" class="">Password</label>
+                <input id="passwordInput" class="form-control" [(ngModel)]="user_password" type="password" name="user_password" value="Password">
+            </div>
+
+            <button class="btn btn-primary" (click)="login(user_username, user_password)">Log in</button>
+
+            <br>
+            <a [routerLink]="['/forgotpassword']">Forgot password?</a>
+            <br>
+            <a [routerLink]="['/createaccount']">No account yet? Register here!</a>
+
+        </form>
+    </div>
+
+</div>

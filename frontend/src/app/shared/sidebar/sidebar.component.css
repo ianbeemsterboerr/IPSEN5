@@ -17,11 +17,11 @@ nav {
   width: 100%;
 }
 
-nav > hr {
+hr {
   border-top-color: #ccc;
 }
 
-nav > ul {
+ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -31,23 +31,31 @@ nav > ul {
   line-height: 2rem;
 }
 
-nav > ul > li:not(:last-child) {
+li:not(:last-child) {
   border-bottom: 1px solid #888;
 }
 
 .navItem {
   height: auto;
+  color: #FFF;
 }
 
 .navItem > a {
   display: block;
   white-space: nowrap;
-  padding: 0 1rem;
-  font-weight: bold;
+  padding: 0 .5rem;
+  text-decoration: none;
+  color: inherit;
+  /*font-weight: bold;*/
+}
+
+.navItem:hover {
+  color: #ccc;
+  background-color: #222;
 }
 
 #navClose {
-  padding-left: 1rem;
+  padding: 0 .5rem;
 }
 
 .item-name {
