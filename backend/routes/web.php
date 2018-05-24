@@ -43,6 +43,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
      * Routes you don't need to be logged on for.
      */
     $router->post('/login', 'UserController@login');
+    $router->post('/users/register', 'UserController@register');
 
 
     /**

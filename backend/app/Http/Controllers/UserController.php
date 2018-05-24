@@ -62,4 +62,8 @@ class UserController extends Controller
     {
         return User::where('user_id', $id)->first();
     }
+
+    public function register(Request $request){
+        return 'Ontvangen';
+    }
 }
