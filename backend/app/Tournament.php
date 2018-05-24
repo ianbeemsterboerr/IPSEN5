@@ -31,15 +31,17 @@ class Tournament extends Model
 
     private $placeholderTeam;
 
-    public function start() {
+    public function start()
+    {
         shuffle($this->teams);
 
         $this->generatePlacementMatches($this->brackets, $this->teams);
-        $this->connectMatches();
+        $this->connectMatches(); //todo: sibling on client
         $this->generateMatches($this->brackets);
     }
 
-    private function generateMatches(&$brackets) {
+    private function generateMatches(&$brackets)
+    {
         $teamCount = $this->next_pow(count($this->teams)) / 2;
         $bracketCount = log($teamCount, 2);
 
@@ -62,35 +64,11 @@ class Tournament extends Model
         }
     }
 
-    private function generatePlacementMatches(&$brackets, $teams) {
+    private function generatePlacementMatches(&$brackets, $teams)
+    {
         $teamCount = count($teams);
 
-        if (!$this->is_pow($teamCount)) {
-            // Placement matches are required
-            $optimalTeamCount = $this->next_pow($teamCount) / 2;
-            $optimalMatchCount = $optimalTeamCount / 2;
-            $difference = $teamCount - $optimalTeamCount;
-
-            // amount of matches with 2 teams playing against each other
-            $completeMatchCount     = $optimalMatchCount - $difference;
-
-            // amount of matches with one undetermined opponent
-            $incompleteMatchCount   = min($optimalMatchCount - $completeMatchCount, $optimalMatchCount);
-
-            // make bracket and add x complete matches
-            $bracket = new Bracket($this->makeXMatches($teams, $completeMatchCount));
-
-            // Add the incomplete matches
-            for ($i = 0; $i < $incompleteMatchCount; $i++) {
-                $match = new Match($this->takeXTeams($teams, 1), $this);
-                array_unshift($match->teams, $this->placeholderTeam);
-                array_push($bracket->matches, $match);
-            }
-
-            $this->generatePlacementMatches($brackets, $teams);
-
-            array_push($brackets, $bracket);
-        } else {
+        if ($this->is_pow($teamCount)) {
             // No placement matches required
 
             $bracket = new Bracket([]);
@@ -99,10 +77,38 @@ class Tournament extends Model
             }
 
             array_push($this->brackets, $bracket);
+
+            return;
         }
+
+        // Placement matches are required
+        $optimalTeamCount = $this->next_pow($teamCount) / 2;
+        $optimalMatchCount = $optimalTeamCount / 2;
+        $difference = $teamCount - $optimalTeamCount;
+
+        // amount of matches with 2 teams playing against each other
+        $completeMatchCount = $optimalMatchCount - $difference;
+
+        // amount of matches with one undetermined opponent
+        $incompleteMatchCount = min($optimalMatchCount - $completeMatchCount, $optimalMatchCount);
+
+        // make bracket and add x complete matches
+        $bracket = new Bracket($this->makeXMatches($teams, $completeMatchCount));
+
+        // Add the incomplete matches
+        for ($i = 0; $i < $incompleteMatchCount; $i++) {
+            $match = new Match($this->takeXTeams($teams, 1), $this);
+            array_unshift($match->teams, $this->placeholderTeam);
+            array_push($bracket->matches, $match);
+        }
+
+        $this->generatePlacementMatches($brackets, $teams);
+
+        array_push($brackets, $bracket);
     }
 
-    private function placeholderCount(Match $match) {
+    private function placeholderCount(Match $match)
+    {
         $count = 0;
 
         foreach ($match->teams as $team) {
@@ -114,7 +120,8 @@ class Tournament extends Model
         return $count;
     }
 
-    private function connectMatches() {
+    private function connectMatches()
+    {
         /* @var $bracket Bracket */
         foreach ($this->brackets as $key => $bracket) {
             // No need to connect the last match, the fact that it has no connection makes it detectable as last match
@@ -140,7 +147,8 @@ class Tournament extends Model
         }
     }
 
-    private function takeXTeams(&$teams, $amount) {
+    private function takeXTeams(&$teams, $amount)
+    {
         $takenTeams = [];
 
         for ($i = 0; $i < $amount; $i++) {
@@ -150,7 +158,8 @@ class Tournament extends Model
         return $takenTeams;
     }
 
-    private function makeXMatches(&$teams, $amount) {
+    private function makeXMatches(&$teams, $amount)
+    {
         $matchTeams = $this->takeXTeams($teams, $amount * 2);
 
         $matches = [];
@@ -164,19 +173,20 @@ class Tournament extends Model
 
     private function next_pow($number)
     {
-        if($number < 2) return 1;
-        for($i = 0 ; $number > 1 ; $i++)
-        {
+        if ($number < 2) return 1;
+        for ($i = 0; $number > 1; $i++) {
             $number = $number >> 1;
         }
-        return 1<<($i+1);
+        return 1 << ($i + 1);
     }
 
-    private function is_pow($number) {
+    private function is_pow($number)
+    {
         return ($number & ($number - 1)) == 0;
     }
 
-    public function getMatchID() {
+    public function getMatchID()
+    {
         return ++$this->matchCounter;
     }
 
