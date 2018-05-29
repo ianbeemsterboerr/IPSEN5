@@ -27,8 +27,9 @@ class UserController extends Controller
         $user_username = $request->json('user_username');
         $user_password = $request->json('user_password');
 
-        $user = User::where('user_username', $user_username)->first();
+        $userFromDatabase = User::where('user_username', $user_username)->first();
 
+<<<<<<< HEAD
         if (is_null($user)) {
             return response()->json(
                 array(
@@ -37,21 +38,30 @@ class UserController extends Controller
                 ),
                 401
             );
+=======
+
+        if ($userFromDatabase === null) {
+            return response()->json(array(
+                'status' => 'error',
+                'message' => 'Unauthorized, User doesnt exist'
+            ), 401);
+>>>>>>> login
         }
 
-        if ($user_password == $user->user_password) {
+        //$hashedPassword = app('hash')->make($plainPassword);
+        if (password_verify($user_password, $userFromDatabase->user_password)) {
             $key = "JWT";
             $token = array(
                 "iss" => "compufifi.test",
                 "aud" => "angularClient",
-                "isadmin" => $user->user_isadmin,
-                "user_username" => $user->user_username
+                "isadmin" => $userFromDatabase->user_isadmin,
+                "user_username" => $userFromDatabase->user_username
             );
             $jwt = JWT::encode($token, $key, 'HS256');
             //TO DO: FIX BEARER SYSTEM
             $jwtstring = array(
                 "bearer" => $jwt,
-                "activeUserId" => $user->user_id
+                "activeUserId" => $userFromDatabase->user_id
             );
             return json_encode($jwtstring);
             // return json_encode(JWT::decode($jwt, $key, array('HS256')));
