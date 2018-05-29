@@ -1,46 +1,46 @@
 <div id="tournament_inputs">
-  <form id="form">
-    <div class="row">
-      <label for="name">Tournament name:</label>
-      <input type="text" id="name" name="name" (change)="updateButton()"><br>
+  <form id="form" class="rounded p-3 form-horizontal">
+    <div class="form-group row">
+      <label for="name" class="col-sm-2 col-form-label">Tournament name:</label>
+      <input type="text" id="name" name="name" class="form-control col-sm-10" (change)="updateButton()">
     </div>
-    <div class="row">
-      <label for="date">Date:</label>
-      <input type="date" id="date" name="date" (change)="updateButton()"><br>
+    <div class="form-group row">
+      <label for="date" class="col-sm-2 col-form-label">Date:</label>
+      <input type="date" id="date" name="date" class="form-control col-sm-10" (change)="updateButton()"><br>
     </div>
-    <div class="row">
-      <label for="type">Type:</label>
-      <select id="type" (change)="updateButton()">
+    <div class="form-group row">
+      <label for="type" class="col-sm-2 col-form-label">Type:</label>
+      <select id="type" class="form-control col-sm-10" (change)="updateButton()">
         <option value="Single elimination"> Single elimination</option>
         <option value="Double elimination"> Double elimination</option>
         <option value="Poules"> Poules</option>
       </select><br>
     </div>
-    <div class="row">
-      <label for="teamSize">Team size:</label>
-      <input type="number" id="teamSize" name="teamSize" (change)="updateButton()"><br>
+    <div class="form-group row">
+      <label for="teamSize" class="col-sm-2 col-form-label">Team size:</label>
+      <input type="number" id="teamSize" name="teamSize" class="form-control col-sm-10" (change)="updateButton()"><br>
     </div>
     <div id="signupOptions">
-      <div class="row">
-        <label for="signupType">Signup type:</label>
-        <select id="signupType" (change)="updateButton()">
+      <div class="form-group row">
+        <label for="signupType" class="col-sm-2 col-form-label">Signup type:</label>
+        <select id="signupType" class="form-control col-sm-10" (change)="updateButton()">
           <option value="Invite only"> Invite only</option>
           <option value="User"> User</option>
           <option value="Guest"> Guest</option>
         </select><br>
       </div>
-      <div class="row">
-        <label for="signupStart">Signup start:</label>
-        <input type="date" id="signupStart" name="signupStart" (change)="updateButton()"><br>
+      <div class="form-group row">
+        <label for="signupStart" class="col-sm-2 col-form-label">Signup start:</label>
+        <input type="date" id="signupStart" name="signupStart" class="form-control col-sm-10" (change)="updateButton()"><br>
       </div>
-      <div class="row">
-        <label for="signupEnd">Signup end:</label>
-        <input type="date" id=signupEnd name="signupEnd" (change)="updateButton()"><br>
+      <div class="form-group row">
+        <label for="signupEnd" class="col-sm-2 col-form-label">Signup end:</label>
+        <input type="date" id=signupEnd name="signupEnd" class="form-control col-sm-10" (change)="updateButton()"><br>
       </div>
     </div>
-    <div class="row">
-      <label for="description">Description:</label>
-      <input type="text" name="description" id="description" ><br>
+    <div class="form-group row">
+      <label for="description" class="col-sm-2 col-form-label">Description:</label>
+      <input type="text" name="description" id="description" class="form-control col-sm-10" ><br>
     </div>
 
     <input type="button" [disabled]="submitDisabled" id="submit" name="submit" value="Submit" (click)="submitForm()"><br>

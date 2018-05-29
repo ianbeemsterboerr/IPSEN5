@@ -29,7 +29,9 @@ class TournamentController extends Controller
             array_push($teams, new Team(null, 'Team ' . $i));
         }
 
-        $tournament = new Tournament($teams);
+        $tournament = new Tournament();
+        $tournament->teams = $teams;
+        $tournament->start();
 
         return $tournament->serialize();
     }
@@ -38,9 +40,13 @@ class TournamentController extends Controller
     public function getNames(Request $request){
 
 
-        $results = \DB::select("SELECT * FROM tournaments");
+        $results = \DB::select("SELECT name FROM tournaments");
 
         return json_encode($results);
+    }
+
+    public function getAll() {
+        return Tournament::all();
     }
 
 
@@ -49,12 +55,10 @@ class TournamentController extends Controller
 
 
 
-//        $results = \DB::select("SELECT * FROM tournaments");
-
-        $servername = "127.0.0.1";
-        $username = "homestead";
-        $password = "secret";
-        $database = "homestead";
+        $servername = $_ENV['DB_HOST'];
+        $username = $_ENV['DB_USERNAME'];
+        $password = $_ENV['DB_PASSWORD'];
+        $database = $_ENV['DB_DATABASE'];
 
         $connection = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
 
@@ -91,7 +95,7 @@ class TournamentController extends Controller
 
         $statement->execute();
 
-        return json_encode("Tournament submitted.");
+        return json_encode("Dummy_tournament submitted.");
 
     }
 

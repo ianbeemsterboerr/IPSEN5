@@ -1,3 +1,24 @@
-p{
-  color: #cccccc;
+* {
+  /*color: #fff;*/
+}
+
+form {
+    border: solid 1px #222;
+}
+
+#tournament-list {
+  background-color: #eee;
+}
+
+#tournament-list > *:not(:last-child) {
+    margin-bottom: 50px;
+}
+
+h3 {
+  text-align: center;
+}
+
+#buttons {
+    text-align: right;
+    margin: 10px 0;
 }

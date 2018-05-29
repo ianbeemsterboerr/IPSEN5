@@ -9,21 +9,10 @@
 namespace App;
 
 
-class Team
+use Illuminate\Database\Eloquent\Model;
+
+class Team extends Model
 {
-    public $players;
-    public $name;
-
-    /**
-     * Team constructor.
-     * @param $players
-     * @param $name
-     */
-    public function __construct($players, $name)
-    {
-        $this->players = $players;
-        $this->name = $name;
-    }
-
-
+    protected $fillable = ['leader_userID', 'size', 'max_size'];
+    protected $table = 'Team';
 }
