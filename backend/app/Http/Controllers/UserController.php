@@ -14,13 +14,16 @@ class UserController extends Controller
      * Retrieve the user for the given ID.
      *
      * @param  int $id
-     * @return Response
+     * @return User[]|\Illuminate\Database\Eloquent\Collection
      */
     public function getAll(Request $request)
     {
         return User::all();
     }
 
+    public function getUserNames() {
+        return User::all(['user_username']);
+    }
 
     public function login(Request $request)
     {
