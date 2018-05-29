@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tournament extends Model
 {
-    protected $table = 'tournaments';
+    protected $table = 'tournament';
     protected $fillable = [
         'organizer_userID', 'gamename', 'tournament_typename', 'signup_typename', 'name', 'description', 'max_team_size', 'signup_start', 'signup_end', 'tournament_start'
     ];

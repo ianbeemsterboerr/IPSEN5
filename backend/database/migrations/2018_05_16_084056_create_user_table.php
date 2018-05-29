@@ -29,6 +29,9 @@ class CreateUserTable extends Migration
             $table->timestamps();
             $table->string('user_webtoken');
             $table->boolean('user_isadmin');
+
+            $table->unique("user_username");
+            $table->unique("user_email");
         });
     }
 
