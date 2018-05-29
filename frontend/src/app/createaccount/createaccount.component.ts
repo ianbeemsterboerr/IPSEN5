@@ -15,13 +15,15 @@ export class CreateaccountComponent implements OnInit {
   private user_first_name:string;
   private user_last_name:string;
 
-  private user:User;
+  public user:User;
   
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService) {
+    this.user = new User(null, null, null, null, null, null, null, null)
+   }
 
-  register(user_username:string, user_password:string,user_password_repeat:string, user_email:string,user_first_name:string, user_last_name:string){
-    if(user_password.length > 12){    //TODO: better client-side validation.
-      this.user = new User(user_username, user_first_name, user_last_name, user_password, user_email, null, null, false);
+  register(){
+    if(this.user.password.length > 0){    //TODO: better client-side validation.
+      //this.user = new User(user_username, user_first_name, user_last_name, user_password, user_email, null, null, false);
       this.api.post('users/register', this.user).subscribe(
         data=>{
           console.log(data);

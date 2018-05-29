@@ -17,7 +17,7 @@ class UsersSeed extends Seeder
         DB::table('user')->insert([
             'user_username' => str_random(10),
             'user_email' => str_random(10).'@gmail.com',
-            'user_password' => str_random(255),
+            'user_password' => password_hash('welkom123', PASSWORD_BCRYPT),
             'user_first_name' => str_random(10),
             'user_last_name' => str_random(14),
             'user_description' => str_random(40),
