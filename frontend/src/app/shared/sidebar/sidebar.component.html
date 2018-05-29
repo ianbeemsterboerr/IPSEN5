@@ -7,7 +7,7 @@
 
     <ul>
         <li class="navItem">
-            <a href="#">
+            <a [routerLink]="['/']">
                 <fa name="home" style="color: dodgerblue;"></fa>
                 <div class="item-name" [@expanded]="state">Home</div>
             </a>
@@ -19,7 +19,7 @@
             </a>
         </li>
         <li class="navItem">
-            <a href="#">
+            <a>
                 <fa name="trophy" style="color: yellow;"></fa>
                 <div class="item-name" [@expanded]="state">Hall Of Fame</div>
             </a>

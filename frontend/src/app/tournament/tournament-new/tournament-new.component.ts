@@ -45,7 +45,9 @@ export class TournamentNewComponent implements OnInit {
     params = params.append('signupEnd', values[6].value);
     params = params.append('description', values[7].value);
     params = params.append('game', this.gameService.getActiveGame().title);
-    params = params.append('organizer_ID', '1'); // fix with active user ID
+    params = params.append('organizer_ID', localStorage.getItem('activeUserId'));
+
+
 
     this.api.post('tournament/new', params).subscribe(res => {
       console.log(res);

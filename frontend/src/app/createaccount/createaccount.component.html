@@ -1,3 +1,40 @@
-<p>
-  createaccount works!
-</p>
+<div class="col">
+  <div class="mx-auto w-50">
+    <form class="rounded p-3">
+      <h2>Create account</h2>
+
+      <div class="form-group">
+        <label for="usernameInput" class="">Username</label>
+        <input id="usernameInput" class="form-control" [(ngModel)]="user.username" type="text" name="user_username" value="Username">
+      </div>
+
+      <div class="form-group ">
+        <label for="passwordInput" class="">Password</label>
+        <input id="password" class="form-control" [(ngModel)]="user.password" type="password" name="password" value="Password">
+      </div>
+
+      <div class="form-group ">
+        <label for="RepeatPasswordInput" class="">Repeat password</label>
+        <input id="repeatPassword" class="form-control" [(ngModel)]="password_repeat" type="password" name="repeatPassword"
+          value="Password">
+      </div>
+
+      <div class="form-group ">
+        <label for="firstNameInput" class="">First name</label>
+        <input id="firstNameInput" class="form-control" [(ngModel)]="user.first_name" type="text" name="firstNameInput" value="First name">
+      </div>
+
+      <div class="form-group ">
+        <label for="LastNameInput" class="">Last name</label>
+        <input id="LastNameInput" class="form-control" [(ngModel)]="user.last_name" type="text" name="LastNameInput" value="Last name">
+      </div>
+
+      <div class="form-group ">
+        <label for="EmailInput" class="">E-mail</label>
+        <input id="EmailInput" class="form-control" [(ngModel)]="user.email" type="text" name="EmailInput" value="Email">
+      </div>
+
+      <button class="btn btn-primary" (click)="register()">Register</button>
+    </form>
+  </div>
+</div>

@@ -56,5 +56,6 @@ export class LoginComponent implements OnInit {
         localStorage.removeItem('bearer');
         localStorage.removeItem('activeUserId');
         localStorage.removeItem('activeUser');
+
     }
 }

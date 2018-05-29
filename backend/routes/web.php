@@ -43,6 +43,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
      * Routes you don't need to be logged on for.
      */
     $router->post('/login', 'UserController@login');
+    $router->post('/users/register', 'UserController@register');
 
 
     /**
@@ -54,6 +55,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'tournament'], function () use ($router) {
         $router->get('dummy', 'TournamentController@createDummyTournament');
         $router->post('new', 'TournamentController@createTournament');
+        $router->get('names', 'TournamentController@getNames');
     });
 });
 

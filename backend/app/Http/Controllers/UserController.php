@@ -57,7 +57,7 @@ class UserController extends Controller
         } else {
             return response()->json(array(
                 'status' => 'error',
-                'message' => password_hash('welkom123', PASSWORD_BCRYPT)
+                'message' => 'Unauthorized, Wrong password'
             ), 401);
         }
     }
@@ -65,5 +65,18 @@ class UserController extends Controller
     public function get(int $id)
     {
         return User::where('user_id', $id)->first();
+    }
+
+    public function register(Request $request){
+        
+        $newUser = new User;
+        $newUser->user_username = $request->json('username');
+        $newUser->user_first_name = $request->json('first_name');
+        $newUser->user_last_name = $request->json('last_name');
+        $newUser->user_password = password_hash($request->json('password'), PASSWORD_BCRYPT);
+        $newUser->user_email = $request->json('email');
+        $newUser->save();
+        
+        return $newUser;
     }
 }
