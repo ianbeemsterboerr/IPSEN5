@@ -29,8 +29,7 @@ class UserController extends Controller
 
         $userFromDatabase = User::where('user_username', $user_username)->first();
 
-<<<<<<< HEAD
-        if (is_null($user)) {
+        if (is_null($userFromDatabase)) {
             return response()->json(
                 array(
                     'status' => 'error',
@@ -38,14 +37,6 @@ class UserController extends Controller
                 ),
                 401
             );
-=======
-
-        if ($userFromDatabase === null) {
-            return response()->json(array(
-                'status' => 'error',
-                'message' => 'Unauthorized, User doesnt exist'
-            ), 401);
->>>>>>> login
         }
 
         //$hashedPassword = app('hash')->make($plainPassword);
