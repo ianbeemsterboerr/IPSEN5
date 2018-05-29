@@ -4,6 +4,9 @@ import {HttpParams} from '@angular/common/http';
 import {Params, Router} from '@angular/router';
 import {ApiService} from '../../shared/api.service';
 import {GameService} from '../../games/game.service';
+import {Tournament} from '../../shared/model/tournament';
+import {FormsModule, Validators} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-tournament-new',
@@ -15,6 +18,9 @@ export class TournamentNewComponent implements OnInit {
   constructor(private api: ApiService, private gameService: GameService, private router: Router) { }
 
   submitDisabled = true;
+  newTournament = new Tournament(0, 0, "", "", "",
+    "", "", null, null, null, null,
+    null, null);
 
   ngOnInit() {
   }

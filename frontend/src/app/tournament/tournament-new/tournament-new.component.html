@@ -1,12 +1,24 @@
 <div id="tournament_inputs">
-  <form id="form" class="rounded p-3 form-horizontal">
+  <form id="form" class="rounded p-3 form-horizontal" ngNativeValidate>
     <div class="form-group row">
       <label for="name" class="col-sm-2 col-form-label">Tournament name:</label>
-      <input type="text" id="name" name="name" class="form-control col-sm-10" (change)="updateButton()">
+      <input type="text" id="name" name="name" class="form-control col-sm-10" required
+           [(ngModel)]="newTournament.name" #name="ngModel" (change)="updateButton()">
+      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger  col-sm-10 offset-2">
+        <div *ngIf="name?.errors.required">
+          Name is required.
+        </div>
+      </div>
     </div>
     <div class="form-group row">
       <label for="date" class="col-sm-2 col-form-label">Date:</label>
-      <input type="date" id="date" name="date" class="form-control col-sm-10" (change)="updateButton()"><br>
+      <input type="date" id="date" name="date" class="form-control col-sm-10" required
+             [(ngModel)]="newTournament.tournament_Start" #date="ngModel" (change)="updateButton()"><br>
+      <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger  col-sm-10 offset-2">
+        <div *ngIf="date?.errors.required">
+          Date is required.
+        </div>
+      </div>
     </div>
     <div class="form-group row">
       <label for="type" class="col-sm-2 col-form-label">Type:</label>
@@ -18,7 +30,16 @@
     </div>
     <div class="form-group row">
       <label for="teamSize" class="col-sm-2 col-form-label">Team size:</label>
-      <input type="number" id="teamSize" name="teamSize" class="form-control col-sm-10" (change)="updateButton()"><br>
+      <input type="number" id="teamSize" name="teamSize" class="form-control col-sm-10" required [min]="5" appTeamsize="32"
+             [(ngModel)]="newTournament.max_team_size" #teamSize="ngModel" (change)="updateButton()"><br>
+      <div *ngIf="teamSize.invalid && (teamSize.dirty || teamSize.touched)" class="alert alert-danger  col-sm-10 offset-2">
+        <div *ngIf="teamSize?.errors.required">
+          Team size is required.
+        </div>
+        <div *ngIf="teamSize?.errors.teamsize">
+          Team size can't be lower than 1.
+        </div>
+      </div>
     </div>
     <div id="signupOptions">
       <div class="form-group row">
@@ -31,11 +52,23 @@
       </div>
       <div class="form-group row">
         <label for="signupStart" class="col-sm-2 col-form-label">Signup start:</label>
-        <input type="date" id="signupStart" name="signupStart" class="form-control col-sm-10" (change)="updateButton()"><br>
+        <input type="date" id="signupStart" name="signupStart" class="form-control col-sm-10" required
+               [(ngModel)]="newTournament.signup_start" #signupStart="ngModel" (change)="updateButton()"><br>
+        <div *ngIf="signupStart.invalid && (signupStart.dirty || signupStart.touched)" class="alert alert-danger  col-sm-10 offset-2">
+          <div *ngIf="signupStart?.errors.required">
+            Signup Start is required.
+          </div>
+        </div>
       </div>
       <div class="form-group row">
         <label for="signupEnd" class="col-sm-2 col-form-label">Signup end:</label>
-        <input type="date" id=signupEnd name="signupEnd" class="form-control col-sm-10" (change)="updateButton()"><br>
+        <input type="date" id=signupEnd name="signupEnd" class="form-control col-sm-10" required
+               [(ngModel)]="newTournament.signup_end" #signupEnd="ngModel" (change)="updateButton()"><br>
+        <div *ngIf="signupEnd.invalid && (signupEnd.dirty || signupEnd.touched)" class="alert alert-danger  col-sm-10 offset-2">
+          <div *ngIf="signupEnd?.errors.required">
+            Signup End is required.
+          </div>
+        </div>
       </div>
     </div>
     <div class="form-group row">
