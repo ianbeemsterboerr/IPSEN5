@@ -24,5 +24,10 @@
                 <div class="item-name" [@expanded]="state">Hall Of Fame</div>
             </a>
         </li>
+        <li>
+            <select class="" id="game-picker" [(ngModel)]='activeGame' (ngModelChange)='onGameChanged()' title="game" [@expanded]="state">
+                <option class='option' *ngFor='let game of gameService.availableGames' [ngValue]="game">{{game.title}}</option>
+            </select>
+        </li>
     </ul>
 </nav>
