@@ -5,7 +5,7 @@ import {Params, Router} from '@angular/router';
 import {ApiService} from '../../shared/api.service';
 import {GameService} from '../../games/game.service';
 import {Tournament} from '../../shared/model/tournament';
-import {FormsModule, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, Validators} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 
 @Component({
@@ -21,8 +21,18 @@ export class TournamentNewComponent implements OnInit {
   newTournament = new Tournament(0, 0, "", "", "",
     "", "", null, null, null, null,
     null, null);
-
+  tournamentForm: FormGroup;
   ngOnInit() {
+    this.tournamentForm = new FormGroup({
+        'name': new FormControl(this.newTournament.name, [
+          Validators.required,
+          Validators.minLength(8)
+        ]),
+      'date': new FormControl(this.newTournament.name, [
+        Validators.required
+      ])
+      }
+    );
   }
   updateButton() {
     let valid = true;
@@ -35,6 +45,13 @@ export class TournamentNewComponent implements OnInit {
 
     this.submitDisabled = !valid;
   }
+  get name() { return this.tournamentForm.get('name'); }
+  get date() { return this.tournamentForm.get('date'); }
+  // get teamsize() { return this.tournamentForm.get('teamsize'); }
+  // get signupStart() { return this.tournamentForm.get('signupStart'); }
+  // get signupEnd() { return this.tournamentForm.get('signupEnd'); }
+
+
 
   submitForm() {
     const values = document.getElementById('form');
