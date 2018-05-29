@@ -12,9 +12,9 @@ class TournamentsTableSeeder extends Seeder
     public function run()
     {
         for ($x = 0; $x <= 3; $x++) {
-            
+
         
-			DB::table('tournaments')->insert([
+			DB::table('tournament')->insert([
 				'organizer_userID' => 1,
 				'gamename' => str_random(10),
 				'tournament_typename' => str_random(10),
