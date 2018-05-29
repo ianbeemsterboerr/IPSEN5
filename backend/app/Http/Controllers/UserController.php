@@ -54,7 +54,10 @@ class UserController extends Controller
             return json_encode($jwtstring);
             // return json_encode(JWT::decode($jwt, $key, array('HS256')));
         } else {
-            abort(401);
+            return response()->json(array(
+                'status' => 'error',
+                'message' => 'Unauthorized, Wrong password'
+            ), 401);
         }
     }
 
@@ -64,6 +67,15 @@ class UserController extends Controller
     }
 
     public function register(Request $request){
-        return 'Ontvangen';
+        
+        $newUser = new User;
+        $newUser->user_username = $request->json('username');
+        $newUser->user_first_name = $request->json('first_name');
+        $newUser->user_last_name = $request->json('last_name');
+        $newUser->user_password = password_hash($request->json('password'), PASSWORD_BCRYPT);
+        $newUser->user_email = $request->json('email');
+        $newUser->save();
+        
+        return $newUser;
     }
 }
