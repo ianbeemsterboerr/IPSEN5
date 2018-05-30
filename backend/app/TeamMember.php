@@ -28,4 +28,12 @@ class TeamMember extends Model
 {
     protected $table = 'team_member';
     protected $fillable = ['user_id', 'team_id', 'size', 'max_size'];
+
+    function user() {
+        return $this->hasOne('App\User');
+    }
+
+    function team() {
+        return $this->belongsTo('App\Team');
+    }
 }

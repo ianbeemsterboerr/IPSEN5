@@ -59,8 +59,8 @@ class Tournament extends Model
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-    public function teams() {
-        return $this->hasMany('App\Team');
+    public function enrollments() {
+        return $this->hasMany('App\Enrollment');
     }
 
     public function matches() {

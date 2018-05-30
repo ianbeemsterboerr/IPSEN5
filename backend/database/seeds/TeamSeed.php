@@ -22,7 +22,7 @@ class TeamSeed extends Seeder
                         'user_id' => $member->id,
                         'team_id' => $u->id
                     ]
-                );
+                )->save();
             }
         });
     }

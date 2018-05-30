@@ -11,9 +11,18 @@ class TournamentsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Tournament::class, 5)->create()->each(function ($o) {
-            $teams = App\Team::where('max_size', '<=', $o->max_team_size);
+        factory(App\Tournament::class, 5)->create()->each(function ($tournament) {
+            $teams = App\Team::inRandomOrder()->where('max_size', '<=', $tournament->max_team_size)->take(5)->get();
 
+            foreach ($teams as $team) {
+                $enrollment = new App\Enrollment();
+                $enrollment->fill(
+                    [
+                        'team_id' => $team->id,
+                        'tournament_id' => $tournament->id
+                    ]
+                )->save();
+            }
         });
     }
 }

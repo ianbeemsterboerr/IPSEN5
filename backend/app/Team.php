@@ -38,4 +38,12 @@ class Team extends Model
 {
     protected $table = 'team';
     protected $fillable = ['leader_user_id', 'name', 'size', 'max_size'];
+
+    function teamMembers() {
+        return $this->hasMany('App\TeamMember', 'team_id', 'id');
+    }
+
+    function teamLeader() {
+        return $this->hasOne('App\User', 'id', 'leader_user_id');
+    }
 }
