@@ -70,7 +70,7 @@ class UserController extends Controller
     }
 
     public function register(Request $request){
-        
+        //TODO: check for null values and validation.
         $newUser = new User;
         $newUser->user_username = $request->json('username');
         $newUser->user_first_name = $request->json('first_name');
