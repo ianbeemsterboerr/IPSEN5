@@ -13,7 +13,7 @@
     <div class="form-group row">
       <label for="date" class="col-sm-2 col-form-label">Date:</label>
       <input type="date" id="date" name="date" class="form-control col-sm-10"
-             formControlName="date" [(ngModel)]="newTournament.tournament_Start" ><br>
+             formControlName="date" [(ngModel)]="newTournament.tournament_start" ><br>
       <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger  col-sm-10 offset-2">
         <div *ngIf="date?.errors.required">
           Date is required.
