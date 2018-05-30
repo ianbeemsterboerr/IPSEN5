@@ -89,12 +89,12 @@
            class="alert alert-danger  col-sm-10 offset-2">
         <div *ngIf="signupEnd?.errors.required">
           Signup End is required.
-        </div>
+        </div>  
         <div *ngIf="signupEnd?.errors.futureDateInvalid">
-          Signup ends is in the past.
+          Signup ends in the past.
         </div>
-        <div *ngIf="signupEnd?.errors.singupStartInvalid">
-          Signup end before signup starts.
+        <div *ngIf="signupEnd?.errors.signupStartInvalid">
+          Signup ends before signup starts.
         </div>
         <div *ngIf="signupEnd?.errors.tournamentInvalid">
           Signup ends after the tournament begins.

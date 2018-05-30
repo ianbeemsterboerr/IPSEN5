@@ -45,11 +45,12 @@ class TournamentController extends Controller
         return Tournament::all();
     }
 
-//    public function createTournamentTemporary(Request $request) {
-//        $newTournament = Tournament::create([]);
-//
-//
-//    }
+    public function createTournamentTemporary(Request $request) {
+//        $incomingTournament = json_encode($request);
+        $newTournament = Tournament::create(['organizer_user_id' => '41', 'name' => $request->input('name')]);
+        return json_encode("IT WORKS");
+
+    }
 
 
     public function createTournament(Request $request) {
@@ -65,7 +66,7 @@ class TournamentController extends Controller
         $connection = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
 
 
-        $statement = $connection->prepare("INSERT INTO tournaments (organizer_userID, gamename,
+        $statement = $connection->prepare("INSERT INTO tournament (organizer_userID, gamename,
           tournament_typename, signup_typename, name, description, max_team_size, signup_start,
           signup_end, tournament_start) VALUES (:organizer_userID, :gamename,
           :tournament_typename, :signup_typename, :name, :description, :max_team_size, :signup_start,
@@ -95,7 +96,7 @@ class TournamentController extends Controller
         $signup_end = $request->input('signupStart');
         $tournament_start = $request->input('date');
 
-        $statement->execute();
+        $status = $statement->execute();
 
         return json_encode("Dummy_tournament submitted.");
 
