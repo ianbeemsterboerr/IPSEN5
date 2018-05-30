@@ -24,15 +24,23 @@ export class TournamentNewComponent implements OnInit {
   tournamentForm: FormGroup;
   ngOnInit() {
     this.tournamentForm = new FormGroup({
-        'name': new FormControl(this.newTournament.name, [
-          Validators.required,
-          Validators.minLength(8)
-        ]),
-      'date': new FormControl(this.newTournament.name, [
+      'name': new FormControl(this.newTournament.name, [
+        Validators.required,
+        Validators.minLength(8)
+      ]),
+      'date': new FormControl(this.newTournament.tournament_Start, [
+        Validators.required
+      ]),
+      'teamsize': new FormControl(this.newTournament.max_team_size, [
+        Validators.required
+      ]),
+      'signupStart': new FormControl(this.newTournament.signup_start, [
+        Validators.required
+      ]),
+      'signupEnd': new FormControl(this.newTournament.signup_end, [
         Validators.required
       ])
-      }
-    );
+    });
   }
   updateButton() {
     let valid = true;
@@ -47,9 +55,9 @@ export class TournamentNewComponent implements OnInit {
   }
   get name() { return this.tournamentForm.get('name'); }
   get date() { return this.tournamentForm.get('date'); }
-  // get teamsize() { return this.tournamentForm.get('teamsize'); }
-  // get signupStart() { return this.tournamentForm.get('signupStart'); }
-  // get signupEnd() { return this.tournamentForm.get('signupEnd'); }
+  get teamsize() { return this.tournamentForm.get('teamsize'); }
+  get signupStart() { return this.tournamentForm.get('signupStart'); }
+  get signupEnd() { return this.tournamentForm.get('signupEnd'); }
 
 
 
