@@ -50,6 +50,14 @@ export class LoginComponent implements OnInit {
                 console.log('Succesvol ingelogd.')
             }
         );
+        this.api.get('users/get/1').subscribe(
+            data=>{
+                console.log(data);
+            },
+            err=>{
+
+            }
+        )
     }
 
     logout() {
