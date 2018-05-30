@@ -18,7 +18,6 @@ export class TournamentNewComponent implements OnInit {
 
   constructor(private api: ApiService, private gameService: GameService, private router: Router) { }
 
-  submitDisabled = true;
   newTournament = new Tournament(0, 0, '', 'Single elimination',
     'Invite only', '', '', null, null, null, null,
     null, null);

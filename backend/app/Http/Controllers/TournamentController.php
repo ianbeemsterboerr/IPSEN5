@@ -49,6 +49,12 @@ class TournamentController extends Controller
         return Tournament::all();
     }
 
+//    public function createTournamentTemporary(Request $request) {
+//        $newTournament = Tournament::create([]);
+//
+//
+//    }
+
 
     public function createTournament(Request $request) {
 
