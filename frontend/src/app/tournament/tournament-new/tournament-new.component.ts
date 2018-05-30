@@ -56,9 +56,9 @@ export class TournamentNewComponent implements OnInit {
   get signupStart() { return this.tournamentForm.get('signupStart'); }
   get signupEnd() { return this.tournamentForm.get('signupEnd'); }
   submitForm() {
+    console.log(this.newTournament);
     const values = document.getElementById('form');
     console.log('Submitting tournament: ' + values[0].value);
-
 
     let params = new HttpParams();
     params = params.append('name', values[0].value);
@@ -84,9 +84,6 @@ export class TournamentNewComponent implements OnInit {
   teamsizeValidator(allowedSize: number): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} => {
       const invalid = control.value < allowedSize && control.value != null;
-      console.log(control.value);
-      console.log(invalid);
-      console.log('Name: ' + this.newTournament.name);
       return invalid ? {'teamsizeInvalid': {value: control.value}} : null;
     };
   }
