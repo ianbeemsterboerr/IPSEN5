@@ -69,7 +69,7 @@ class UserController extends Controller
 
     public function get(int $id)
     {
-        return User::where('user_id', $id)->first();
+        return User::where('id', $id)->first();
     }
 
     public function register(Request $request){

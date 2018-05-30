@@ -11,38 +11,81 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Tournament
+ *
+ * @mixin \Eloquent
+ * @property int $ID
+ * @property int $organizer_userID
+ * @property string $gamename
+ * @property string $tournament_typename
+ * @property string $signup_typename
+ * @property string $name
+ * @property string $description
+ * @property int $max_team_size
+ * @property string $signup_start
+ * @property string $signup_end
+ * @property string $tournament_start
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereGamename($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereID($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereMaxTeamSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereOrganizerUserID($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereSignupEnd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereSignupStart($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereSignupTypename($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereTournamentStart($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereTournamentTypename($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereUpdatedAt($value)
+ * @property int $id
+ * @property int $organizer_user_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Match[] $matches
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Team[] $teams
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereOrganizerUserId($value)
+ */
 class Tournament extends Model
 {
     protected $table = 'tournament';
     protected $fillable = [
-        'organizer_userID', 'gamename', 'tournament_typename', 'signup_typename', 'name', 'description', 'max_team_size', 'signup_start', 'signup_end', 'tournament_start'
+        'organizer_user_id', 'gamename', 'tournament_typename', 'signup_typename', 'name', 'description', 'max_team_size', 'signup_start', 'signup_end', 'tournament_start'
     ];
 
     public $timestamps = true;
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
+    public function teams() {
+        return $this->hasMany('App\Team');
+    }
+
+    public function matches() {
+        return $this->hasMany('app\Match');
+    }
 
     public $matchCounter = 0;
 
-
-    public $teams;
     public $brackets = [];
 
     private $placeholderTeam;
 
     public function start()
     {
-        shuffle($this->teams);
+        $teams = $this->teams;
+        shuffle($teams);
 
-        $this->generatePlacementMatches($this->brackets, $this->teams);
+        $this->generatePlacementMatches($this->brackets, $teams);
         $this->connectMatches(); //todo: sibling on client
-        $this->generateMatches($this->brackets);
+        $this->generateMatches($this->brackets, $teams);
     }
 
-    private function generateMatches(&$brackets)
+    private function generateMatches(&$brackets, &$teams)
     {
-        $teamCount = $this->next_pow(count($this->teams)) / 2;
+        $teamCount = $this->next_pow(count($teams)) / 2;
         $bracketCount = log($teamCount, 2);
 
         for ($i = 0; $i < $bracketCount - 1; $i++) {
@@ -54,8 +97,8 @@ class Tournament extends Model
             for ($a = 0; $a < $matchCount; $a++) {
                 $match = new Match([$this->placeholderTeam, $this->placeholderTeam], $this);
 
-                $match->connect($lastBracket->matches[$a * 2]);
-                $match->connect($lastBracket->matches[$a * 2 + 1]);
+//                $match->connect($lastBracket->matches[$a * 2]);
+//                $match->connect($lastBracket->matches[$a * 2 + 1]);
 
                 array_push($bracket->matches, $match);
             }
@@ -73,7 +116,7 @@ class Tournament extends Model
 
             $bracket = new Bracket([]);
             for ($i = 0; $i < $teamCount / 2; $i++) {
-                array_push($bracket->matches, new Match([$teams[$i * 2], $teams[$i * 2 + 1]], $this));
+//                array_push($bracket->matches, new Match([$teams[$i * 2], $teams[$i * 2 + 1]], $this));
             }
 
             array_push($this->brackets, $bracket);
@@ -97,9 +140,9 @@ class Tournament extends Model
 
         // Add the incomplete matches
         for ($i = 0; $i < $incompleteMatchCount; $i++) {
-            $match = new Match($this->takeXTeams($teams, 1), $this);
-            array_unshift($match->teams, $this->placeholderTeam);
-            array_push($bracket->matches, $match);
+//            $match = new Match($this->takeXTeams($teams, 1), $this);
+//            array_unshift($match->teams, $this->placeholderTeam);
+//            array_push($bracket->matches, $match);
         }
 
         $this->generatePlacementMatches($brackets, $teams);
@@ -138,7 +181,7 @@ class Tournament extends Model
                     $spots = 2 - count($nextMatch->teams) - count($nextMatch->previousMatches) + $this->placeholderCount($nextMatch);
                     if ($spots > 0) {
                         //Spot available here
-                        $nextMatch->connect($match);
+//                        $nextMatch->connect($match);
 
                         break;
                     }
@@ -165,7 +208,7 @@ class Tournament extends Model
         $matches = [];
 
         for ($i = 0; $i < $amount; $i++) {
-            array_push($matches, new Match([$matchTeams[$i * 2], $matchTeams[$i * 2 + 1]], $this));
+//            array_push($matches, new Match([$matchTeams[$i * 2], $matchTeams[$i * 2 + 1]], $this));
         }
 
         return $matches;

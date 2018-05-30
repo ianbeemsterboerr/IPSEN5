@@ -14,8 +14,8 @@ class CreateTeamTable extends Migration
     public function up()
     {
         Schema::create('team', function (Blueprint $table) {
-            $table->increments('ID');
-            $table->integer('leader_userID')->unsigned();;
+            $table->increments('id');
+            $table->integer('leader_user_id')->unsigned();;
             $table->string('name');
             $table->integer('size');
             $table->integer('max_size');
@@ -25,7 +25,7 @@ class CreateTeamTable extends Migration
         });
 
         Schema::table('team', function($table) {
-            $table->foreign('leader_userID')->references('user_id')->on('user');
+            $table->foreign('leader_user_id')->references('id')->on('user');
         });
     }
 
@@ -37,7 +37,7 @@ class CreateTeamTable extends Migration
     public function down()
     {
         Schema::table('team', function(Blueprint $table) {
-            $table->dropForeign(['leader_userID']);
+            $table->dropForeign(['leader_user_id']);
         });
 
         Schema::dropIfExists('team');

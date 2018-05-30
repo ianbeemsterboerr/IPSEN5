@@ -9,26 +9,15 @@
 namespace App;
 
 
-class Match
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * App\Match
+ *
+ * @mixin \Eloquent
+ */
+class Match extends Model
 {
-    public $matchID;
-    public $teams = [];
-    public $nextMatch;
-    public $previousMatches = [];
+    //protected $fillable = [''];
 
-    /**
-     * Match constructor.
-     * @param array $teams
-     * @param Tournament $tournament
-     */
-    public function __construct(array $teams, Tournament $tournament)
-    {
-        $this->teams = $teams;
-        $this->matchID = $tournament->getMatchID();
-    }
-
-    public function connect(Match &$other) {
-        array_push($this->previousMatches, $other->matchID);
-        $other->nextMatch = $this->matchID;
-    }
 }
