@@ -11,20 +11,9 @@ class TournamentsTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($x = 0; $x <= 3; $x++) {
+        factory(App\Tournament::class, 5)->create()->each(function ($o) {
+            $teams = App\Team::where('max_size', '<=', $o->max_team_size);
 
-        
-			DB::table('tournament')->insert([
-				'organizer_userID' => 1,
-				'gamename' => str_random(10),
-				'tournament_typename' => str_random(10),
-				'signup_typename' => str_random(10),
-				'name' => str_random(10),
-				'description' => str_random(40),
-				'signup_start' => '2000-01-01',
-				'signup_end' => '2000-01-01',
-				'tournament_start' => '2000-01-01'
-			]);
-		}
+        });
     }
 }
