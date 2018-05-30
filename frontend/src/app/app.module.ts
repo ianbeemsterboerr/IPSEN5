@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import { AppComponent } from './app.component';
-
+import { PasswordEqualValidator } from './shared/passwordconfirmation.directive';
 
 import { TournamentHomeComponent } from './tournament/tournament-home/tournament-home.component';
 import { TournamentNewComponent } from './tournament/tournament-new/tournament-new.component';
@@ -29,6 +29,7 @@ import { ActiveaccountService } from './services/activeaccount.service';
         LoginComponent,
         CreateaccountComponent,
         ForgotpasswordComponent,
+        PasswordEqualValidator
     ],
     imports: [
         BrowserModule,
