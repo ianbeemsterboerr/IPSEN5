@@ -9,21 +9,33 @@
 namespace App;
 
 
-class Team
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * App\Team
+ *
+ * @mixin \Eloquent
+ * @property int $ID
+ * @property int $leader_userID
+ * @property string $name
+ * @property int $size
+ * @property int $max_size
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Team whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Team whereID($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Team whereLeaderUserID($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Team whereMaxSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Team whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Team whereSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Team whereUpdatedAt($value)
+ * @property int $id
+ * @property int $leader_user_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Team whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Team whereLeaderUserId($value)
+ */
+class Team extends Model
 {
-    public $players;
-    public $name;
-
-    /**
-     * Team constructor.
-     * @param $players
-     * @param $name
-     */
-    public function __construct($players, $name)
-    {
-        $this->players = $players;
-        $this->name = $name;
-    }
-
-
+    protected $table = 'team';
+    protected $fillable = ['leader_user_id', 'name', 'size', 'max_size'];
 }

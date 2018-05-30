@@ -13,9 +13,9 @@ class CreateTournamentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tournaments', function (Blueprint $table) {
-            $table->increments('ID');
-			$table->integer('organizer_userID');
+        Schema::create('tournament', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('organizer_user_id')->unsigned();;
 			$table->string('gamename');
 			$table->string('tournament_typename');
 			$table->string('signup_typename');
@@ -27,6 +27,10 @@ class CreateTournamentsTable extends Migration
 			$table->date('tournament_start');
             $table->timestamps();
         });
+
+        Schema::table('tournament', function(Blueprint $table) {
+            $table->foreign('organizer_user_id')->references('id')->on('user');
+        });
     }
 
     /**
@@ -36,6 +40,10 @@ class CreateTournamentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tournaments');
+        Schema::table('tournament', function(Blueprint $table) {
+            $table->dropForeign(['organizer_user_id']);
+        });
+
+        Schema::dropIfExists('tournament');
     }
 }

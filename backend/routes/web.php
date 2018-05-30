@@ -1,7 +1,6 @@
 <?php
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,10 +11,8 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-
 
 
 $router->group(['prefix' => 'api'], function () use ($router) {
@@ -27,10 +24,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->group(['prefix' => 'users'], function () use ($router) {
 
             $router->get('all', 'UserController@getAll');
+            $router->get('allNames', 'UserController@getUserNames');
             $router->get('get/{id}', 'UserController@get');
-            
-        });
 
+        });
 
 
         $router->group(['prefix' => 'tournaments'], function () use ($router) {
@@ -51,6 +48,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
      */
     $router->group(['prefix' => 'users'], function () use ($router) {
         $router->get('getusersunsafe', 'UserController@getAll');
+        $router->get('allNamesUnsave', 'UserController@getUserNames');
     });
     $router->group(['prefix' => 'tournament'], function () use ($router) {
         $router->get('all', 'TournamentController@getAll');

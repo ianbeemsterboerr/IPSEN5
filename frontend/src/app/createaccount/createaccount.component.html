@@ -1,40 +1,66 @@
 <div class="col">
   <div class="mx-auto w-50">
-    <form class="rounded p-3">
-      <h2>Create account</h2>
+    <form (ngSubmit)="register()" #registerForm="ngForm" class="rounded p-3">
+      <div class="form-group">
+        <label for="firstname">First name</label>
+        <input type="text" class="form-control" id="firstname" required [(ngModel)]="user.first_name" name="first_name" #firstname="ngModel">
+
+        <div class="alert alert-danger" role="alert" *ngIf="firstname.touched && firstname.errors?.required">
+          This field is required.
+        </div>
+      </div>
 
       <div class="form-group">
-        <label for="usernameInput" class="">Username</label>
-        <input id="usernameInput" class="form-control" [(ngModel)]="user_username" type="text" name="user_username" value="Username">
+        <label for="lastname">Last name</label>
+        <input type="text" class="form-control" id="lastname" required [(ngModel)]="user.last_name" name="last_name" #lastname="ngModel">
+
+        <div class="alert alert-danger" role="alert" *ngIf="lastname.touched && lastname.errors?.required">
+          This field is required.
+        </div>
       </div>
 
-      <div class="form-group ">
-        <label for="passwordInput" class="">Password</label>
-        <input id="passwordInput" class="form-control" [(ngModel)]="user_password" type="password" name="user_password" value="Password">
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="text" class="form-control" id="email" required [(ngModel)]="user.email" name="email" #email="ngModel">
+
+        <div class="alert alert-danger" role="alert" *ngIf="email.touched && email.errors?.required">
+          This field is required.
+        </div>
       </div>
 
-      <div class="form-group ">
-        <label for="RepeatPasswordInput" class="">Repeat password</label>
-        <input id="RepeatPasswordInput" class="form-control" [(ngModel)]="user_password_repeat" type="password" name="user_password_repeat"
-          value="Password">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" required [(ngModel)]="user.username" name="username" #username="ngModel">
+
+        <div class="alert alert-danger" role="alert" *ngIf="username.touched && username.errors?.required">
+          This field is required.
+        </div>
       </div>
 
-      <div class="form-group ">
-        <label for="firstNameInput" class="">First name</label>
-        <input id="firstNameInput" class="form-control" [(ngModel)]="user_first_name" type="text" name="user_password" value="First name">
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="text" class="form-control" id="password" required [(ngModel)]="user.password" name=password #password="ngModel">
+
+        <div class="alert alert-danger" role="alert" *ngIf="password.touched && password.errors?.required">
+          This field is required.
+        </div>
       </div>
 
-      <div class="form-group ">
-        <label for="LastNameInput" class="">Last name</label>
-        <input id="LastNameInput" class="form-control" [(ngModel)]="user_last_name" type="text" name="user_last_name" value="Last name">
+      <div class="form-group">
+        <label for="repeatPassword">Repeat password</label>
+        <input type="text" class="form-control" id="repeatPassword" required [(ngModel)]="password_repeat" name=repeatPassword #repeatPassword="ngModel"
+          appConfirmEqualValidator="password">
+
+        <div class="alert alert-danger" role="alert" *ngIf="repeatPassword.touched && repeatPassword.errors?.required">
+          This field is required.
+        </div>
+
+        <div class="alert alert-danger" role="alert" *ngIf="repeatPassword.touched && repeatPassword.errors?.notEqual && !repeatPassword.errors?.required">
+          Passwords don't match.
+        </div>
       </div>
 
-      <div class="form-group ">
-        <label for="EmailInput" class="">E-mail</label>
-        <input id="EmailInput" class="form-control" [(ngModel)]="user_email" type="text" name="user_email" value="Email">
-      </div>
-
-      <button class="btn btn-primary" (click)="register(user_username, user_password, user_password_repeat, user_email, user_first_name, user_last_name)">Register</button>
+      <button type="submit" class="btn btn-success" [disabled]="!registerForm.form.valid">Register</button>
     </form>
   </div>
 </div>
