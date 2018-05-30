@@ -3,7 +3,7 @@
     <form (ngSubmit)="register()" #registerForm="ngForm" class="rounded p-3">
       <div class="form-group">
         <label for="firstname">First name</label>
-        <input type="text" class="form-control" id="firstname" required [(ngModel)]="user.first_name" name="first_name" #firstname="ngModel">
+        <input type="text" class="form-control" id="firstname" required [(ngModel)]="user.user_first_name" name="first_name" #firstname="ngModel">
 
         <div class="alert alert-danger" role="alert" *ngIf="firstname.touched && firstname.errors?.required">
           This field is required.
@@ -12,7 +12,7 @@
 
       <div class="form-group">
         <label for="lastname">Last name</label>
-        <input type="text" class="form-control" id="lastname" required [(ngModel)]="user.last_name" name="last_name" #lastname="ngModel">
+        <input type="text" class="form-control" id="lastname" required [(ngModel)]="user.user_last_name" name="last_name" #lastname="ngModel">
 
         <div class="alert alert-danger" role="alert" *ngIf="lastname.touched && lastname.errors?.required">
           This field is required.
@@ -21,7 +21,7 @@
 
       <div class="form-group">
         <label for="email">E-mail</label>
-        <input type="text" class="form-control" id="email" required [(ngModel)]="user.email" name="email" #email="ngModel">
+        <input type="text" class="form-control" id="email" required [(ngModel)]="user.user_email" name="email" #email="ngModel">
 
         <div class="alert alert-danger" role="alert" *ngIf="email.touched && email.errors?.required">
           This field is required.
@@ -30,7 +30,7 @@
 
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" class="form-control" id="username" required [(ngModel)]="user.username" name="username" #username="ngModel">
+        <input type="text" class="form-control" id="username" required [(ngModel)]="user.user_username" name="username" #username="ngModel">
 
         <div class="alert alert-danger" role="alert" *ngIf="username.touched && username.errors?.required">
           This field is required.
@@ -39,7 +39,7 @@
 
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="text" class="form-control" id="password" required [(ngModel)]="user.password" name=password #password="ngModel">
+        <input type="text" class="form-control" id="password" required [(ngModel)]="user.user_password" name=password #password="ngModel">
 
         <div class="alert alert-danger" role="alert" *ngIf="password.touched && password.errors?.required">
           This field is required.
