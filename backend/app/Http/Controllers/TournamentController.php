@@ -20,7 +20,7 @@ use PDO;
 class TournamentController extends Controller
 {
     public function get(int $id) {
-        return (string) Tournament::with('enrollments.team.teamMembers.user', 'enrollments.team.teamLeader')->find($id);
+        return (string) Tournament::with(['enrollments.team.teamMembers.user', 'enrollments.team.teamLeader', 'organiser'])->find($id);
     }
 
     public function getNames(Request $request){
