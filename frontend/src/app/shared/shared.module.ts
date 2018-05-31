@@ -9,11 +9,13 @@ import {HttpModule} from "@angular/http";
 import {ApiService} from "./api.service";
 import {RouterModule} from '@angular/router';
 import {FormsModule} from "@angular/forms";
+import { CountdownComponent } from './countdown/countdown.component';
 
 
 @NgModule({
     declarations: [
-        SidebarComponent
+        SidebarComponent,
+        CountdownComponent
     ],
     imports: [
         CommonModule,
@@ -23,7 +25,7 @@ import {FormsModule} from "@angular/forms";
         RouterModule,
         FormsModule
     ],
-    exports: [SidebarComponent]
+    exports: [SidebarComponent, CountdownComponent]
 })
 export class SharedModule {
 }

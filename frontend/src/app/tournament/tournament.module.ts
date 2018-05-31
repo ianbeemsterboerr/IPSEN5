@@ -9,6 +9,8 @@ import {TournamentNewComponent} from "./tournament-new/tournament-new.component"
 import {TournamentHomeComponent} from "./tournament-home/tournament-home.component";
 import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { TournamentComponent } from './tournament/tournament.component';
+import {TournamentService} from "./tournament.service";
 
 @NgModule({
     imports: [
@@ -23,8 +25,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     declarations: [
         EliminationComponent,
         TournamentHomeComponent,
-        TournamentNewComponent],
-    providers: [ApiService]
+        TournamentNewComponent,
+        TournamentComponent
+    ],
+    providers: [ApiService, TournamentService]
 })
 export class TournamentModule {
 }

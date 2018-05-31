@@ -30,7 +30,7 @@ class UserController extends Controller
         $user_username = $request->json('user_username');
         $user_password = $request->json('user_password');
 
-        $userFromDatabase = User::where('user_username', $user_username)->first();
+        $userFromDatabase = User::whereUserUsername($user_username)->first();
 
         if (is_null($userFromDatabase)) {
             return response()->json(
@@ -55,7 +55,8 @@ class UserController extends Controller
             //TO DO: FIX BEARER SYSTEM
             $jwtstring = array(
                 "bearer" => $jwt,
-                "activeUserId" => $userFromDatabase->user_id
+                "activeUserId" => $userFromDatabase->user_id,
+                "user" => (string) $userFromDatabase
             );
             return json_encode($jwtstring);
             // return json_encode(JWT::decode($jwt, $key, array('HS256')));

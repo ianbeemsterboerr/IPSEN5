@@ -7,7 +7,7 @@ import {TournamentNewComponent} from './tournament/tournament-new/tournament-new
 import {LoginComponent} from './login/login.component';
 import {ForgotpasswordComponent} from './forgotpassword/forgotpassword.component';
 import {CreateaccountComponent} from './createaccount/createaccount.component';
-import {EliminationComponent} from "./tournament/elimination/elimination.component";
+import {TournamentComponent} from "./tournament/tournament/tournament.component";
 
 
 const routes: Routes = [
@@ -17,7 +17,7 @@ const routes: Routes = [
     {path: 'createaccount', component: CreateaccountComponent},
     {path: 'tournaments', component: TournamentHomeComponent},
     {path: 'tournaments/new', component: TournamentNewComponent},
-    {path: 'tournaments/:id', component: EliminationComponent}
+    {path: 'tournaments/:id', component: TournamentComponent},
 ];
 
 @NgModule({

@@ -37,9 +37,9 @@ $factory->define(App\Tournament::class, function (Faker\Generator $faker) {
         'name' => $faker->company,
         'description' => $faker->text($maxNbChars = 50),
         'max_team_size' => rand(1, 3),
-        'signup_start' => '2000-01-01',
-        'signup_end' => '2000-01-01',
-        'tournament_start' => '2000-01-01'
+        'signup_start' => $faker->dateTimeBetween('+0 days', '+1 days'),
+        'signup_end' => $faker->dateTimeBetween('+1 days', '+2 days'),
+        'tournament_start' => $faker->dateTimeBetween('+2 days', '+3 days')
     ];
 });
 
