@@ -33,25 +33,20 @@ class AuthServiceProvider extends ServiceProvider
 
         $this->app['auth']->viaRequest('api', function ($request) {
             if ($request->header('Authorization')) {
-                $user;
                 $token = str_replace('Bearer ','', $request->header('Authorization'));
                 $jwt = JWT::decode($token, "JWT", array('HS256'));
-                if ($jwt->isadmin)
-                {
-                    $user =  User::whereUserUsername($jwt->user_username)->first();
 
-                    $request->merge(['user' => $user ]);
-                    $request->setUserResolver(function () use ($user) {
-                        return $user;
-                    });
-                } 
-                else
-                {
-                    $user = json_encode($jwt);
-                }
+                $user =  User::whereUserUsername($jwt->user_username)->first();
+
+                $request->merge(['user' => $user ]);
+                $request->setUserResolver(function () use ($user) {
+                    return $user;
+                });
 
                 return $user;
             }
+
+            return null;
         });
     }
 }
