@@ -14,15 +14,15 @@ class CreateEnrollmentTable extends Migration
     public function up()
     {
         Schema::create('enrollment', function (Blueprint $table) {
-            $table->integer('tournamentID')->unsigned();
-            $table->integer('teamID')->unsigned();
+            $table->integer('tournament_id')->unsigned();
+            $table->integer('team_id')->unsigned();
             $table->timestamps();
 
-            $table->primary(['tournamentID', 'teamID']);
+            $table->primary(['tournament_id', 'team_id']);
         });
 
         Schema::table('enrollment', function (Blueprint $table) {
-            $table->foreign('tournamentID')->references('ID')->on('tournament');
+            $table->foreign('tournament_id')->references('id')->on('tournament');
         });
     }
 
@@ -34,7 +34,7 @@ class CreateEnrollmentTable extends Migration
     public function down()
     {
         Schema::table('enrollment', function (Blueprint $table) {
-            $table->dropForeign(['tournamentID']);
+            $table->dropForeign(['tournament_id']);
         });
         Schema::dropIfExists('enrollment');
     }

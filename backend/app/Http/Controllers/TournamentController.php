@@ -13,6 +13,7 @@ use App\Team;
 use Illuminate\Http\Request;
 use App\Tournament;
 
+use Illuminate\Http\Response;
 use PDO;
 
 
@@ -38,11 +39,7 @@ class TournamentController extends Controller
 
 
     public function getNames(Request $request){
-
-
-        $results = \DB::select("SELECT name FROM tournaments");
-
-        return json_encode($results);
+        return Tournament::all(['name']);
     }
 
     public function getAll() {
@@ -51,52 +48,12 @@ class TournamentController extends Controller
 
 
     public function createTournament(Request $request) {
+        $tournament = new Tournament();
+        $tournament->fill($request->json()->all());
+        $tournament->organizer_user_id = $request->user()->id;
+        $tournament->save();
 
-
-
-
-        $servername = $_ENV['DB_HOST'];
-        $username = $_ENV['DB_USERNAME'];
-        $password = $_ENV['DB_PASSWORD'];
-        $database = $_ENV['DB_DATABASE'];
-
-        $connection = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
-
-
-        $statement = $connection->prepare("INSERT INTO tournaments (organizer_userID, gamename,
-          tournament_typename, signup_typename, name, description, max_team_size, signup_start,
-          signup_end, tournament_start) VALUES (:organizer_userID, :gamename,
-          :tournament_typename, :signup_typename, :name, :description, :max_team_size, :signup_start,
-          :signup_end, :tournament_start)");
-
-
-        $statement->bindParam(':organizer_userID', $organizer_userID);
-        $statement->bindParam(':gamename', $gamename);
-        $statement->bindParam(':tournament_typename', $tournament_typename);
-        $statement->bindParam(':signup_typename', $signup_typename);
-        $statement->bindParam(':name', $name);
-        $statement->bindParam(':description', $description);
-        $statement->bindParam(':max_team_size', $max_team_size);
-        $statement->bindParam(':signup_start', $signup_start);
-        $statement->bindParam(':signup_end', $signup_end);
-        $statement->bindParam(':tournament_start', $tournament_start);
-
-
-        $organizer_userID = $request->input('organizer_ID');
-        $gamename = $request->input('game');
-        $tournament_typename = $request->input('type');;
-        $signup_typename = $request->input('signupType');
-        $name = $request->input('name');
-        $description = $request->input('description');
-        $max_team_size = $request->input('teamSize');
-        $signup_start = $request->input('signupStart');
-        $signup_end = $request->input('signupStart');
-        $tournament_start = $request->input('date');
-
-        $statement->execute();
-
-        return json_encode("Dummy_tournament submitted.");
-
+        return Response::HTTP_OK;
     }
 
 }

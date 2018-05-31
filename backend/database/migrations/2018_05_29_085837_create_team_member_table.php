@@ -14,17 +14,17 @@ class CreateTeamMemberTable extends Migration
     public function up()
     {
         Schema::create('team_member', function (Blueprint $table) {
-            $table->integer('userID')->unsigned();;
-            $table->integer('teamID')->unsigned();;
+            $table->integer('user_id')->unsigned();;
+            $table->integer('team_id')->unsigned();;
 
             $table->timestamps();
 
-            $table->primary(['userID', 'teamID']);
+            $table->primary(['user_id', 'team_id']);
         });
 
         Schema::table('team_member', function(Blueprint $table) {
-            $table->foreign('userID')->references('user_id')->on('user');
-            $table->foreign('teamID')->references('ID')->on('team');
+            $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('team_id')->references('id')->on('team');
         });
     }
 
@@ -36,8 +36,8 @@ class CreateTeamMemberTable extends Migration
     public function down()
     {
         Schema::table('team_member', function(Blueprint $table) {
-            $table->dropForeign(['userID']);
-            $table->dropForeign(['teamID']);
+            $table->dropForeign(['user_id']);
+            $table->dropForeign(['team_id']);
         });
         Schema::dropIfExists('team_member');
     }

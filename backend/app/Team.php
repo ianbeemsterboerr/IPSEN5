@@ -11,8 +11,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Team extends Model
 {
-    protected $fillable = ['leader_userID', 'size', 'max_size'];
-    protected $table = 'Team';
+    protected $table = 'team';
+    protected $fillable = ['leader_user_id', 'name', 'size', 'max_size'];
 }
