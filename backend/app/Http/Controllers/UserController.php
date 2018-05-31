@@ -22,15 +22,15 @@ class UserController extends Controller
     }
 
     public function getUserNames() {
-        return User::all(['user_username']);
+        return User::all(['username']);
     }
 
     public function login(Request $request)
     {
-        $user_username = $request->json('user_username');
-        $user_password = $request->json('user_password');
+        $username = $request->json('username');
+        $password = $request->json('password');
 
-        $userFromDatabase = User::whereUserUsername($user_username)->first();
+        $userFromDatabase = User::whereUsername($username)->first();
 
         if (is_null($userFromDatabase)) {
             return response()->json(
@@ -43,19 +43,19 @@ class UserController extends Controller
         }
 
         //$hashedPassword = app('hash')->make($plainPassword);
-        if (password_verify($user_password, $userFromDatabase->user_password)) {
+        if (password_verify($password, $userFromDatabase->password)) {
             $key = "JWT";
             $token = array(
                 "iss" => "compufifi.test",
                 "aud" => "angularClient",
-                "isadmin" => $userFromDatabase->user_isadmin,
-                "user_username" => $userFromDatabase->user_username
+                "isadmin" => $userFromDatabase->isadmin,
+                "username" => $userFromDatabase->username
             );
             $jwt = JWT::encode($token, $key, 'HS256');
             //TO DO: FIX BEARER SYSTEM
             $jwtstring = array(
                 "bearer" => $jwt,
-                "activeUserId" => $userFromDatabase->user_id,
+                "activeUserId" => $userFromDatabase->id,
                 "user" => (string) $userFromDatabase
             );
             return json_encode($jwtstring);
@@ -78,7 +78,7 @@ class UserController extends Controller
 
         $newUser = new User();
         $newUser->fill($data);
-        $newUser->user_password = password_hash($data['user_password'], PASSWORD_BCRYPT);
+        $newUser->password = password_hash($data['password'], PASSWORD_BCRYPT);
         $newUser->save();
         
         return $newUser;
