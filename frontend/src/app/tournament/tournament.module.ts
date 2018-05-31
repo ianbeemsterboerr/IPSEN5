@@ -8,6 +8,7 @@ import {AngularFontAwesomeModule} from "angular-font-awesome";
 import {TournamentNewComponent} from "./tournament-new/tournament-new.component";
 import {TournamentHomeComponent} from "./tournament-home/tournament-home.component";
 import {RouterModule} from "@angular/router";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
     imports: [
@@ -15,7 +16,9 @@ import {RouterModule} from "@angular/router";
         SharedModule,
         NgbModule,
         AngularFontAwesomeModule,
-        RouterModule
+        RouterModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     declarations: [
         EliminationComponent,

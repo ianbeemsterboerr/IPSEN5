@@ -11,43 +11,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * App\Tournament
- *
- * @mixin \Eloquent
- * @property int $ID
- * @property int $organizer_userID
- * @property string $gamename
- * @property string $tournament_typename
- * @property string $signup_typename
- * @property string $name
- * @property string $description
- * @property int $max_team_size
- * @property string $signup_start
- * @property string $signup_end
- * @property string $tournament_start
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereGamename($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereID($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereMaxTeamSize($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereOrganizerUserID($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereSignupEnd($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereSignupStart($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereSignupTypename($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereTournamentStart($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereTournamentTypename($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereUpdatedAt($value)
- * @property int $id
- * @property int $organizer_user_id
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Match[] $matches
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Team[] $teams
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Tournament whereOrganizerUserId($value)
- */
+
 class Tournament extends Model
 {
     protected $table = 'tournament';
