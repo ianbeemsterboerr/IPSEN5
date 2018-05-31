@@ -133,7 +133,7 @@ export class TournamentNewComponent implements OnInit {
             const today = new Date();
             const input = new Date(control.value + 'T23:59:59');
             const signupEnd = new Date(this.newTournament.signup_end + 'T23:59:59');
-            const tournamentStart = new Date(this.newTournament.tournament_start + 'T23:59:59')
+            const tournamentStart = new Date(this.newTournament.tournament_start + 'T23:59:59');
 
             const invalidPast = input < today && !empty;
             const invalidTournament = input > tournamentStart && !empty;
