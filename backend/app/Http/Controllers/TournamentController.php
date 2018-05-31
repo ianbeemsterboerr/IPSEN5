@@ -19,25 +19,6 @@ use PDO;
 
 class TournamentController extends Controller
 {
-
-
-    public function createDummyTournament(Request $request) {
-        $team_count = $request->get('teams');
-        $teams = [];
-
-//        Generate dummy teams
-        for ($i = 0; $i < $team_count; $i++) {
-            array_push($teams, new Team(null, 'Team ' . $i));
-        }
-
-        $tournament = new Tournament();
-        $tournament->teams = $teams;
-        $tournament->start();
-
-        return $tournament->serialize();
-    }
-
-
     public function getNames(Request $request){
         return Tournament::all(['name']);
     }
