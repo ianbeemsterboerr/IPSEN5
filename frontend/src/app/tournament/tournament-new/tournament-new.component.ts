@@ -88,7 +88,7 @@ export class TournamentNewComponent implements OnInit {
                 this.toastr.success("Tournament created!");
             },
             failure => {
-                this.toastr.error("Zie console");
+                this.toastr.error("Zie console.");
             },
             () => {
                 this.router.navigate(['/tournaments']);
@@ -100,9 +100,6 @@ export class TournamentNewComponent implements OnInit {
     teamsizeValidator(allowedSize: number): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } => {
             const invalid = control.value < allowedSize && control.value != null;
-            console.log(control.value);
-            console.log(invalid);
-            console.log('Name: ' + this.newTournament.name);
             return invalid ? {'teamsizeInvalid': {value: control.value}} : null;
         };
     }
