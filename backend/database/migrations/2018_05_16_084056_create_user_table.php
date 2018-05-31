@@ -19,16 +19,16 @@ class CreateUserTable extends Migration
             $table->string('user_first_name', 32);
             $table->string('user_last_name', 32);
             $table->string('user_email',64);
-            $table->string('user_description', 511);
-            $table->string('user_avatar_url', 255);
-            $table->char('user_salt', 126);
-            $table->char('user_password', 255);
-            $table->boolean('user_force_pw_change');
-            $table->boolean('user_force_name_change');
-            $table->boolean('user_guest');
+            $table->string('user_description', 511)->nullable();
+            $table->string('user_avatar_url', 255)->nullable();
+            $table->char('user_salt', 126)->nullable();
+            $table->char('user_password', 255)->nullable();
+            $table->boolean('user_force_pw_change')->nullable()->default(0);
+            $table->boolean('user_force_name_change')->nullable()->default(0);
+            $table->boolean('user_guest')->nullable()->default(0);
+            $table->string('user_webtoken')->nullable();
+            $table->boolean('user_isadmin')->nullable()->default(0);
             $table->timestamps();
-            $table->string('user_webtoken');
-            $table->boolean('user_isadmin');
 
             $table->unique("user_username");
             $table->unique("user_email");

@@ -73,13 +73,11 @@ class UserController extends Controller
     }
 
     public function register(Request $request){
-        //TODO: check for null values and validation.
-        $newUser = new User;
-        $newUser->user_username = $request->json('username');
-        $newUser->user_first_name = $request->json('first_name');
-        $newUser->user_last_name = $request->json('last_name');
-        $newUser->user_password = password_hash($request->json('password'), PASSWORD_BCRYPT);
-        $newUser->user_email = $request->json('email');
+        $data = $request->json()->all();
+
+        $newUser = new User();
+        $newUser->fill($data);
+        $newUser->user_password = password_hash($data['user_password'], PASSWORD_BCRYPT);
         $newUser->save();
         
         return $newUser;

@@ -85,11 +85,16 @@ export class TournamentNewComponent implements OnInit {
     submitForm() {
         this.api.post('tournament/new', this.newTournament).subscribe(
             succes => {
-                this.toastr.success("Tournament created!")
+                this.toastr.success("Tournament created!");
+            },
+            failure => {
+                this.toastr.error("Zie console");
+            },
+            () => {
+                this.router.navigate(['/tournaments']);
             }
         );
 
-        this.router.navigate(['/tournaments']);
     }
 
     teamsizeValidator(allowedSize: number): ValidatorFn {
