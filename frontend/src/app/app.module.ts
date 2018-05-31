@@ -31,7 +31,6 @@ import { ActiveaccountService } from './services/activeaccount.service';
         CreateaccountComponent,
         ForgotpasswordComponent,
         PasswordEqualValidator
-
     ],
     imports: [
         BrowserModule,
