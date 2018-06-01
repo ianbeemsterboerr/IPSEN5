@@ -132,7 +132,7 @@ export class EliminationComponent implements OnInit {
             return false;
         }
 
-        return bracket.length < nextBracket.length;
+        return bracket.length <= nextBracket.length;
     }
 
     getMatchById(id: number) {

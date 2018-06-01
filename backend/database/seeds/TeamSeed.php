@@ -11,7 +11,7 @@ class TeamSeed extends Seeder
      */
     public function run()
     {
-        factory(App\Team::class, 20)->create()->each(function ($u) {
+        factory(App\Team::class, 40)->create()->each(function ($u) {
             $memberCount = rand(1, 3);
             $members = factory(App\User::class, $memberCount)->create();
 

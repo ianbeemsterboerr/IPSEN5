@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {GameService} from "../../games/game.service";
 import {Game} from "../../games/game";
-import {Dummy_tournament} from "../../shared/model/dummy_tournament";
 import {ApiService} from "../../shared/api.service";
 import {Tournament} from "../../shared/model/tournament";
 

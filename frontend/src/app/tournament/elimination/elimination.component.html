@@ -40,7 +40,7 @@
                               [attr.y]="matchesY[match.id] + match_font_size"
                               class="match-text"
                               [ngStyle]="{'font-size': match_font_size + 'px'}">
-                            {{match.opponents[0]?.team.name || '?'}}
+                            {{(match.opponents[0]?.team.name| slice:0:10) || '?'}}
                         </text>
 
                         <!--Upper team score-->
@@ -58,7 +58,7 @@
                               [attr.y]="matchesY[match.id] + match_height/2 + match_font_size"
                               class="match-text"
                               [ngStyle]="{'font-size': match_font_size + 'px'}">
-                            {{match.opponents[1]?.team.name || '?'}}
+                            {{(match.opponents[1]?.team.name | slice:0:10) || '?'}}
                         </text>
 
                         <!--Lower team score-->
