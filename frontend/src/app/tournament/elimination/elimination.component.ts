@@ -1,113 +1,176 @@
-import { Component, OnInit } from '@angular/core';
-import {ApiService} from "../../shared/api.service";
-import {Dummy_tournament} from "../../shared/model/dummy_tournament";
+import {Component, OnInit} from '@angular/core';
 import {Match} from "../../shared/model/match";
-import {Bracket} from "../../shared/model/bracket";
+import {Tournament} from "../../shared/model/tournament";
+import {ActivatedRoute} from "@angular/router";
+import {TournamentService} from "../tournament.service";
 
 @Component({
-  selector: 'app-elimination',
-  templateUrl: './elimination.component.html',
-  styleUrls: ['./elimination.component.css']
+    selector: 'app-elimination',
+    templateUrl: './elimination.component.html',
+    styleUrls: ['./elimination.component.css']
 })
 export class EliminationComponent implements OnInit {
-  tournament: Dummy_tournament;
+    tournament: Tournament;
+    brackets = [];
+    loadingFinished: boolean = false;
 
-  matchesY: number[] =[];
-  matchesX: number[] =[];
+    matchesY: number[] = [];
+    matchesX: number[] = [];
 
-  match_width = 120;
-  match_height = 50;
-  match_font_size = this.match_height/2 - 5;
+    match_width = 120;
+    match_height = 50;
+    match_font_size = this.match_height / 2 - 5;
 
-  score_width = 30;
+    score_width = 30;
 
-  bracket_width = 150;
-  bracket_spacing = this.bracket_width - this.match_width;
+    bracket_width = 150;
+    bracket_spacing = this.bracket_width - this.match_width;
 
-  match_height_spacing = 20;
+    match_height_spacing = 20;
 
-  tournament_height = 0;
-  tournament_width = 0;
+    tournament_height = 0;
+    tournament_width = 0;
 
-  constructor(private api: ApiService) { }
-
-  ngOnInit() {
-    this.api.get<Dummy_tournament>('tournament/dummy', {teams: 200}).subscribe(
-      next=> {
-        this.onTournamentLoaded(next);
-        this.tournament = next;
-      }
-    )
-  }
-
-  onTournamentLoaded(tournament: Dummy_tournament) {
-    this.tournament_width = this.bracket_width * tournament.brackets.length;
-
-    for (let bracket of tournament.brackets) {
-      this.tournament_height = Math.max((this.match_height + this.match_height_spacing) * bracket.matches.length, this.tournament_height);
-    }
-    for (let bracket of tournament.brackets) {
-      for (let match of bracket.matches) {
-        this.matchesX[match.matchID] = this.getMatchXPosition(match, bracket, tournament);
-        this.matchesY[match.matchID] = this.getMatchYPosition(match, bracket, tournament);
-      }
-    }
-  }
-
-  getNextBracket(bracket: Bracket, tournament: Dummy_tournament) {
-    const current_index = tournament.brackets.indexOf(bracket);
-
-    if (current_index == tournament.brackets.length - 1) {
-      return null;
+    constructor(
+        private tournamentService: TournamentService,
+        private route: ActivatedRoute
+    ) {
     }
 
-    return tournament.brackets[current_index + 1];
-  }
+    ngOnInit() {
+        this.route.params.subscribe(params => {
+            const id = +params['id'];
 
-  nextBracketBigger(bracket: Bracket, tournament: Dummy_tournament): boolean {
-    const nextBracket = this.getNextBracket(bracket, tournament);
-
-    if (nextBracket == null) {
-      return false;
+            this.tournamentService.getTournament(id).subscribe(
+                tournament => {
+                    this.tournament = tournament;
+                    this.loadTournament(tournament);
+                },
+                error => {/*todo: resolve error case*/},
+                () => {}
+            )
+        });
     }
 
-    return bracket.matches.length < nextBracket.matches.length;
-  }
+    loadTournament(tournament: Tournament) {
+        const finale: Match = this.findFinale(tournament.matches);
+        const bracket = [finale];
 
-  static getMatchByIdAndBracket(id: number, bracket: Bracket) {
-    for (let match of bracket.matches) {
-      if (match.matchID == id) {
-        return match;
-      }
+        this.brackets.unshift(bracket);
+        this.loadNextBracket(bracket);
+
+        this.onTournamentLoaded();
+        this.loadingFinished = true;
     }
 
-    return null;
-  }
+    private loadNextBracket(last_bracket: Match[]) {
+        let new_bracket = [];
 
-  getMatchXPosition(match: Match, bracket: Bracket, tournament: Dummy_tournament) {
-    return tournament.brackets.indexOf(bracket) * this.bracket_width;
-  }
+        for (let match of last_bracket) {
+            const matches = this.findMatchesWithParent(match);
+            new_bracket = new_bracket.concat(matches);
+        }
 
-  getMatchYPosition(match: Match, bracket: Bracket, tournament: Dummy_tournament) {
-    if (!this.nextBracketBigger(bracket, tournament)) {
-      const availableSpace = this.tournament_height - bracket.matches.length * this.match_height;
-      const spacing = availableSpace / bracket.matches.length;
-      const index = bracket.matches.indexOf(match);
-      return index * this.match_height + index * spacing + spacing / 2;
+        if (new_bracket.length > 0) {
+            this.brackets.unshift(new_bracket);
+            this.loadNextBracket(new_bracket);
+        }
     }
 
-    const nextBracket = this.getNextBracket(bracket, tournament);
-    const nextMatch = EliminationComponent.getMatchByIdAndBracket(match.nextMatch, nextBracket);
+    private findMatchesWithParent(parent: Match) {
+        const matches = [];
 
-    return this.getMatchYPosition(nextMatch, nextBracket, tournament)
-  }
+        for (let match of this.tournament.matches) {
+            if (match.parent_match_id == parent.id) {
+                matches.push(match);
+            }
+        }
 
-  generatePointString(matchA: number, matchB: number) {
-    const a = (this.matchesX[matchA] + this.match_width) + ', ' + (this.matchesY[matchA] + this.match_height/2) ;
-    const b = (this.matchesX[matchA] + this.match_width + this.bracket_spacing/2) + ', ' + (this.matchesY[matchA] + this.match_height/2);
-    const c = (this.matchesX[matchB] - this.bracket_spacing/2) + ', ' + (this.matchesY[matchB] + this.match_height/2);
-    const d = (this.matchesX[matchB]) + ', ' + (this.matchesY[matchB] + this.match_height/2);
+        return matches;
+    }
 
-    return a + ', ' + b + ', ' + c + ', ' +  d;
-  }
+    private findFinale(matches: Match[]) {
+        for (let match of matches) {
+            if (match.parent_match_id == null) {
+                return match;
+            }
+        }
+
+        return null;
+    }
+
+    onTournamentLoaded() {
+        this.tournament_width = this.bracket_width * this.brackets.length;
+
+        console.log(this.brackets);
+        for (let bracket of this.brackets) {
+            this.tournament_height = Math.max((this.match_height + this.match_height_spacing) * bracket.length, this.tournament_height);
+        }
+
+        for (let bracket of this.brackets) {
+            for (let match of bracket) {
+                this.matchesX[match.id] = this.getMatchXPosition(match, bracket);
+                this.matchesY[match.id] = this.getMatchYPosition(match, bracket);
+            }
+        }
+    }
+
+    getNextBracket(bracket) {
+        const current_index = this.brackets.indexOf(bracket);
+
+        if (current_index == this.brackets.length - 1) {
+            return null;
+        }
+
+        return this.brackets[current_index + 1];
+    }
+
+    isNextBracketBigger(bracket): boolean {
+        const nextBracket = this.getNextBracket(bracket);
+
+        if (nextBracket == null) {
+            return false;
+        }
+
+        return bracket.length < nextBracket.length;
+    }
+
+    getMatchById(id: number) {
+        for (let match of this.tournament.matches) {
+            if (match.id == id) {
+                return match;
+            }
+        }
+
+        return null;
+    }
+
+    getMatchXPosition(match: Match, bracket) {
+        return this.brackets.indexOf(bracket) * this.bracket_width;
+    }
+
+    getMatchYPosition(match: Match, bracket) {
+        if (!this.isNextBracketBigger(bracket)) {
+            const availableSpace = this.tournament_height - bracket.length * this.match_height;
+            const spacing = availableSpace / bracket.length;
+            const index = bracket.indexOf(match);
+            return index * this.match_height + index * spacing + spacing / 2;
+        }
+
+        const nextBracket = this.getNextBracket(bracket);
+        const nextMatch = this.getMatchById(match.parent_match_id);
+
+        return this.getMatchYPosition(nextMatch, nextBracket)
+    }
+
+    generatePointString(matchA: number, matchB: number) {
+        const a = (this.matchesX[matchA] + this.match_width) + ', ' + (this.matchesY[matchA] + this.match_height / 2);
+        const b = (this.matchesX[matchA] + this.match_width + this.bracket_spacing / 2) + ', ' + (this.matchesY[matchA] + this.match_height / 2);
+        const c = (this.matchesX[matchB] - this.bracket_spacing / 2) + ', ' + (this.matchesY[matchB] + this.match_height / 2);
+        const d = (this.matchesX[matchB]) + ', ' + (this.matchesY[matchB] + this.match_height / 2);
+
+        return `${a}, ${b}, ${c}, ${d}`;
+    }
+
+
 }

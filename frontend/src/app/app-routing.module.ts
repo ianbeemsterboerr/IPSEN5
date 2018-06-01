@@ -8,6 +8,7 @@ import {LoginComponent} from './login/login.component';
 import {ForgotpasswordComponent} from './forgotpassword/forgotpassword.component';
 import {CreateaccountComponent} from './createaccount/createaccount.component';
 import {TournamentComponent} from "./tournament/tournament/tournament.component";
+import {EliminationComponent} from "./tournament/elimination/elimination.component";
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
     {path: 'tournaments', component: TournamentHomeComponent},
     {path: 'tournaments/new', component: TournamentNewComponent},
     {path: 'tournaments/:id', component: TournamentComponent},
+    {path: 'tournaments/overview/:id', component: EliminationComponent},
 ];
 
 @NgModule({
