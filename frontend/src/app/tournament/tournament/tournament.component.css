@@ -1,3 +1,21 @@
 * {
-    color: #FFF;
+    color: #000000;
+}
+
+#status-page {
+  background-color: #464646;
+  margin-top: 10px;
+}
+
+.jumbotron {
+  height: 100px;
+  padding-top: 20px;
+}
+
+.btn {
+  margin: 5px;
+}
+
+table{
+  width: 100%;
 }
