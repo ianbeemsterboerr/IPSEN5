@@ -20,10 +20,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'user_password', 'user_username', 'user_email', 'user_first_name', 'user_last_name', 'user_email', 'user_description', 'user_avatar_url', 'user_salt', 'user_force_pw_change', 'user_force_name_change', 'user_guest', 'user_webtoken', 'user_isadmin'
+        'username', 'password', 'email', 'first_name', 'last_name', 'email', 'description', 'avatar_url', 'salt', 'force_pw_change', 'force_name_change', 'guest'
     ];
     protected $visible =[
-        'id', 'user_username', 'user_first_name', 'user_last_name', 'user_description', 'user_avatar_url',  'user_guest', 'user_isadmin'
+        'id', 'username', 'first_name', 'last_name', 'description', 'avatar_url',  'guest', 'isadmin'
     ];
     /**
      * The attributes excluded from the model's JSON form.
@@ -31,6 +31,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $hidden = [
-        'user_email', 'user_salt', 'user_force_pw_change', 'user_force_name_change', 'user_webtoken'
+        'email', 'salt', 'force_pw_change', 'force_name_change', 'webtoken'
     ];
 }

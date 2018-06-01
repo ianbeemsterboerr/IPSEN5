@@ -1,8 +1,9 @@
 import {Team} from "./team";
 
-export class Enrollment {
+export class Opponent {
     constructor (
-        public tournament_id: number,
+        public id: number,
+        public match_id: number,
         public team_id: number,
         public team?: Team
     ) {}

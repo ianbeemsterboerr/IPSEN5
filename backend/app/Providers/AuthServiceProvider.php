@@ -36,7 +36,7 @@ class AuthServiceProvider extends ServiceProvider
                 $token = str_replace('Bearer ','', $request->header('Authorization'));
                 $jwt = JWT::decode($token, "JWT", array('HS256'));
 
-                $user =  User::whereUserUsername($jwt->user_username)->first();
+                $user =  User::whereUsername($jwt->username)->first();
 
                 $request->merge(['user' => $user ]);
                 $request->setUserResolver(function () use ($user) {

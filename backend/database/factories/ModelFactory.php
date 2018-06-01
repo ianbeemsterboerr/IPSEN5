@@ -13,26 +13,25 @@
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
-        'user_username' => $faker->userName,
-        'user_first_name' => $faker->firstName,
-        'user_last_name' => $faker->lastName,
-        'user_email' => $faker->email,
-        'user_description' => $faker->text($maxNbChars = 200),
-        'user_salt' => str_random(126),
-        'user_password' => password_hash('welkom123', PASSWORD_BCRYPT),
-        'user_force_pw_change' => false,
-        'user_force_name_change' => false,
-        'user_guest' => false,
-        'user_webtoken' => str_random(255),
-        'user_isadmin' => 0
+        'username' => $faker->userName,
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'email' => $faker->email,
+        'description' => $faker->text($maxNbChars = 200),
+        'salt' => str_random(126),
+        'password' => password_hash('welkom123', PASSWORD_BCRYPT),
+        'force_pw_change' => false,
+        'force_name_change' => false,
+        'guest' => false,
+        'isadmin' => false
     ];
 });
 
 $factory->define(App\Tournament::class, function (Faker\Generator $faker) {
     return [
         'organizer_user_id' => App\User::inRandomOrder()->get()->first()->id,
-        'gamename' => str_random(10),
-        'tournament_typename' => str_random(10),
+        'gamename' => 'Fifa',
+        'tournament_typename' => 'Single elimination',
         'signup_typename' => str_random(10),
         'name' => $faker->company,
         'description' => $faker->text($maxNbChars = 50),

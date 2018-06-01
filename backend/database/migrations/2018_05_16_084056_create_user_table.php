@@ -15,23 +15,23 @@ class CreateUserTable extends Migration
     {
         Schema::create('user', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('user_username', 20);
-            $table->string('user_first_name', 32);
-            $table->string('user_last_name', 32);
-            $table->string('user_email',64);
-            $table->string('user_description', 511)->nullable();
-            $table->string('user_avatar_url', 255)->nullable();
-            $table->char('user_salt', 126)->nullable();
-            $table->char('user_password', 255)->nullable();
-            $table->boolean('user_force_pw_change')->nullable()->default(0);
-            $table->boolean('user_force_name_change')->nullable()->default(0);
-            $table->boolean('user_guest')->nullable()->default(0);
-            $table->string('user_webtoken')->nullable();
-            $table->boolean('user_isadmin')->nullable()->default(0);
+            $table->string('username', 20);
+            $table->string('first_name', 32);
+            $table->string('last_name', 32);
+            $table->string('email',64);
+            $table->string('description', 511)->nullable();
+            $table->string('avatar_url', 255)->nullable();
+            $table->char('salt', 126)->nullable();
+            $table->char('password', 255)->nullable();
+            $table->boolean('force_pw_change')->nullable()->default(0);
+            $table->boolean('force_name_change')->nullable()->default(0);
+            $table->boolean('guest')->nullable()->default(0);
+            $table->string('webtoken')->nullable();
+            $table->boolean('isadmin')->nullable()->default(0);
             $table->timestamps();
 
-            $table->unique("user_username");
-            $table->unique("user_email");
+            $table->unique("username");
+            $table->unique("email");
         });
     }
 

@@ -18,6 +18,18 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Match extends Model
 {
-    //protected $fillable = [''];
+    protected $table = 'match';
+    protected $fillable = ['parent_match_id', 'tournament_id'];
 
+    public function opponents() {
+        return $this->hasMany('App\Opponent');
+    }
+
+    public function parentMatch() {
+        return $this->hasOne('App\Match', 'id', 'parent_match_id');
+    }
+
+    public function tournament() {
+        return $this->belongsTo('App\Tournament');
+    }
 }

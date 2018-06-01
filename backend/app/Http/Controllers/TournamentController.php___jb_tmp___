@@ -51,14 +51,11 @@ class TournamentController extends Controller
         return Response::HTTP_OK;
     }
 
-<<<<<<< HEAD
-
-=======
     public function runMatchmaker(int $id) {
         $tournament = Tournament::find($id);
 
         $controller = TournamentFactory::getTournamentController($tournament);
         $controller->runMatchmaker($tournament);
     }
->>>>>>> dev
+
 }
