@@ -57,5 +57,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('dummy', 'TournamentController@createDummyTournament');
         $router->get('names', 'TournamentController@getNames');
     });
+
+    $router->group(['prefix' => 'rating'], function () use ($router) {
+        $router->post('postresults', 'RatingController@postResults');
+    }
 });
 
