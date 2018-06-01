@@ -21,15 +21,15 @@ class Match extends Model
     protected $table = 'match';
     protected $fillable = ['parent_match_id', 'tournament_id'];
 
-    public function results() {
-        return $this->hasMany('App\Result');
+    public function opponents() {
+        return $this->hasMany('App\Opponent');
     }
 
     public function parentMatch() {
         return $this->hasOne('App\Match', 'id', 'parent_match_id');
     }
 
-    public function tournamnt() {
+    public function tournament() {
         return $this->belongsTo('App\Tournament');
     }
 }

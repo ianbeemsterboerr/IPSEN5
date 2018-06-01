@@ -18,7 +18,7 @@ class CreateResultsTable extends Migration
             $table->integer('score');
             $table->timestamps();
 
-            $table->foreign('opponent_id')->references('id')->on('opponent');
+            $table->foreign('opponent_id')->references('id')->on('opponent')->onDelete('CASCADE');
             $table->primary('opponent_id');
         });
     }

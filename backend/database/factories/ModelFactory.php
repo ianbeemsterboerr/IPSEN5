@@ -30,8 +30,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Tournament::class, function (Faker\Generator $faker) {
     return [
         'organizer_user_id' => App\User::inRandomOrder()->get()->first()->id,
-        'gamename' => str_random(10),
-        'tournament_typename' => str_random(10),
+        'gamename' => 'Fifa',
+        'tournament_typename' => 'Single elimination',
         'signup_typename' => str_random(10),
         'name' => $faker->company,
         'description' => $faker->text($maxNbChars = 50),

@@ -14,13 +14,9 @@ use Illuminate\Database\Eloquent\Model;
 class Result extends Model
 {
     protected $table = 'result';
-    protected $fillable = ['match_id', 'team_id', 'score'];
+    protected $fillable = ['score'];
 
-    public function match() {
-        return $this->belongsTo('App\Match');
-    }
-
-    public function team() {
-        return $this->hasOne('App\Team');
+    public function opponent() {
+        return $this->belongsTo('App\Opponent');
     }
 }

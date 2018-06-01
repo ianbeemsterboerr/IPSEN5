@@ -19,7 +19,7 @@ class CreateOpponentTable extends Migration
             $table->integer('team_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('match_id')->references('id')->on('match');
+            $table->foreign('match_id')->references('id')->on('match')->onDelete('CASCADE');
             $table->foreign('team_id')->references('id')->on('team');
         });
     }

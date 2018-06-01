@@ -19,16 +19,27 @@ use PDO;
 
 class TournamentController extends Controller
 {
+    public function getAll() {
+        return Tournament::all();
+    }
+
     public function get(int $id) {
-        return (string) Tournament::with(['enrollments.team.teamMembers.user', 'enrollments.team.teamLeader', 'organiser'])->find($id);
+        return Tournament::with(
+            [
+                'enrollments.team.teamMembers.user',
+                'enrollments.team.teamLeader',
+                'matches.opponents.team',
+                'organiser'
+            ]
+        )->find($id);
+    }
+
+    public function getMatchOverview(int $id) {
+        return (string) Tournament::with(['matches.opponents.team'])->find($id);
     }
 
     public function getNames(Request $request){
         return Tournament::all(['name']);
-    }
-
-    public function getAll() {
-        return Tournament::all();
     }
 
     public function createTournament(Request $request) {
@@ -40,4 +51,10 @@ class TournamentController extends Controller
         return Response::HTTP_OK;
     }
 
+    public function runMatchmaker(int $id) {
+        $tournament = Tournament::find($id);
+
+        $controller = TournamentFactory::getTournamentController($tournament);
+        $controller->runMatchmaker($tournament);
+    }
 }

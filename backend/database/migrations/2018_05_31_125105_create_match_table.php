@@ -15,14 +15,14 @@ class CreateMatchTable extends Migration
     {
         Schema::create('match', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parent_match_id')->unsigned();
+            $table->integer('parent_match_id')->nullable()->unsigned();
             $table->integer('tournament_id')->unsigned();
             $table->timestamps();
         });
 
         Schema::table('match', function (Blueprint $table) {
-            $table->foreign('parent_match_id')->references('id')->on('match');
-            $table->foreign('tournament_id')->references('id')->on('tournament');
+            $table->foreign('parent_match_id')->references('id')->on('match')->onDelete('CASCADE');
+            $table->foreign('tournament_id')->references('id')->on('tournament')->onDelete('CASCADE');
         });
     }
 

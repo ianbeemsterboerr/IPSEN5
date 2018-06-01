@@ -1,10 +1,11 @@
 import {Team} from "./team";
+import {Opponent} from "./opponent";
 
 export class Match {
   constructor (
-    public matchID: number,
-    public teams: Team[],
-    public nextMatch: number, //id
-    public previousMatches: number[] //id's
+    public id: number,
+    public parent_match_id: number,
+    public tournament_id: number,
+    public opponents: Opponent[],
   ) {}
 }

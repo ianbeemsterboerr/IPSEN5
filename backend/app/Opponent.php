@@ -21,6 +21,10 @@ class Opponent extends Model
     }
 
     public function team() {
-        return $this->hasOne('App\Team');
+        return $this->hasOne('App\Team', 'id', 'team_id');
+    }
+
+    public function result() {
+        return $this->hasOne('App\Result');
     }
 }
