@@ -14,9 +14,10 @@ import {Team} from '../../shared/model/team';
 })
 export class TournamentComponent implements OnInit {
     public tournament: Tournament;
-
+    public users: User[];
     public today: Date = new Date();
     public start: Date;
+    //public stringarray = ['lol', 'lmao', 'xd'];
 
     constructor(
         private tournamentService: TournamentService,
@@ -35,5 +36,27 @@ export class TournamentComponent implements OnInit {
                 () => {}
             );
         });
+    }
+
+    public getUserList(){
+        console.log('getuserlist activated')
+        this.tournamentService.getAllUsers().subscribe(
+            data=>{
+                this.users = data;
+            }
+        );
+        console.log(this.users);
+    }
+
+    public invite(id){
+        this.tournamentService.inviteForTournament(this.tournament.id, id).subscribe(
+            data=>{
+                console.log(data);
+                //give notification of success.
+            },err=>{
+                //give notification of error.
+                console.log(err);
+            }
+        )
     }
 }

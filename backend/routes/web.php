@@ -32,6 +32,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
         $router->group(['prefix' => 'tournament'], function () use ($router) {
             $router->post('new', 'TournamentController@createTournament');
+            $router->post('invite', 'TournamentController@invite');
         });
 
     });

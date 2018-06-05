@@ -58,4 +58,11 @@ class TournamentController extends Controller
         $controller->runMatchmaker($tournament);
     }
 
+    public function invite(Request $request){
+        $userid = $request->json()->get('userId');
+        $tournamentid = $request->json()->get('tournamentId');
+        //HANDLE INVITE LOGIC HERE
+        return $userid;
+    }
+
 }
