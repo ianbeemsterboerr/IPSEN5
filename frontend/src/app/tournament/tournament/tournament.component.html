@@ -47,7 +47,10 @@
 
                 <td>{{enrollment.team.name}}</td>
                 <td>{{enrollment.team.team_leader.username}}</td>
-                <td>fix this</td>
+                <td>
+                  <div *ngFor="let member of enrollment.team.team_members">{{member.user.username}}</div>
+                </td>
+                <!--<td *ngIf="enrollment.team.team_members[0]">{{enrollment.team.team_members[0].user.username}}</td>-->
               </tr>
             </tbody>
           </table>
