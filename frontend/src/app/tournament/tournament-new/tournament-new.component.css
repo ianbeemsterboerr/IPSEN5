@@ -1,31 +1,12 @@
-#tournament_inputs{
-  color: #2e2e2e;
-  margin: 30px;
-  padding: 30px;
-  background: #cccccc;
-  border-radius: 25px;
+form{
+  background-color: #ccc ;
+  margin: 10px;
 }
 
-input, select{
-  padding: 5px;
-  border: 1px solid #2e2e2e;
-  border-radius: 10px;
-  width: 80%
+.form-group{
+  margin-right: 0px;
 }
 
-label{
-  width: 20%;
-  float:left;
-}
-
-.row{
-  padding: 5px;
-}
-
-#signupOptions{
-  margin-bottom: 20px;
-  margin-top: 20px;
-}
 
 #description{
   height: 50px;

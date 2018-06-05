@@ -1,19 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {GameService} from "../../games/game.service";
+import {Game} from "../../games/game";
+import {ApiService} from "../../shared/api.service";
+import {Tournament} from "../../shared/model/tournament";
+
 @Component({
-  selector: 'app-tournament-home',
-  templateUrl: './tournament-home.component.html',
-  styleUrls: ['./tournament-home.component.css']
+    selector: 'app-tournament-home',
+    templateUrl: './tournament-home.component.html',
+    styleUrls: ['./tournament-home.component.css']
 })
 export class TournamentHomeComponent implements OnInit {
 
-  constructor(private router: Router) { }
+    tournaments: Tournament[];
 
-  ngOnInit() {
-  }
+    constructor(private gameService: GameService, private api: ApiService) {
+    }
 
-  goTournamentNew() {
-    this.router.navigate(['tournamentNew']);
-  }
+    ngOnInit() {
+        this.api.get<Tournament[]>('tournament/all').subscribe(
+            data => {
+                this.tournaments = data;
+            },
+            error => {
+
+            }
+        );
+    }
+
+    getGames(): Game[] {
+        return this.gameService.availableGames;
+    }
 
 }

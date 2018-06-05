@@ -9,26 +9,31 @@
 namespace App;
 
 
-class Match
-{
-    public $matchID;
-    public $teams = [];
-    public $nextMatch;
-    public $previousMatches = [];
+use Illuminate\Database\Eloquent\Model;
 
-    /**
-     * Match constructor.
-     * @param array $teams
-     * @param Tournament $tournament
-     */
-    public function __construct(array $teams, Tournament $tournament)
-    {
-        $this->teams = $teams;
-        $this->matchID = $tournament->getMatchID();
+/**
+ * App\Match
+ *
+ * @mixin \Eloquent
+ */
+class Match extends Model
+{
+    protected $table = 'match';
+    protected $fillable = ['parent_match_id', 'tournament_id'];
+
+    public function opponents() {
+        return $this->hasMany('App\Opponent');
     }
 
-    public function connect(Match &$other) {
-        array_push($this->previousMatches, $other->matchID);
-        $other->nextMatch = $this->matchID;
+    public function parentMatch() {
+        return $this->hasOne('App\Match', 'id', 'parent_match_id');
+    }
+
+    public function childMatches() {
+        return $this->hasMany('App\Match', 'parent_match_id', 'id');
+    }
+
+    public function tournament() {
+        return $this->belongsTo('App\Tournament');
     }
 }

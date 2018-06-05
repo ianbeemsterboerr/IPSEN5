@@ -14,52 +14,73 @@ class UserController extends Controller
      * Retrieve the user for the given ID.
      *
      * @param  int $id
-     * @return Response
+     * @return User[]|\Illuminate\Database\Eloquent\Collection
      */
     public function getAll(Request $request)
     {
         return User::all();
     }
 
+    public function getUserNames() {
+        return User::all(['username']);
+    }
 
     public function login(Request $request)
     {
-        $user_username = $request->json('user_username');
-        $user_password = $request->json('user_password');
+        $username = $request->json('username');
+        $password = $request->json('password');
 
-        $user = User::where('user_username', $user_username)->first();
+        $userFromDatabase = User::whereUsername($username)->first();
 
-
-        if ($user === null) {
-            return response()->json(array(
-                'status' => 'error',
-                'message' => 'Unauthorized, User doesnt exist'
-            ), 401);
+        if (is_null($userFromDatabase)) {
+            return response()->json(
+                array(
+                    'status' => 'error',
+                    'message' => 'Unauthorized, User doesnt exist'
+                ),
+                401
+            );
         }
 
-        if ($user_password == $user->user_password) {
+        //$hashedPassword = app('hash')->make($plainPassword);
+        if (password_verify($password, $userFromDatabase->password)) {
             $key = "JWT";
             $token = array(
                 "iss" => "compufifi.test",
                 "aud" => "angularClient",
-                "isadmin" => $user->user_isadmin,
-                "user_username" => $user->user_username
+                "isadmin" => $userFromDatabase->isadmin,
+                "username" => $userFromDatabase->username
             );
             $jwt = JWT::encode($token, $key, 'HS256');
             //TO DO: FIX BEARER SYSTEM
             $jwtstring = array(
                 "bearer" => $jwt,
-                "activeUserId" => $user->user_id
+                "activeUserId" => $userFromDatabase->id,
+                "user" => (string) $userFromDatabase
             );
             return json_encode($jwtstring);
             // return json_encode(JWT::decode($jwt, $key, array('HS256')));
         } else {
-            abort(401);
+            return response()->json(array(
+                'status' => 'error',
+                'message' => 'Unauthorized, Wrong password'
+            ), 401);
         }
     }
 
     public function get(int $id)
     {
-        return User::where('user_id', $id)->first();
+        return User::find($id);
+    }
+
+    public function register(Request $request){
+        $data = $request->json()->all();
+
+        $newUser = new User();
+        $newUser->fill($data);
+        $newUser->password = password_hash($data['password'], PASSWORD_BCRYPT);
+        $newUser->save();
+        
+        return $newUser;
     }
 }

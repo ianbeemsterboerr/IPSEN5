@@ -1,11 +1,25 @@
-import {Team} from "./team";
-import {Bracket} from "./bracket";
+import {User} from "./user";
+import {Enrollment} from "./enrollment";
+import {Match} from "./match";
 
 export class Tournament {
-  constructor(
-    public team: Team[],
-    public brackets: Bracket[]
-  ) {
+    constructor (
+        public organizer: User,
+        public gamename: string,
+        public tournament_typename: string,
+        public signup_typename: string,
+        public name: string,
+        public description: string,
+        public max_team_size: number,
+        public signup_start: Date,
+        public signup_end: Date,
+        public tournament_start: Date,
+        public id?: number,
+        public enrollments?: Enrollment[],
+        public matches?: Match[],
+        public created_at?: Date,
+        public updated_at?: Date
+    ) {
 
-  }
+    }
 }

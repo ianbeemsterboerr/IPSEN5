@@ -13,77 +13,48 @@ use App\Team;
 use Illuminate\Http\Request;
 use App\Tournament;
 
+use Illuminate\Http\Response;
 use PDO;
 
 
 class TournamentController extends Controller
 {
-
-
-    public function createDummyTournament(Request $request) {
-        $team_count = $request->get('teams');
-        $teams = [];
-
-//        Generate dummy teams
-        for ($i = 0; $i < $team_count; $i++) {
-            array_push($teams, new Team(null, 'Team ' . $i));
-        }
-
-        $tournament = new Tournament($teams);
-
-        return $tournament->serialize();
+    public function getAll() {
+        return Tournament::all();
     }
 
+    public function get(int $id) {
+        return Tournament::with(
+            [
+                'enrollments.team.teamMembers.user',
+                'enrollments.team.teamLeader',
+                'matches.opponents.team',
+                'organiser'
+            ]
+        )->find($id);
+    }
+
+    public function getMatchOverview(int $id) {
+        return (string) Tournament::with(['matches.opponents.team'])->find($id);
+    }
+
+    public function getNames(Request $request){
+        return Tournament::all(['name']);
+    }
 
     public function createTournament(Request $request) {
+        $tournament = new Tournament();
+        $tournament->fill($request->json()->all());
+        $tournament->organizer_user_id = $request->user()->id;
+        $tournament->save();
 
-
-
-
-//        $results = \DB::select("SELECT * FROM tournaments");
-
-        $servername = "127.0.0.1";
-        $username = "homestead";
-        $password = "secret";
-        $database = "homestead";
-
-        $connection = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
-
-
-        $statement = $connection->prepare("INSERT INTO tournaments (organizer_userID, gamename,
-          tournament_typename, signup_typename, name, description, max_team_size, signup_start,
-          signup_end, tournament_start) VALUES (:organizer_userID, :gamename,
-          :tournament_typename, :signup_typename, :name, :description, :max_team_size, :signup_start,
-          :signup_end, :tournament_start)");
-
-
-        $statement->bindParam(':organizer_userID', $organizer_userID);
-        $statement->bindParam(':gamename', $gamename);
-        $statement->bindParam(':tournament_typename', $tournament_typename);
-        $statement->bindParam(':signup_typename', $signup_typename);
-        $statement->bindParam(':name', $name);
-        $statement->bindParam(':description', $description);
-        $statement->bindParam(':max_team_size', $max_team_size);
-        $statement->bindParam(':signup_start', $signup_start);
-        $statement->bindParam(':signup_end', $signup_end);
-        $statement->bindParam(':tournament_start', $tournament_start);
-
-
-        $organizer_userID = $request->input('organizer_ID');
-        $gamename = $request->input('game');
-        $tournament_typename = $request->input('type');;
-        $signup_typename = $request->input('signupType');
-        $name = $request->input('name');
-        $description = $request->input('description');
-        $max_team_size = $request->input('teamSize');
-        $signup_start = $request->input('signupStart');
-        $signup_end = $request->input('signupStart');
-        $tournament_start = $request->input('date');
-
-        $statement->execute();
-
-        return json_encode("Tournament submitted.");
-
+        return Response::HTTP_OK;
     }
 
+    public function runMatchmaker(int $id) {
+        $tournament = Tournament::find($id);
+
+        $controller = TournamentFactory::getTournamentController($tournament);
+        $controller->runMatchmaker($tournament);
+    }
 }

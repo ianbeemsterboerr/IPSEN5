@@ -1,11 +1,6 @@
 <header class="page-header" [ngStyle]="{ 'background-image': 'url(' + gameservice.getActiveGame().header_img + ')'}">
     <div id="header-content">
 
-        <!--Game selection select-->
-        <!--<select class='form-control bg-dark' id="game-picker" [(ngModel)]='activeGame' (ngModelChange)='onGameChanged($event)' title="game">-->
-        <!--<option class='option' *ngFor='let game of gameservice.availableGames' [ngValue]="game">{{game.title}}</option>-->
-        <!--</select>-->
-
         <img id="logo" src="/assets/img/computest.png"/>
 
         <div id="header_title" [routerLink]="['/']">
@@ -19,7 +14,7 @@
     <app-sidebar></app-sidebar>
 
     <div id="content-container" class="w-100">
-        <div id="login-warning">
+        <div *ngIf="activeAccountService.loggedIn == false" id="login-warning">
             Je bent momenteel niet ingelogd. <a routerLink="/login">Klik hier</a> om in te loggen.
         </div>
 

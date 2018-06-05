@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-
+import { PasswordEqualValidator } from './shared/passwordconfirmation.directive';
 
 import { TournamentHomeComponent } from './tournament/tournament-home/tournament-home.component';
 import { TournamentNewComponent } from './tournament/tournament-new/tournament-new.component';
@@ -19,9 +19,11 @@ import {LoginComponent} from './login/login.component';
 import {CreateaccountComponent} from './createaccount/createaccount.component';
 import {ForgotpasswordComponent} from './forgotpassword/forgotpassword.component';
 import {FormsModule} from "@angular/forms";
+import {ReactiveFormsModule} from '@angular/forms';
 import {TournamentModule} from "./tournament/tournament.module";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ToastrModule} from "ngx-toastr";
+import { ActiveaccountService } from './services/activeaccount.service';
 
 
 @NgModule({
@@ -31,8 +33,7 @@ import {ToastrModule} from "ngx-toastr";
         LoginComponent,
         CreateaccountComponent,
         ForgotpasswordComponent,
-        TournamentHomeComponent,
-        TournamentNewComponent
+        PasswordEqualValidator
     ],
     imports: [
         BrowserModule,
@@ -40,6 +41,7 @@ import {ToastrModule} from "ngx-toastr";
         SharedModule,
         HomeModule,
         FormsModule,
+        ReactiveFormsModule,
         HttpClientModule,
         TournamentModule,
         NgbModule.forRoot(),
@@ -50,7 +52,8 @@ import {ToastrModule} from "ngx-toastr";
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
             multi: true
-        }
+        },
+        ActiveaccountService
     ],
     bootstrap: [AppComponent]
 })

@@ -1,0 +1,4 @@
+<div *ngIf="tournament">
+    <h2>{{tournament.name}}</h2>
+    <p>Signups ending in: <app-countdown [target_date]="tournament.signup_end"></app-countdown></p>
+</div>

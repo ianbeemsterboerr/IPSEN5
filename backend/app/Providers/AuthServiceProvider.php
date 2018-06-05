@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Firebase\JWT\JWT;
 use App\User;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -32,19 +32,21 @@ class AuthServiceProvider extends ServiceProvider
         // the User instance via an API token or any other method necessary.
 
         $this->app['auth']->viaRequest('api', function ($request) {
-            if ($request->header('bearer')) {
-                $user;
-                $jwt = JWT::decode($request->header('bearer'), "JWT", array('HS256'));
-                if ($jwt->isadmin)
-                {
-                    $user =  User::where('user_username', $jwt->user_username)->first();
-                } 
-                else
-                {
-                    $user = json_encode($jwt);
-                }
+            if ($request->header('Authorization')) {
+                $token = str_replace('Bearer ','', $request->header('Authorization'));
+                $jwt = JWT::decode($token, "JWT", array('HS256'));
+
+                $user =  User::whereUsername($jwt->username)->first();
+
+                $request->merge(['user' => $user ]);
+                $request->setUserResolver(function () use ($user) {
+                    return $user;
+                });
+
                 return $user;
             }
+
+            return null;
         });
     }
 }

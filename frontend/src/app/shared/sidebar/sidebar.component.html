@@ -13,7 +13,7 @@
             </a>
         </li>
         <li class="navItem">
-            <a [routerLink]="['/tournamentHome']">
+            <a [routerLink]="['/tournaments']">
                 <fa name="flag-checkered" style="color: lawngreen;"></fa>
                 <div class="item-name" [@expanded]="state">Toernooien</div>
             </a>
@@ -23,6 +23,11 @@
                 <fa name="trophy" style="color: yellow;"></fa>
                 <div class="item-name" [@expanded]="state">Hall Of Fame</div>
             </a>
+        </li>
+        <li>
+            <select class="" id="game-picker" [(ngModel)]='activeGame' (ngModelChange)='onGameChanged()' title="game" [@expanded]="state">
+                <option class='option' *ngFor='let game of gameService.availableGames' [ngValue]="game">{{game.title}}</option>
+            </select>
         </li>
     </ul>
 </nav>

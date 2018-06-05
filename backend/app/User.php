@@ -8,21 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
+
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable;
     protected $table = 'user';
-    protected $primaryKey = 'user_id';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'user_id', 'user_password', 'user_username', 'user_email', 'user_first_name', 'user_last_name', 'user_email', 'user_description', 'user_avatar_url', 'user_salt', 'user_force_pw_change', 'user_force_name_change', 'user_guest', 'user_webtoken', 'user_isadmin'
+        'username', 'password', 'email', 'first_name', 'last_name', 'email', 'description', 'avatar_url', 'salt', 'force_pw_change', 'force_name_change', 'guest'
     ];
     protected $visible =[
-        'user_id', 'user_username', 'user_email', 'user_first_name', 'user_last_name', 'user_email', 'user_description', 'user_avatar_url', 'user_salt', 'user_force_pw_change', 'user_force_name_change', 'user_guest', 'user_webtoken', 'user_isadmin'
+        'id', 'username', 'first_name', 'last_name', 'description', 'avatar_url',  'guest', 'isadmin'
     ];
     /**
      * The attributes excluded from the model's JSON form.
@@ -30,6 +31,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $hidden = [
-        'user_password'
+        'email', 'salt', 'force_pw_change', 'force_name_change', 'webtoken'
     ];
 }
