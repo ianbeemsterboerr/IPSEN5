@@ -37,5 +37,9 @@ export class TournamentComponent implements OnInit {
         });
     }
     startTournament() {
+      if (confirm('Starting the tournament finalizes enrollments. No players or teams can be added after this point.')) {
+        console.log('Starting tournament..');
+        // todo connect to actual function
+      }
     }
 }
