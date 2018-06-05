@@ -12,4 +12,5 @@ export class TournamentService {
     getTournament(id: number): Observable<Tournament> {
         return this.api.get<Tournament>(`tournament/get/${id}`);
     }
+
 }

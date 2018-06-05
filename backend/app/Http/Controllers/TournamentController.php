@@ -57,4 +57,5 @@ class TournamentController extends Controller
         $controller = TournamentFactory::getTournamentController($tournament);
         $controller->runMatchmaker($tournament);
     }
+
 }
