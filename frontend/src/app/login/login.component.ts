@@ -21,7 +21,9 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-       
+       if (localStorage.getItem('bearer')!= null && localStorage.getItem('activeUserId')!= null){
+        this.router.navigate(['/']);
+       }
     }
 
     login(user_username: string, user_password: string) {
