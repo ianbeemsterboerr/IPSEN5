@@ -29,6 +29,10 @@ class Match extends Model
         return $this->hasOne('App\Match', 'id', 'parent_match_id');
     }
 
+    public function childMatches() {
+        return $this->hasMany('App\Match', 'parent_match_id', 'id');
+    }
+
     public function tournament() {
         return $this->belongsTo('App\Tournament');
     }

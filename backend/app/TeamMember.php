@@ -18,7 +18,7 @@ class TeamMember extends Model
     protected $fillable = ['user_id', 'team_id', 'size', 'max_size'];
 
     function user() {
-        return $this->hasOne('App\User');
+        return $this->hasOne('App\User', 'id', 'user_id');
     }
 
     function team() {

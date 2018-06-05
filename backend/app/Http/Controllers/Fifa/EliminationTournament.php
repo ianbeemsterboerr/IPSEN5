@@ -87,13 +87,44 @@ class EliminationTournament implements ITournament
         // Placement matches are required
         $optimalTeamCount = $this->next_pow($teamCount) / 2;
         $optimalMatchCount = $optimalTeamCount / 2;
-        $difference = $teamCount - $optimalTeamCount;
+        $teamDifference = $teamCount - $optimalTeamCount;
+
+        $possibleConnections = floor($teamDifference / 2);
 
         // amount of matches with 2 teams playing against each other
-        $completeMatchCount = $optimalMatchCount - $difference;
+        $completeMatchCount = $optimalMatchCount - $possibleConnections;
+
 
         // amount of matches with one undetermined opponent
         $incompleteMatchCount = min($optimalMatchCount - $completeMatchCount, $optimalMatchCount);
+
+        $takenTeams =$completeMatchCount*2 + $incompleteMatchCount;
+        $remainingTeams = $teamCount-$takenTeams;
+        $possibleConnections = floor($remainingTeams / 2);
+
+        if ($possibleConnections > $incompleteMatchCount) {
+            $completeMatchCount--;
+            $incompleteMatchCount++;
+        }
+
+        if ($remainingTeams == 1) {
+            $completeMatchCount--;
+            $incompleteMatchCount++;
+        }
+
+//        if ($teamCount != 19) {
+//            dd([
+//                'teams' => $teamCount,
+//                'optimal teams' => $optimalTeamCount,
+//                'optimal match' => $optimalMatchCount,
+//                'diff' => $teamDifference,
+//                'complete matches' => $completeMatchCount,
+//                'incomplete matches' => $incompleteMatchCount,
+//                'taken teams' => $takenTeams,
+//                'remaining teams' => $teamCount-$takenTeams
+//            ]);
+//        }
+
 
         // make bracket and add x complete matches
         $bracket = [];
@@ -125,7 +156,7 @@ class EliminationTournament implements ITournament
                 if ($match->parent_match_id == null) {
                     /* @var $nextMatch Match */
                     foreach ($nextBracket as $nextMatch) {
-                        $spots = 2 - $nextMatch->opponents()->count();
+                        $spots = 2 - $nextMatch->opponents()->count() - $nextMatch->childMatches()->count();
                         if ($spots > 0) {
                             $match->parent_match_id = $nextMatch->id;
                             $match->save();
