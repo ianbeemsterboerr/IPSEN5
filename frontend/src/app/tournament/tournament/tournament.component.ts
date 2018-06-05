@@ -36,4 +36,6 @@ export class TournamentComponent implements OnInit {
             );
         });
     }
+    startTournament() {
+    }
 }
