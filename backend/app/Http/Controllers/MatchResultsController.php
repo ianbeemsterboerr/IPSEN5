@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\MatchResults;
+use App\MatchOpponent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,22 +17,33 @@ class MatchResultsController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the request...
+        // Validate the request...        
+        $this->insertResults($this->insertOpponent($request->matchId, $request->team1Id), $request->Team1Score);
+        $this->insertResults($this->insertOpponent($request->matchId, $request->team2Id), $request->Team2Score);
 
-        $team1results = new MatchResults;
-        $team2results = new MatchResults;
-        
-        $team1results->MatchID = $request->MatchId;
-        $team2results->MatchID = $request->MatchId;
+    }
 
-        $team1results->score = $request->Team1Score;
-        $team2results->score = $request->Team2Score;
-        
-        $team1results->TeamID = $request->Team1Id;
-        $team2results->TeamID = $request->Team2Id;
+    public function insertOpponent($matchId, $teamId){
+        $teamOpponent = new MatchOpponent;
 
-        $team1results->save();
-        $team2results->save();
+        $teamOpponent->match_id = $matchId;
+
+        $teamOpponent->team_id = $teamId;
+
+        $teamOpponent->save();
+
+        return $teamOpponent->id;
+
+    }
+
+    public function insertResults($opponent_id, $score){
+        $teamResults = new MatchResults;
+
+        $teamResults->opponent_id = $opponent_id;
+
+        $teamResults->score = $score;
+       
+        $teamResults->save();
     }
 
     public function getAll(Request $request)

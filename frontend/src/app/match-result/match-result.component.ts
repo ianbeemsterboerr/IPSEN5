@@ -33,12 +33,12 @@ export class MatchResultComponent implements OnInit {
   sendResults(){    
     const values = document.getElementById('resultForm');
     let results = new HttpParams();
-    results = results.append('TournamentId', '0');
-    results = results.append('MatchId', '0')
-    results = results.append('Team1Id', this.team1Id);
-    results = results.append('Team1Score', values[0].value);
-    results = results.append('Team2Id', this.team2Id);
-    results = results.append('Team2Score', values[1].value);
+    results = results.append('tournamentId', '0');
+    results = results.append('matchId', '0')
+    results = results.append('team1Id', this.team1Id);
+    results = results.append('team1Score', values[0].value);
+    results = results.append('team2Id', this.team2Id);
+    results = results.append('team2Score', values[1].value);
 
    //console.log(values[2].value);
 

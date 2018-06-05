@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MatchResults extends Model
+class MatchOpponent extends Model
 {
-    protected $table = 'Result';
+    protected $table = 'opponent';
 
     protected $fillable = [
-        'opponent_id', 'score'
+        'match_id', 'team_id'
     ];
     
     //
