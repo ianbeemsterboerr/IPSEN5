@@ -81,7 +81,7 @@ $app->middleware([
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Appzcoder\LumenRoutesList\RoutesCommandServiceProvider::class);
@@ -97,6 +97,7 @@ $app->register(Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
 | can respond to, as well as the controllers that may handle them.
 |
 */
+$app->configure('services');
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',

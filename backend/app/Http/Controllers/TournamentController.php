@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 use App\Team;
 use Illuminate\Http\Request;
 use App\Tournament;
+use Mailgun\Mailgun;
 
 use Illuminate\Http\Response;
 use PDO;
@@ -62,7 +63,16 @@ class TournamentController extends Controller
         $userid = $request->json()->get('userId');
         $tournamentid = $request->json()->get('tournamentId');
         //HANDLE INVITE LOGIC HERE
-        return $userid;
+        $mg = Mailgun::create(env('MAILGUN_SECRET'));
+
+        $mg->messages()->send(env('MAILGUN_DOMAIN'), [
+            'from'    => 'invites@'.env('MAILGUN_DOMAIN'),
+            'to'      => 'itje023@live.com',
+            'subject' => 'The PHP SDK is awesome!',
+            'text'    => "{$userid} {$tournamentid}"
+          ]);
+        
+        return Response::HTTP_OK;
     }
 
 }

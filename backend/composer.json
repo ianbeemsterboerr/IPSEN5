@@ -10,7 +10,11 @@
         "barryvdh/laravel-ide-helper": "^2.4",
         "doctrine/dbal": "^2.7",
         "firebase/php-jwt": "^5.0",
+        "illuminate/mail": "5.6.*",
         "laravel/lumen-framework": "5.6.*",
+        "mailgun/mailgun-php": "^2.5",
+        "php-http/guzzle6-adapter": "^1.1",
+        "php-http/message": "^1.6",
         "tymon/jwt-auth": "0.5.*",
         "vlucas/phpdotenv": "~2.2",
         "wn/lumen-generators": "^1.3"
