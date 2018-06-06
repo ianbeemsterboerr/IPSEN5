@@ -65,8 +65,6 @@ class TournamentController extends Controller
 
     public function storeScore(Request $request)
     {
-
-        dd($$request->json()->all()["opponents"]);
         foreach ($request->json()->all()["opponents"] as $opponent) {
             $resultClient = $opponent["result"];
 
