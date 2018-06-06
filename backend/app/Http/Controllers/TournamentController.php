@@ -13,6 +13,9 @@ use App\Team;
 use Illuminate\Http\Request;
 use App\Tournament;
 use App\Result;
+use App\Match;
+use App\Opponent;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Response;
 use PDO;
@@ -62,6 +65,8 @@ class TournamentController extends Controller
 
     public function storeScore(Request $request)
     {
+
+        dd($$request->json()->all()["opponents"]);
         foreach ($request->json()->all()["opponents"] as $opponent) {
             $resultClient = $opponent["result"];
 
