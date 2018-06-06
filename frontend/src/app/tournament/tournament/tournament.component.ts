@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../../shared/api.service";
 import {Tournament} from "../../shared/model/tournament";
 import {TournamentService} from "../tournament.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../shared/model/user';
 import {Enrollment} from '../../shared/model/enrollment';
 import {Team} from '../../shared/model/team';
@@ -15,13 +15,15 @@ import {Team} from '../../shared/model/team';
 export class TournamentComponent implements OnInit {
     public tournament: Tournament;
     public isOrganizer: boolean;
+    public hasMatches: boolean;
 
     public today: Date = new Date();
     public start: Date;
 
     constructor(
         private tournamentService: TournamentService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router
     ) {
     }
 
@@ -35,16 +37,26 @@ export class TournamentComponent implements OnInit {
                   this.tournament = tournament;
                   this.start = new Date(this.tournament.signup_end);
                   this.isOrganizer = localStorage.getItem('activeUserId') === this.tournament.organizer_user_id.toString();
+                  this.hasMatches = this.tournament.matches.length > 0;
                 },
                 error => {/*todo: resolve error case*/},
                 () => {}
             );
         });
     }
+    goOverview() {
+      const id = this.tournament.id;
+      this.router.navigate(['tournaments/overview/' + id.toString()]);
+    }
     startTournament() {
+      const id = this.tournament.id;
       if (confirm('Starting the tournament finalizes enrollments. No players or teams can be added after this point.')) {
         console.log('Starting tournament..');
-        // todo connect to actual function
+        this.tournamentService.startTournament(id).subscribe(
+          repsonse => {
+            this.goOverview();
+          }
+        );
       }
     }
 }

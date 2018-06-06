@@ -10,11 +10,17 @@
 .jumbotron {
   height: 100px;
   padding-top: 20px;
+  margin-bottom: 16px;
 }
 
 .btn {
   margin: 5px;
 }
+
+.guest{
+  width: 100%;
+}
+
 
 table{
   width: 100%;

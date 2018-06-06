@@ -24,6 +24,7 @@ import {TournamentModule} from "./tournament/tournament.module";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ToastrModule} from "ngx-toastr";
 import { ActiveaccountService } from './services/activeaccount.service';
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
