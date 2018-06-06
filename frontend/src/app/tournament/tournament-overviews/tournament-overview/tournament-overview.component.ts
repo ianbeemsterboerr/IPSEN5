@@ -61,9 +61,7 @@ export class TournamentOverviewComponent implements OnInit {
     const id = this.id;
     if (confirm('Generating a new bracket will reset any progress in te current bracket. The tournament' +
       'will be reset to a fresh bracket with different match-ups.')) {
-      console.log('Reshuffling');
-      // todo shuffle tournment
+      // todo add actual shuffle
     }
   }
-
 }
