@@ -163,7 +163,7 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
 
     matchClicked(match: Match) {
         if(match.opponents.length > 1){
-            const modalRef = this.modalService.open(MatchResultComponent, { centered: true, size: 'lg' });
+            const modalRef = this.modalService.open(MatchResultComponent);
             modalRef.componentInstance.match = match;
         }
     }
