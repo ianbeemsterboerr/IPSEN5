@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EliminationComponent } from './elimination.component';
+import { FifaEliminationComponent } from './fifa-elimination.component';
 
-describe('EliminationComponent', () => {
-  let component: EliminationComponent;
-  let fixture: ComponentFixture<EliminationComponent>;
+describe('FifaEliminationComponent', () => {
+  let component: FifaEliminationComponent;
+  let fixture: ComponentFixture<FifaEliminationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EliminationComponent ]
+      declarations: [ FifaEliminationComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EliminationComponent);
+    fixture = TestBed.createComponent(FifaEliminationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
