@@ -15,6 +15,7 @@ import {Team} from '../../shared/model/team';
 export class TournamentComponent implements OnInit {
     public tournament: Tournament;
     public isOrganizer: boolean;
+    public hasMatches: boolean;
 
     public today: Date = new Date();
     public start: Date;
@@ -36,11 +37,16 @@ export class TournamentComponent implements OnInit {
                   this.tournament = tournament;
                   this.start = new Date(this.tournament.signup_end);
                   this.isOrganizer = localStorage.getItem('activeUserId') === this.tournament.organizer_user_id.toString();
+                  this.hasMatches = this.tournament.matches.length > 0;
                 },
                 error => {/*todo: resolve error case*/},
                 () => {}
             );
         });
+    }
+    goOverview() {
+      const id = this.tournament.id;
+      this.router.navigate(['tournaments/overview/' + id.toString()]);
     }
     startTournament() {
       const id = this.tournament.id;
@@ -48,7 +54,7 @@ export class TournamentComponent implements OnInit {
         console.log('Starting tournament..');
         this.tournamentService.startTournament(id).subscribe(
           repsonse => {
-            this.router.navigate(['tournaments/overview/1']);
+            this.goOverview();
           }
         );
       }
