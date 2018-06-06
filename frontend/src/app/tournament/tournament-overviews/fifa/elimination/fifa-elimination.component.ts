@@ -34,16 +34,18 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
     tournament_height = 0;
     tournament_width = 0;
 
-    constructor(private modalService: NgbModal) {
-        super();
+    constructor(private modalService: NgbModal, tournamentService: TournamentService) {
+        super(tournamentService);
     }
 
     ngOnInit() {
-        this.loadTournament(this.tournament)
+        this.loadTournament()
     }
 
-    loadTournament(tournament: Tournament) {
-        const finale: Match = this.findFinale(tournament.matches);
+    loadTournament() {
+        this.brackets = [];
+
+        const finale: Match = this.findFinale(this.tournament.matches);
         const bracket = [finale];
 
         this.brackets.unshift(bracket);
@@ -92,7 +94,6 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
     onTournamentLoaded() {
         this.tournament_width = this.bracket_width * this.brackets.length;
 
-        console.log(this.brackets);
         for (let bracket of this.brackets) {
             this.tournament_height = Math.max((this.match_height + this.match_height_spacing) * bracket.length, this.tournament_height);
         }
@@ -195,5 +196,10 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
         }
 
         return [];
+    }
+
+    onUpdate(tournament: Tournament): void {
+        this.tournament = tournament;
+        this.loadTournament();
     }
 }
