@@ -57,11 +57,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('dummy', 'TournamentController@createDummyTournament');
         $router->get('names', 'TournamentController@getNames');
         $router->get('matchmake/{id}', 'TournamentController@runMatchmaker');
-    });
-
-    $router->group(['prefix' => 'results'], function () use ($router){
-       $router->post('new' , 'MatchResultsController@store');
-       $router->get('all' , 'MatchResultsController@getAll');
+        $router->post('score', 'TournamentController@storeScore');
     });
 });
 

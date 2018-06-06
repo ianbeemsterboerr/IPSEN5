@@ -1,10 +1,13 @@
-<div class="popup">
-  <div class="wrap">
-    <form id='resultForm' (submit)="sendResults()">
-      {{player1Name}} 
-      <input *ngFor="let team of match.teams" type="number" value="0"><br>
-      <button>Accept</button>
-    </form>
-  </div>
-</div>
-<button (click)="setNames ('Bart','Nart')">Set Name</button><br>
+<!--<ng-template #content let-c="close" let-d="dismiss">-->
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    
+    <form id='resultForm' (submit)="sendResults(match)">
+        <div *ngFor="let opponent of match.opponents">
+          {{opponent.team.name}}
+          <input [(ngModel)]="opponent.result.score" type="number" value="0" name="score">
+        </div>
+        <button class="btn btn-success">submit</button>
+      </form>
+<!--</ng-template>-->
