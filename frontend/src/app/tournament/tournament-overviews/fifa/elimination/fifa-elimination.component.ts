@@ -6,6 +6,7 @@ import {TournamentService} from "../../../tournament.service";
 import {ATournament} from "../../ATournament";
 import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { MatchResultComponent } from '../../../../match-result/match-result.component';
+import {TeamMember} from "../../../../shared/model/team_member";
 
 @Component({
     selector: 'app-elimination',
@@ -167,10 +168,30 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
     }
 
     isMatchActive(match: Match): boolean {
+        if (match.opponents.length < 2) {
+            return false;
+        }
+
         for (let opponent of match.opponents) {
-            //if (opponent.)
+            if (opponent.result.score != 0) {
+                return false;
+            }
         }
 
         return true;
+    }
+
+    filterActiveMatches() {
+        return this.tournament.matches.filter(match => this.isMatchActive(match))
+    }
+
+    getTeamMembers(id: number): TeamMember[] {
+        for (let enrollment of this.tournament.enrollments) {
+            if (enrollment.team_id == id) {
+                return enrollment.team.team_members;
+            }
+        }
+
+        return [];
     }
 }

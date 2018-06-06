@@ -51,7 +51,7 @@
                               class="match-text"
                               [ngStyle]="{'font-size': match_font_size + 'px'}"
                               text-anchor="middle"
-                        >0</text>
+                        >{{match.opponents[0]?.result.score}}</text>
 
                         <!--Lower team name-->
                         <text fill="#FFFFFF"
@@ -69,7 +69,7 @@
                               class="match-text"
                               [ngStyle]="{'font-size': match_font_size + 'px'}"
                               text-anchor="middle"
-                        >0</text>
+                        >{{match.opponents[1]?.result.score}}</text>
 
                         <!--Connection line to next match-->
                         <polyline *ngIf="match.parent_match_id"
@@ -88,7 +88,31 @@
         <ng-template ngbTabTitle>Active matches</ng-template>
         <ng-template ngbTabContent>
             <div>
-                <div *ngFor="let match of tournament.matches" *ngIf="isMatchActive(match)"></div>
+                <div *ngFor="let match of filterActiveMatches()" class="tournament-match">
+                    <div class="match-header">
+                        <h3 class="header-team text-left">{{match.opponents[0].team.name}}</h3>
+                        <h3 class="versus text-center">VS</h3>
+                        <h3 class="header-team text-right">{{match.opponents[1].team.name}}</h3>
+                    </div>
+
+                    <div class="sectionTitle"><h4>Team members</h4></div>
+
+                    <div class="match-content">
+                        <div class="team text-left">
+                            <p *ngFor="let teamMember of getTeamMembers(match.opponents[0].team.id)">
+                                {{teamMember.user.username}}
+                            </p>
+                        </div>
+                        <div class="center text-center">
+
+                        </div>
+                        <div class="team text-right">
+                            <p *ngFor="let teamMember of getTeamMembers(match.opponents[1].team.id)">
+                                {{teamMember.user.username}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </ng-template>
     </ngb-tab>

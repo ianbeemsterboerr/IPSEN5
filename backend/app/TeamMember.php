@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 class TeamMember extends Model
 {
     protected $table = 'team_member';
-    protected $fillable = ['user_id', 'team_id', 'size', 'max_size'];
+    protected $fillable = ['user_id', 'team_id'];
 
     function user() {
         return $this->hasOne('App\User', 'id', 'user_id');
