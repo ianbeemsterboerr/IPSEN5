@@ -77,4 +77,5 @@ class TournamentController extends Controller
 
         return Response::HTTP_OK;
     }
+
 }
