@@ -9,7 +9,7 @@ import {Tournament} from '../../../shared/model/tournament';
 @Component({
     selector: 'app-tournament-overview',
     template: '<ng-template overview-host></ng-template>' +
-    '<button id="shuffleBtn" class="btn-secondary offset-10" (click)="shuffle()" >Shuffle match-ups </button>',
+    '<button id="shuffleBtn" class="btn-secondary offset-10" (click)="shuffle()" *ngIf="isOrganiser"> Shuffle match-ups </button>',
     styles: ['#shuffleBtn { color: #888888; background-color: #2e2e2e;}']
 })
 export class TournamentOverviewComponent implements OnInit {
@@ -23,6 +23,7 @@ export class TournamentOverviewComponent implements OnInit {
     };
 
     private id: number;
+    public isOrganiser: boolean;
 
     private tournamentComponent: ComponentRef<ATournament>;
 
@@ -41,6 +42,7 @@ export class TournamentOverviewComponent implements OnInit {
 
             this.tournamentService.getTournament(id).subscribe(
                 tournament => {
+                    this.isOrganiser = localStorage.getItem('activeUserId') === tournament.organizer_user_id.toString();
                     this.loadTournament(tournament);
                 },
                 error => {/*todo: resolve error case*/
