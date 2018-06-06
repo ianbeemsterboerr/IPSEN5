@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../../shared/api.service";
 import {Tournament} from "../../shared/model/tournament";
 import {TournamentService} from "../tournament.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../shared/model/user';
 import {Enrollment} from '../../shared/model/enrollment';
 import {Team} from '../../shared/model/team';
@@ -21,7 +21,8 @@ export class TournamentComponent implements OnInit {
 
     constructor(
         private tournamentService: TournamentService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router
     ) {
     }
 
@@ -42,9 +43,14 @@ export class TournamentComponent implements OnInit {
         });
     }
     startTournament() {
+      const id = this.tournament.id;
       if (confirm('Starting the tournament finalizes enrollments. No players or teams can be added after this point.')) {
         console.log('Starting tournament..');
-        // todo connect to actual function
+        this.tournamentService.startTournament(id).subscribe(
+          repsonse => {
+            this.router.navigate(['tournaments/overview/1']);
+          }
+        );
       }
     }
 }

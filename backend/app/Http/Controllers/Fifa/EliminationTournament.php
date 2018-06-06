@@ -28,7 +28,7 @@ class EliminationTournament implements ITournament
         $this->generateMatches($tournament, $brackets, $enrollmentCount);
         $this->connectMatches($brackets);
 
-        dd($brackets);
+//        dd($brackets);
     }
 
     private function generateMatches($tournament, &$brackets, $enrollmentCount)

@@ -13,4 +13,8 @@ export class TournamentService {
         return this.api.get<Tournament>(`tournament/get/${id}`);
     }
 
+    startTournament(id: number) {
+        return this.api.get(`tournament/matchmake/${id}`);
+    }
+
 }
