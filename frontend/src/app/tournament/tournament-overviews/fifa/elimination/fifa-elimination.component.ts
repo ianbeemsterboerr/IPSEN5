@@ -160,4 +160,11 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
     }
 
 
+    isMatchActive(match: Match): boolean {
+        for (let opponent of match.opponents) {
+            //if (opponent.)
+        }
+
+        return true;
+    }
 }
