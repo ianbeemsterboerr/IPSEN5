@@ -167,4 +167,8 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
             modalRef.componentInstance.match = match;
         }
     }
+
+    test(a){
+        console.log(a);
+    }
 }

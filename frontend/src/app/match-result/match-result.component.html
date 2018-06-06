@@ -7,9 +7,9 @@
   <div class="modal-body">    
     <form id='resultForm' (submit)="sendResults(match, activeModal)">
       <div *ngFor="let opponent of match.opponents">
-        {{opponent.team.name}}
-        <input [(ngModel)]="opponent.result.score" type="number" value="0" name="score">
+        <input [(ngModel)]="opponent.result.score" type="number" [ngModelOptions]="{standalone: true}" />
       </div>
       <br>
       <button class="btn btn-success">submit</button>
     </form>
+    
