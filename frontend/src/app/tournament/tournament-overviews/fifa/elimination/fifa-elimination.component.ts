@@ -4,7 +4,7 @@ import {Tournament} from "../../../../shared/model/tournament";
 import {ActivatedRoute} from "@angular/router";
 import {TournamentService} from "../../../tournament.service";
 import {ATournament} from "../../ATournament";
-import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbActiveModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { MatchResultComponent } from '../../../../match-result/match-result.component';
 
 @Component({
@@ -162,7 +162,9 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
     }
 
     matchClicked(match: Match) {
-        const modalRef = this.modalService.open(MatchResultComponent);
-        modalRef.componentInstance.match = match;
+        if(match.opponents.length > 1){
+            const modalRef = this.modalService.open(MatchResultComponent, { centered: true, size: 'lg' });
+            modalRef.componentInstance.match = match;
+        }
     }
 }
