@@ -45,16 +45,16 @@
             <thead>
               <tr>
                 <th scope="col">Team name</th>
-                <th scope="col">Leader name</th>
-                <th scope="col">Additional members</th>
+                <th scope="col" *ngIf="additionalMembers">Leader name</th>
+                <th scope="col" *ngIf="additionalMembers">Additional members</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let enrollment of tournament.enrollments">
 
                 <td class="align-text-top">{{enrollment.team.name}}</td>
-                <td class="align-text-top">{{enrollment.team.team_leader.username}}</td>
-                <td>
+                <td class="align-text-top" *ngIf="additionalMembers">{{enrollment.team.team_leader.username}}</td>
+                <td *ngIf="additionalMembers">
                   <div *ngFor="let member of enrollment.team.team_members">{{member.user.username}}</div>
                 </td>
               </tr>
