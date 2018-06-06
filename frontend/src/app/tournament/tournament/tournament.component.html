@@ -45,8 +45,8 @@
             <tbody>
               <tr *ngFor="let enrollment of tournament.enrollments">
 
-                <td>{{enrollment.team.name}}</td>
-                <td>{{enrollment.team.team_leader.username}}</td>
+                <td class="align-text-top">{{enrollment.team.name}}</td>
+                <td class="align-text-top">{{enrollment.team.team_leader.username}}</td>
                 <td>
                   <div *ngFor="let member of enrollment.team.team_members">{{member.user.username}}</div>
                 </td>
