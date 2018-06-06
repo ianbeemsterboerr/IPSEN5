@@ -4,6 +4,8 @@ import {Tournament} from "../../../../shared/model/tournament";
 import {ActivatedRoute} from "@angular/router";
 import {TournamentService} from "../../../tournament.service";
 import {ATournament} from "../../ATournament";
+import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { MatchResultComponent } from '../../../../match-result/match-result.component';
 
 @Component({
     selector: 'app-elimination',
@@ -31,7 +33,7 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
     tournament_height = 0;
     tournament_width = 0;
 
-    constructor( ) {
+    constructor(private modalService: NgbModal) {
         super();
     }
 
@@ -159,6 +161,10 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
         return `${a}, ${b}, ${c}, ${d}`;
     }
 
+    matchClicked(match: Match) {
+        const modalRef = this.modalService.open(MatchResultComponent);
+        modalRef.componentInstance.match = match;
+    }
 
     isMatchActive(match: Match): boolean {
         for (let opponent of match.opponents) {

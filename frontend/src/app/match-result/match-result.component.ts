@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {ApiService} from '../shared/api.service';
+import { Match } from '../shared/model/match';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
 @Component({
@@ -9,12 +10,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 })
 
 export class MatchResultComponent implements OnInit {
-  team1score = 0;
-  team2score = 0;
-  player1Name = "Default 1";
-  player2Name = "Default 2";
-  team1Id = '1';
-  team2Id = '2';
+  @Input() match: Match;
 
  
 
@@ -23,26 +19,19 @@ export class MatchResultComponent implements OnInit {
   ngOnInit() {  
   }
 
-  
+  sendResults(match){    
+    //const values = document.getElementById('resultForm');
+    //let results = new HttpParams();
+    //results = results.append('tournamentId', '0');
+    //results = results.append('matchId', '0')
+    //results = results.append('team1Id', this.team1Id);
+    //results = results.append('team1Score', values[0].value);
+    //results = results.append('team2Id', this.team2Id);
+    //results = results.append('team2Score', values[1].value);
 
-  setNames(player1, player2){
-    this.player1Name = player1;
-    this.player2Name = player2;
-  }
+   //console.log(match);
 
-  sendResults(){    
-    const values = document.getElementById('resultForm');
-    let results = new HttpParams();
-    results = results.append('tournamentId', '0');
-    results = results.append('matchId', '0')
-    results = results.append('team1Id', this.team1Id);
-    results = results.append('team1Score', values[0].value);
-    results = results.append('team2Id', this.team2Id);
-    results = results.append('team2Score', values[1].value);
-
-   //console.log(values[2].value);
-
-   this.api.post('results/new', results).subscribe(res => {
+   this.api.post('tournament/score', match).subscribe(res => {
    });
   }
 

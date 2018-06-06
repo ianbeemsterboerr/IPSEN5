@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MatchResults extends Model
 {
-    protected $table = 'Result';
+    protected $table = 'result';
 
     protected $fillable = [
         'opponent_id', 'score'

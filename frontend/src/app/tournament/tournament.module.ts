@@ -13,6 +13,7 @@ import { TournamentComponent } from './tournament/tournament.component';
 import {TournamentService} from "./tournament.service";
 import { TournamentOverviewComponent } from './tournament-overviews/tournament-overview/tournament-overview.component';
 import {TournamentDirective} from "./tournament-directive";
+import { MatchResultComponent } from '../match-result/match-result.component';
 
 @NgModule({
     imports: [
@@ -34,7 +35,8 @@ import {TournamentDirective} from "./tournament-directive";
     ],
     providers: [ApiService, TournamentService],
     entryComponents: [
-        FifaEliminationComponent
+        FifaEliminationComponent,
+        MatchResultComponent
     ]
 })
 export class TournamentModule {

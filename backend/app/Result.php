@@ -14,7 +14,8 @@ use Illuminate\Database\Eloquent\Model;
 class Result extends Model
 {
     protected $table = 'result';
-    protected $fillable = ['score'];
+    protected $primaryKey = 'opponent_id';
+    protected $fillable = ['score', 'opponent_id'];
 
     public function opponent() {
         return $this->belongsTo('App\Opponent');

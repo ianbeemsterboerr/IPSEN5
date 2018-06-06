@@ -15,7 +15,8 @@
                               [attr.y]="matchesY[match.id]"
                               [attr.width]="match_width"
                               [attr.height]="match_height"
-                              fill="#000">
+                              fill="#000"
+                              (click)="matchClicked(match)">
                         </rect>
 
                         <!--Match scores rectangle-->
