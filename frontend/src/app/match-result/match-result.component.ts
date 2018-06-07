@@ -2,6 +2,8 @@ import {Component, OnInit, Input} from '@angular/core';
 import {ApiService} from '../shared/api.service';
 import { Match } from '../shared/model/match';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-match-result',
@@ -13,14 +15,21 @@ export class MatchResultComponent implements OnInit {
 
  
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, public activeModal : NgbActiveModal, private toastr: ToastrService) { }
 
   ngOnInit() {  
   }
 
-  sendResults(match){
-    this.api.post('tournament/score', match).subscribe(res => {
-   });
+  sendResults(match, activeModal){
+    this.api.post('tournament/score', match).subscribe(
+      succes => {
+          this.toastr.success("Score updated");
+          activeModal.close('close button pressed');
+      },
+      failure => {
+          this.toastr.error("Zie console.");
+      }
+   );
   }
 
   
