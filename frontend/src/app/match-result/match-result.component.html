@@ -8,9 +8,9 @@
     <form id='resultForm' (submit)="sendResults(match, activeModal)">
         <div *ngFor="let opponent of match.opponents">
             <div class="form-group row">
-                <label for="example-text-input" class="col-4 col-form-label">{{opponent.team.name}} : </label>
+                <label for="example-text-input" class="col-4 col-form-label">{{opponent.team.name}}</label>
                 <div class="col-2">
-                  <input [(ngModel)]="opponent.result.score" class="form-control" type="number" [ngModelOptions]="{standalone: true}" />
+                  <input min="0" [(ngModel)]="opponent.result.score" class="form-control" type="number" [ngModelOptions]="{standalone: true}" />
                 </div>
               </div>
             </div>    
