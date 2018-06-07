@@ -4,13 +4,63 @@
     <p class="text-center">{{tournament.tournament_start}}</p>
   </div>
 
-  <div class="card-group">
-    <div class="card bg-light">
-      <!--<div class="card-header">-->
-      <!--Description-->
-      <!--</div>-->
+    <div class="card-group">
+      <div class="card bg-light">
+        <div class="card-body">
+          {{tournament.description}}
+        </div>
+      </div>
+      <div class="card bg-light" *ngIf="isOrganizer">
+        <button class="btn" (click)="startTournament()">
+          Start tournament
+        </button>
+        <button class="btn">
+          Settings
+        </button>
+        <button class="btn">
+          Invite players
+        </button>
+      </div>
+      <div class="card bg-light" *ngIf="!isOrganizer">
+        <div class="card-header">Organiser: {{tournament.organiser.username}}</div>
+        <div class="card-body">
+          <button class="btn guest" *ngIf="hasMatches" (click)="goOverview()">
+            Match schedule
+          </button>
+          <button class="btn guest">
+            Settings
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="card bg-light mt-3">
+      <div class="card-header text-center">
+        Enrolled teams
+      </div>
       <div class="card-body">
-        {{tournament.description}}
+        <div id="team-table" class="table-responsive">
+          <table class="table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Team name</th>
+                <th scope="col">Leader name</th>
+                <th scope="col">Additional members</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let enrollment of tournament.enrollments">
+
+                <td class="align-text-top">{{enrollment.team.name}}</td>
+                <td class="align-text-top">{{enrollment.team.team_leader.username}}</td>
+                <td>
+                  <div *ngFor="let member of enrollment.team.team_members">{{member.user.username}}</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
     <div class="card bg-light">
@@ -41,9 +91,9 @@
             <td>{{ user.username }}</td>
             <td>
               <button class="btn btn-info" (click)="invite(user.id)">
-              
+
                 Invite
-               
+
               </button>
             </td>
           </tr>
@@ -70,7 +120,7 @@
             <tr *ngFor="let enrollment of tournament.enrollments">
 
               <td>{{enrollment.team.name}}</td>
-              <td>{{enrollment.team.team_leader.user_username}}</td>
+              <td>{{enrollment.team.team_leader.username}}</td>
               <td>fix this</td>
             </tr>
           </tbody>
@@ -78,4 +128,3 @@
       </div>
     </div>
   </div>
-</div>

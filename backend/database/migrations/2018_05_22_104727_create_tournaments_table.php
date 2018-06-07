@@ -20,7 +20,7 @@ class CreateTournamentsTable extends Migration
 			$table->string('tournament_typename');
 			$table->string('signup_typename');
 			$table->string('name');
-			$table->string('description');
+			$table->string('description', 2048);
 			$table->integer('max_team_size');
 			$table->date('signup_start');
 			$table->date('signup_end');

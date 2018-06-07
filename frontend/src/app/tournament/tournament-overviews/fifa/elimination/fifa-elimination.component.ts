@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {Match} from "../../shared/model/match";
-import {Tournament} from "../../shared/model/tournament";
+import {Component, Input, OnInit} from '@angular/core';
+import {Match} from "../../../../shared/model/match";
+import {Tournament} from "../../../../shared/model/tournament";
 import {ActivatedRoute} from "@angular/router";
-import {TournamentService} from "../tournament.service";
+import {TournamentService} from "../../../tournament.service";
+import {ATournament} from "../../ATournament";
 
 @Component({
     selector: 'app-elimination',
-    templateUrl: './elimination.component.html',
-    styleUrls: ['./elimination.component.css']
+    templateUrl: './fifa-elimination.component.html',
+    styleUrls: ['./fifa-elimination.component.css']
 })
-export class EliminationComponent implements OnInit {
-    tournament: Tournament;
+export class FifaEliminationComponent extends ATournament implements OnInit {
     brackets = [];
     loadingFinished: boolean = false;
 
@@ -31,25 +31,12 @@ export class EliminationComponent implements OnInit {
     tournament_height = 0;
     tournament_width = 0;
 
-    constructor(
-        private tournamentService: TournamentService,
-        private route: ActivatedRoute
-    ) {
+    constructor( ) {
+        super();
     }
 
     ngOnInit() {
-        this.route.params.subscribe(params => {
-            const id = +params['id'];
-
-            this.tournamentService.getTournament(id).subscribe(
-                tournament => {
-                    this.tournament = tournament;
-                    this.loadTournament(tournament);
-                },
-                error => {/*todo: resolve error case*/},
-                () => {}
-            )
-        });
+        this.loadTournament(this.tournament)
     }
 
     loadTournament(tournament: Tournament) {
@@ -171,6 +158,8 @@ export class EliminationComponent implements OnInit {
 
         return `${a}, ${b}, ${c}, ${d}`;
     }
+
+
 
 
 }

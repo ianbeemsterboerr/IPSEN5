@@ -1,10 +1,10 @@
-import {User} from "./user";
-import {Enrollment} from "./enrollment";
-import {Match} from "./match";
+import {User} from './user';
+import {Enrollment} from './enrollment';
+import {Match} from './match';
 
 export class Tournament {
     constructor (
-        public organizer: User,
+        public organiser: User,
         public gamename: string,
         public tournament_typename: string,
         public signup_typename: string,
@@ -15,6 +15,7 @@ export class Tournament {
         public signup_end: Date,
         public tournament_start: Date,
         public id?: number,
+        public organizer_user_id?: number,
         public enrollments?: Enrollment[],
         public matches?: Match[],
         public created_at?: Date,

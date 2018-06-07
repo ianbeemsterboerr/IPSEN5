@@ -103,8 +103,9 @@
     </div>
     <div class="form-group row">
       <label for="description" class="col-sm-2 col-form-label">Description:</label>
-      <input type="text" name="description" id="description" class="form-control col-sm-10"
-             formControlName="description" [(ngModel)]="newTournament.description" ><br>
+      <textarea type="text" name="description" id="description" class="form-control col-sm-10"
+                formControlName="description" [(ngModel)]="newTournament.description" >
+      </textarea><br>
     </div>
 
     <input type="button" [disabled]="!tournamentForm.valid" id="submit" name="submit" value="Submit"
