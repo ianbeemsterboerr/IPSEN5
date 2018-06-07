@@ -162,13 +162,9 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
     }
 
     matchClicked(match: Match) {
-        if(match.opponents.length > 1){
+        if(match.opponents.length > 1 && localStorage.getItem('activeUserId')!=null){
             const modalRef = this.modalService.open(MatchResultComponent);
             modalRef.componentInstance.match = match;
         }
-    }
-
-    test(a){
-        console.log(a);
     }
 }
