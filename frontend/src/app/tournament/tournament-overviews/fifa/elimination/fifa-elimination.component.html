@@ -8,15 +8,14 @@
                 <g *ngFor="let bracket of brackets; let bracket_index = index"
                    [attr.x]="bracket_width * bracket_index">
 
-                    <g *ngFor="let match of bracket">
+                    <g *ngFor="let match of bracket" (click)="matchClicked(match)">
 
                         <!--Match rectangle-->
                         <rect [attr.x]="matchesX[match.id]"
                               [attr.y]="matchesY[match.id]"
                               [attr.width]="match_width"
                               [attr.height]="match_height"
-                              fill="#000"
-                              (click)="matchClicked(match)">
+                              fill="#000">
                         </rect>
 
                         <!--Match scores rectangle-->
