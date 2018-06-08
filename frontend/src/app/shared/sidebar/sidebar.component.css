@@ -36,6 +36,7 @@ li:not(:last-child) {
 }
 
 .navItem {
+  cursor: pointer;
   height: auto;
   color: #FFF;
 }
