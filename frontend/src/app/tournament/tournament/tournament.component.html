@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="card bg-light" *ngIf="isOrganizer">
-        <button class="btn" (click)="startTournament()">
+        <button class="btn" (click)="startTournament()" *ngIf="!hasMatches">
           Start tournament
         </button>
         <button class="btn" *ngIf="hasMatches" (click)="goOverview()">
