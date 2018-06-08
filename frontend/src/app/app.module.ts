@@ -6,21 +6,21 @@ import { PasswordEqualValidator } from './shared/passwordconfirmation.directive'
 import { TournamentHomeComponent } from './tournament/tournament-home/tournament-home.component';
 import { TournamentNewComponent } from './tournament/tournament-new/tournament-new.component';
 
-import {AppRoutingModule} from "./app-routing.module";
-import {HomeModule} from "./home/home.module";
-import {SharedModule} from "./shared/shared.module";
+import {AppRoutingModule} from './app-routing.module';
+import {HomeModule} from './home/home.module';
+import {SharedModule} from './shared/shared.module';
 
-import {JwtInterceptor} from './interceptors/jwt-interceptor'
+import {JwtInterceptor} from './interceptors/jwt-interceptor';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {ApiService} from './services/api.service';
 import {LoginComponent} from './login/login.component';
 import {CreateaccountComponent} from './createaccount/createaccount.component';
 import {ForgotpasswordComponent} from './forgotpassword/forgotpassword.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
-import {TournamentModule} from "./tournament/tournament.module";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {ToastrModule} from "ngx-toastr";
+import {TournamentModule} from './tournament/tournament.module';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrModule} from 'ngx-toastr';
 import { ActiveaccountService } from './services/activeaccount.service';
 import {RouterModule} from '@angular/router';
 

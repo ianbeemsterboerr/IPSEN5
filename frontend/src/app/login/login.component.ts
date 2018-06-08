@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../shared/api.service';
 import {FormsModule} from '@angular/forms';
-import {ToastrService} from "ngx-toastr";
+import {ToastrService} from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { ActiveaccountService } from '../services/activeaccount.service';
 
@@ -16,12 +16,13 @@ export class LoginComponent implements OnInit {
     user_username: string;
     user_password: string;
 
-    constructor(private api: ApiService, private toastr : ToastrService, private router: Router, public activeAccountService:ActiveaccountService) {
+    // tslint:disable-next-line:max-line-length
+    constructor(private api: ApiService, private toastr: ToastrService, private router: Router, public activeAccountService: ActiveaccountService) {
 
     }
 
     ngOnInit() {
-       if (localStorage.getItem('bearer')!= null && localStorage.getItem('activeUserId')!= null){
+       if (localStorage.getItem('bearer') != null && localStorage.getItem('activeUserId') != null) {
         this.router.navigate(['/']);
        }
     }
@@ -31,8 +32,8 @@ export class LoginComponent implements OnInit {
             data => {
                 console.log('Received data (JWT): ' + data['bearer']);
                 console.log('ActiveUser from JSON: ' + data['activeUserId']);
-                let JSONWebToken = data['bearer'];
-                let activeUserId = data['activeUserId'];
+                const JSONWebToken = data['bearer'];
+                const activeUserId = data['activeUserId'];
 
                 localStorage.removeItem('bearer');
                 localStorage.setItem('bearer', JSONWebToken);
@@ -46,19 +47,19 @@ export class LoginComponent implements OnInit {
             },
             err => {
                 console.log('error: ' + JSON.stringify(err.error));
-                this.toastr.error(err.error.message, "Could not log in!");
+                this.toastr.error(err.error.message, 'Could not log in!');
             },
             () => {
-                console.log('Succesvol ingelogd.')
+                console.log('Succesvol ingelogd.');
 
                 this.api.get('users/get/1').subscribe(
-                    data=>{
+                    data => {
                         console.log(data);
                     },
-                    err=>{
+                    err => {
 
                     }
-                )
+                );
             }
         );
 

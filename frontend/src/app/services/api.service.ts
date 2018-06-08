@@ -14,15 +14,15 @@ const httpOptions = {
 export class ApiService {
 
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  login(user_username:string, user_password:string){
-    let body = JSON.stringify({user_username, user_password});
+  login(user_username: string, user_password: string) {
+    const body = JSON.stringify({user_username, user_password});
 
-    return this.http.post<string>('/api/login', body); 
+    return this.http.post<string>('/api/login', body);
   }
 
-  getUsers(){
+  getUsers() {
     return this.http.get('/api/users/all');
   }
 }
