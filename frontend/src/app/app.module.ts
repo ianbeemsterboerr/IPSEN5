@@ -25,6 +25,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ToastrModule} from "ngx-toastr";
 import { ActiveaccountService } from './services/activeaccount.service';
 import {RouterModule} from '@angular/router';
+import { TeamComponent } from './team/team.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {RouterModule} from '@angular/router';
         LoginComponent,
         CreateaccountComponent,
         ForgotpasswordComponent,
-        PasswordEqualValidator
+        PasswordEqualValidator,
+        TeamComponent
     ],
     imports: [
         BrowserModule,

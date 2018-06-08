@@ -1,0 +1,19 @@
+form{
+    background-color: #ccc ;
+    margin: 10px;
+  }
+  
+  .form-group{
+    margin-right: 0px;
+  }
+  
+  
+  #description{
+    height: 50px;
+  }
+  
+  #submit{
+    width: 100px;
+  }
+  
+  

@@ -16,6 +16,7 @@ export class TournamentComponent implements OnInit {
     public tournament: Tournament;
     public isOrganizer: boolean;
     public hasMatches: boolean;
+    public isNotInMatch: boolean;
     public additionalMembers: boolean;
 
     public today: Date = new Date();
@@ -36,9 +37,11 @@ export class TournamentComponent implements OnInit {
             this.tournamentService.getTournament(id).subscribe(
                 tournament => {
                   this.tournament = tournament;
+                  console.log(this.tournament.matches);
                   this.start = new Date(this.tournament.signup_end);
                   this.isOrganizer = localStorage.getItem('activeUserId') === this.tournament.organizer_user_id.toString();
                   this.hasMatches = this.tournament.matches.length > 0;
+                  //this.isNotInMatch = this.tournament.matches.length > 0;
                   this.additionalMembers = this.tournament.max_team_size > 1;
                 },
                 error => {/*todo: resolve error case*/},

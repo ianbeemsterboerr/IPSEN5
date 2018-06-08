@@ -76,4 +76,7 @@ class TournamentController extends Controller
         return Response::HTTP_OK;
     }
 
+    public function getTest() {
+        return (string) Tournament::with(['matches.opponents.team'])->find(4);
+    }
 }

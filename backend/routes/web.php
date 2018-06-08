@@ -58,6 +58,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('names', 'TournamentController@getNames');
         $router->get('matchmake/{id}', 'TournamentController@runMatchmaker');
         $router->post('score', 'TournamentController@storeScore');
+        $router->get('test', 'TournamentController@getTest');
     });
 });
 
