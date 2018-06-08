@@ -13,6 +13,7 @@ use App\Http\Controllers\ITournament;
 use App\Match;
 use App\Opponent;
 use App\Tournament;
+use App\Result;
 
 class EliminationTournament implements ITournament
 {
@@ -198,6 +199,13 @@ class EliminationTournament implements ITournament
                 'team_id' => $opponent['team_id']
             ]);
             $opponent_object->save();
+
+            $result_object = new result();
+            $result_object->fill([
+                'opponent_id' => $opponent_object->id,
+                'score' => 0
+            ]);
+            $result_object->save();
         }
 
         return $match;

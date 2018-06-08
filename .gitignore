@@ -124,3 +124,12 @@ https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
 # End of https://www.gitignore.io/api/webstorm,intellij,visualstudiocode
 
+.idea/IPSEN5.iml
+.idea/modules.xml
+.idea/typescript-compiler.xml
+backend/composer.lock
+.idea/vcs.xml
+.idea/php.xml
+.gitignore
+backend/composer.lock
+.gitignore

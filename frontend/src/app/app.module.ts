@@ -1,5 +1,6 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { PasswordEqualValidator } from './shared/passwordconfirmation.directive';
 
@@ -9,6 +10,7 @@ import { TournamentNewComponent } from './tournament/tournament-new/tournament-n
 import {AppRoutingModule} from './app-routing.module';
 import {HomeModule} from './home/home.module';
 import {SharedModule} from './shared/shared.module';
+import { MatchResultComponent } from './match-result/match-result.component';
 
 import {JwtInterceptor} from './interceptors/jwt-interceptor';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
@@ -28,6 +30,7 @@ import {RouterModule} from '@angular/router';
 @NgModule({
     declarations: [
         AppComponent,
+        MatchResultComponent,
         LoginComponent,
         CreateaccountComponent,
         ForgotpasswordComponent,

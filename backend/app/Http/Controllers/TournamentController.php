@@ -13,6 +13,10 @@ use App\Team;
 use Illuminate\Http\Request;
 use App\Tournament;
 use Mailgun\Mailgun;
+use App\Result;
+use App\Match;
+use App\Opponent;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Response;
 use PDO;
@@ -30,6 +34,7 @@ class TournamentController extends Controller
                 'enrollments.team.teamMembers.user',
                 'enrollments.team.teamLeader',
                 'matches.opponents.team',
+                'matches.opponents.result',
                 'organiser'
             ]
         )->find($id);
@@ -71,7 +76,17 @@ class TournamentController extends Controller
             'subject' => 'The PHP SDK is awesome!',
             'text'    => "{$userid} {$tournamentid}"
           ]);
-        
+    }
+    public function storeScore(Request $request)
+    {
+        foreach ($request->json()->all()["opponents"] as $opponent) {
+            $resultClient = $opponent["result"];
+
+            $result = Result::find($resultClient["opponent_id"]);
+            $result->score = $resultClient["score"];
+            $result->save();
+        }   
+
         return Response::HTTP_OK;
     }
 

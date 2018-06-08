@@ -12,7 +12,8 @@ class UsersSeed extends Seeder
     public function run()
     {
         factory(App\User::class, 50)->create()->each(function ($u) {
-            factory(App\Team::class, 1)->create(
+            $team = new \App\Team();
+            $team->fill(
                 [
                     'name' => $u->username,
                     'leader_user_id' => $u->id,
@@ -20,6 +21,14 @@ class UsersSeed extends Seeder
                     'max_size' => 1
                 ]
             );
+            $team->save();
+
+            $teamMember = new \App\TeamMember();
+            $teamMember->fill([
+                'user_id' => $u->id,
+                'team_id' => $team->id
+            ]);
+            $teamMember->save();
         });
     }
 }

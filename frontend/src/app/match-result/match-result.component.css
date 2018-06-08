@@ -1,0 +1,21 @@
+input {
+    width: 30px;
+    text-align: center; 
+}
+
+button{
+    margin-top: 10px;
+}
+
+.popup{
+    background-color: white;
+    height: 200px;
+    width: 400px;
+    text-align: center; 
+}
+
+.wrap{
+    margin: auto;
+    padding: 10px;
+    border: 1px solid black;
+}

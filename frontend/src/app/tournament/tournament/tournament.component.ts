@@ -17,6 +17,7 @@ export class TournamentComponent implements OnInit {
     public users: User[];
     public isOrganizer: boolean;
     public hasMatches: boolean;
+    public additionalMembers: boolean;
 
     public today: Date = new Date();
     public start: Date;
@@ -40,6 +41,7 @@ export class TournamentComponent implements OnInit {
                   this.start = new Date(this.tournament.signup_end);
                   this.isOrganizer = localStorage.getItem('activeUserId') === this.tournament.organizer_user_id.toString();
                   this.hasMatches = this.tournament.matches.length > 0;
+                  this.additionalMembers = this.tournament.max_team_size > 1;
                 },
                 error => {/*todo: resolve error case*/},
                 () => {}
