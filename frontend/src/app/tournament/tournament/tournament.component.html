@@ -1,13 +1,35 @@
 <div *ngIf="tournament" id="status-page" class="rounded p-3">
     <div class="jumbotron container">
       <h2 class="text-center">{{tournament.name}}</h2>
-      <p class="text-center">{{tournament.tournament_start}}</p>
+      <app-countdown id="countdown" [target_date]="tournament.signup_end"></app-countdown>
     </div>
 
     <div class="card-group">
-      <div class="card bg-light">
+      <div class="card bg-light col-3">
         <div class="card-body">
           {{tournament.description}}
+        </div>
+      </div>
+      <div class="card bg-light">
+        <div class="card-body">
+          <table class="table table-hover">
+            <tr>
+              <td>Tournament type:</td>
+              <td>{{tournament.tournament_typename}}</td>
+            </tr>
+            <tr>
+              <td>Signup type:</td>
+              <td>{{tournament.signup_typename}}</td>
+            </tr>
+            <tr>
+              <td>Team size:</td>
+              <td>{{tournament.max_team_size}}</td>
+            </tr>
+            <tr>
+              <td>Signup period:</td>
+              <td>{{tournament.signup_start}} to {{tournament.signup_end}}</td>
+            </tr>
+          </table>
         </div>
       </div>
       <div class="card bg-light" *ngIf="isOrganizer">
