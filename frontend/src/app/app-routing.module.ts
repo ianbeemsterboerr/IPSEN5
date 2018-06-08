@@ -1,3 +1,4 @@
+import { AcceptinviteComponent } from './tournament/invite/acceptinvite/acceptinvite.component';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
@@ -7,8 +8,8 @@ import {TournamentNewComponent} from './tournament/tournament-new/tournament-new
 import {LoginComponent} from './login/login.component';
 import {ForgotpasswordComponent} from './forgotpassword/forgotpassword.component';
 import {CreateaccountComponent} from './createaccount/createaccount.component';
-import {TournamentComponent} from "./tournament/tournament/tournament.component";
-import {TournamentOverviewComponent} from "./tournament/tournament-overviews/tournament-overview/tournament-overview.component";
+import {TournamentComponent} from './tournament/tournament/tournament.component';
+import {TournamentOverviewComponent} from './tournament/tournament-overviews/tournament-overview/tournament-overview.component';
 
 
 const routes: Routes = [
@@ -16,10 +17,11 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'forgotpassword', component: ForgotpasswordComponent},
     {path: 'createaccount', component: CreateaccountComponent},
+    {path: 'invites', component: AcceptinviteComponent},
     {path: 'tournaments', component: TournamentHomeComponent},
     {path: 'tournaments/new', component: TournamentNewComponent},
     {path: 'tournaments/:id', component: TournamentComponent},
-    {path: 'tournaments/overview/:id', component: TournamentOverviewComponent},
+    {path: 'tournaments/overview/:id', component: TournamentOverviewComponent}
 ];
 
 @NgModule({

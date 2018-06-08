@@ -33,6 +33,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->group(['prefix' => 'tournament'], function () use ($router) {
             $router->post('new', 'TournamentController@createTournament');
             $router->post('invite', 'TournamentController@invite');
+            $router->post('acceptinvite', 'TournamentController@acceptInvite');
+            $router->get('enroll/{tournamentId}/{teamId}', 'TournamentController@enroll');   
         });
 
     });
@@ -59,6 +61,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('names', 'TournamentController@getNames');
         $router->get('matchmake/{id}', 'TournamentController@runMatchmaker');
         $router->post('score', 'TournamentController@storeScore');
+        $router->get('enroll/{tournamentId}/{teamId}', 'TournamentController@enroll');   
+        
     });
 });
 
