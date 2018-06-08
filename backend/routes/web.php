@@ -22,16 +22,18 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['middleware' => 'auth'], function () use ($router) {
 
         $router->group(['prefix' => 'users'], function () use ($router) {
-
             $router->get('all', 'UserController@getAll');
             $router->get('allNames', 'UserController@getUserNames');
             $router->get('get/{id}', 'UserController@get');
-
         });
-
 
         $router->group(['prefix' => 'tournament'], function () use ($router) {
             $router->post('new', 'TournamentController@createTournament');
+            $router->post('score', 'TournamentController@storeScore');
+            $router->get('all', 'TournamentController@getAll');
+            $router->get('get/{id}', 'TournamentController@get');
+            $router->get('names', 'TournamentController@getNames');
+            $router->get('matchmake/{id}', 'TournamentController@runMatchmaker');
         });
 
     });
@@ -41,23 +43,5 @@ $router->group(['prefix' => 'api'], function () use ($router) {
      */
     $router->post('/login', 'UserController@login');
     $router->post('/users/register', 'UserController@register');
-
-
-    /**
-     * Testing routes (unsafe).
-     */
-    $router->group(['prefix' => 'users'], function () use ($router) {
-        $router->get('getusersunsafe', 'UserController@getAll');
-        $router->get('allNamesUnsave', 'UserController@getUserNames');
-        $router->get('getUnsafe/{id}', 'UserController@get');
-    });
-    $router->group(['prefix' => 'tournament'], function () use ($router) {
-        $router->get('all', 'TournamentController@getAll');
-        $router->get('get/{id}', 'TournamentController@get');
-        $router->get('dummy', 'TournamentController@createDummyTournament');
-        $router->get('names', 'TournamentController@getNames');
-        $router->get('matchmake/{id}', 'TournamentController@runMatchmaker');
-        $router->post('score', 'TournamentController@storeScore');
-    });
 });
 

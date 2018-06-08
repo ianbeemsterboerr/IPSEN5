@@ -23,22 +23,20 @@ class EliminationTournament implements ITournament
 
         $enrollments = $tournament->enrollments()->with('team')->inRandomOrder()->get()->toArray();
         $enrollmentCount = count($enrollments);
-        $brackets = [];
+        $tournamentBracketsArray = [];
 
-        $this->generatePlacementMatches($tournament, $brackets, $enrollments);
-        $this->generateMatches($tournament, $brackets, $enrollmentCount);
-        $this->connectMatches($brackets);
-
-//        dd($brackets);
+        $this->generatePlacementMatches($tournament, $tournamentBracketsArray, $enrollments);
+        $this->generateMatches($tournament, $tournamentBracketsArray, $enrollmentCount);
+        $this->connectMatches($tournamentBracketsArray);
     }
 
-    private function generateMatches($tournament, &$brackets, $enrollmentCount)
+    public function generateMatches($tournament, &$tournamentBracketsArray, $enrollmentCount)
     {
         $teamCount = $this->next_pow($enrollmentCount) / 2;
         $bracketCount = log($teamCount, 2);
 
         for ($i = 0; $i < $bracketCount - 1; $i++) {
-            $lastBracket = end($brackets);
+            $lastBracket = end($tournamentBracketsArray);
 
             $matchCount = $teamCount / 2 / pow(2, $i + 1);
             $bracket = [];
@@ -56,11 +54,11 @@ class EliminationTournament implements ITournament
                 array_push($bracket, $match);
             }
 
-            array_push($brackets, $bracket);
+            array_push($tournamentBracketsArray, $bracket);
         }
     }
 
-    private function generatePlacementMatches(Tournament $tournament, &$brackets, &$enrollments)
+    public function generatePlacementMatches(Tournament $tournament, &$brackets, &$enrollments)
     {
         $teamCount = count($enrollments);
 
