@@ -30,7 +30,7 @@ class EliminationTournament implements ITournament
         $this->connectMatches($tournamentBracketsArray);
     }
 
-    public function generateMatches($tournament, &$tournamentBracketsArray, $enrollmentCount)
+    private function generateMatches($tournament, &$tournamentBracketsArray, $enrollmentCount)
     {
         $teamCount = $this->next_pow($enrollmentCount) / 2;
         $bracketCount = log($teamCount, 2);
@@ -140,7 +140,7 @@ class EliminationTournament implements ITournament
         array_push($brackets, $bracket);
     }
 
-    private function connectMatches($brackets)
+    public function connectMatches($brackets)
     {
         foreach ($brackets as $key => $bracket) {
             // No need to connect the last match, the fact that it has no connection makes it detectable as last match
