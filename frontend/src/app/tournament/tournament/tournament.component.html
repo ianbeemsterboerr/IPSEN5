@@ -14,12 +14,16 @@
         <button class="btn" (click)="startTournament()">
           Start tournament
         </button>
+        <button class="btn" *ngIf="hasMatches" (click)="goOverview()">
+          Match schedule
+        </button>
         <button class="btn">
           Settings
         </button>
         <button class="btn">
           Invite players
         </button>
+
       </div>
       <div class="card bg-light" *ngIf="!isOrganizer">
         <div class="card-header">Organiser: {{tournament.organiser.username}}</div>
