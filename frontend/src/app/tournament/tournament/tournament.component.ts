@@ -6,8 +6,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../shared/model/user';
 import {Enrollment} from '../../shared/model/enrollment';
 import {Team} from '../../shared/model/team';
-import {animate, state, style, transition, trigger} from "@angular/animations";
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ToastrService} from 'ngx-toastr';
+import { SearchPipe } from '../../shared/search.pipe';
 
 @Component({
     selector: 'app-tournament',
@@ -39,6 +40,7 @@ export class TournamentComponent implements OnInit {
     public hasMatches: boolean;
     public additionalMembers: boolean;
 
+    public searchString;
     public today: Date = new Date();
     public start: Date;
     // public stringarray = ['lol', 'lmao', 'xd'];
@@ -51,6 +53,7 @@ export class TournamentComponent implements OnInit {
         private router: Router,
         private toastr: ToastrService
     ) {
+      this.searchString = '';
     }
 
     ngOnInit() {
@@ -73,7 +76,7 @@ export class TournamentComponent implements OnInit {
     }
 
     public getUserList() {
-        if (this.invitableListState == 'active') {
+        if (this.invitableListState === 'active') {
             this.invitableListState = 'inactive';
             return;
         }

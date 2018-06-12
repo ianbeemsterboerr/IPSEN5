@@ -10,7 +10,7 @@ import {ForgotpasswordComponent} from './user/forgotpassword/forgotpassword.comp
 import {CreateaccountComponent} from './user/createaccount/createaccount.component';
 import {TournamentComponent} from './tournament/tournament/tournament.component';
 import {TournamentOverviewComponent} from './tournament/tournament-overviews/tournament-overview/tournament-overview.component';
-import {ProfileComponent} from "./user/profile/profile.component";
+import {ProfileComponent} from './user/profile/profile.component';
 
 
 const routes: Routes = [
