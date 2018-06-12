@@ -9,6 +9,7 @@
       <div class="card-body">
         {{tournament.description}}
       </div>
+<<<<<<< HEAD
     </div>
     <div class="card bg-light" *ngIf="isOrganizer">
       <button class="btn" (click)="startTournament()">
@@ -34,6 +35,33 @@
         <button class="btn guest">
           Settings
         </button>
+=======
+      <div class="card bg-light" *ngIf="isOrganizer">
+        <button class="btn" (click)="startTournament()" *ngIf="!hasMatches">
+          Start tournament
+        </button>
+        <button class="btn" *ngIf="hasMatches" (click)="goOverview()">
+          Match schedule
+        </button>
+        <button class="btn">
+          Settings
+        </button>
+        <button class="btn">
+          Invite players
+        </button>
+
+      </div>
+      <div class="card bg-light" *ngIf="!isOrganizer">
+        <div class="card-header">Organiser: {{tournament.organiser.username}}</div>
+        <div class="card-body">
+          <button class="btn guest" *ngIf="hasMatches" (click)="goOverview()">
+            Match schedule
+          </button>
+          <button class="btn guest">
+            Settings
+          </button>
+        </div>
+>>>>>>> dev
       </div>
     </div>
   </div>

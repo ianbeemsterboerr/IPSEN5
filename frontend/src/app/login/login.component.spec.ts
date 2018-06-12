@@ -45,7 +45,7 @@ describe('LoginComponent', () => {
     expect(localStorage.getItem('activeUserId')).not.toBe(null);
     expect(localStorage.getItem('bearer')).not.toBe(null);
 
-    component.logout();
+    // component.logout();
 
     expect(localStorage.getItem('activeUserId')).toBeNull();
     expect(localStorage.getItem('bearer')).toBeNull();

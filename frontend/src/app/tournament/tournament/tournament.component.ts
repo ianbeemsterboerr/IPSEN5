@@ -49,6 +49,7 @@ export class TournamentComponent implements OnInit {
         });
     }
 
+<<<<<<< HEAD
     public getUserList() {
         console.log('getuserlist activated');
         this.tournamentService.getAllUsers().subscribe(
@@ -70,15 +71,16 @@ export class TournamentComponent implements OnInit {
             }
         );
       }
+=======
+>>>>>>> dev
     goOverview() {
-      const id = this.tournament.id;
-      this.router.navigate(['tournaments/overview/' + id.toString()]);
+      this.router.navigate([`tournaments/overview/${this.tournament.id}`]);
     }
+
     startTournament() {
-      const id = this.tournament.id;
       if (confirm('Starting the tournament finalizes enrollments. No players or teams can be added after this point.')) {
         console.log('Starting tournament..');
-        this.tournamentService.startTournament(id).subscribe(
+        this.tournamentService.startTournament(this.tournament.id).subscribe(
           repsonse => {
             this.goOverview();
           }
