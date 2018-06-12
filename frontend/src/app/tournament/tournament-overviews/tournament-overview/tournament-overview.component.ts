@@ -20,6 +20,7 @@ export class TournamentOverviewComponent implements OnInit {
     private components = {
         'Fifa': {
             'Single elimination': FifaEliminationComponent,
+            'Poules': FifaEliminationComponent // test
         }
     };
 
