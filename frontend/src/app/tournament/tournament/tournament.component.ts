@@ -49,7 +49,6 @@ export class TournamentComponent implements OnInit {
         });
     }
 
-<<<<<<< HEAD
     public getUserList() {
         console.log('getuserlist activated');
         this.tournamentService.getAllUsers().subscribe(
@@ -71,8 +70,6 @@ export class TournamentComponent implements OnInit {
             }
         );
       }
-=======
->>>>>>> dev
     goOverview() {
       this.router.navigate([`tournaments/overview/${this.tournament.id}`]);
     }
