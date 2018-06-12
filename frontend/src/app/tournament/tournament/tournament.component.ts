@@ -6,12 +6,31 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../shared/model/user';
 import {Enrollment} from '../../shared/model/enrollment';
 import {Team} from '../../shared/model/team';
+import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-tournament',
     templateUrl: './tournament.component.html',
-    styleUrls: ['./tournament.component.css']
+    styleUrls: ['./tournament.component.css'],
+    animations: [
+        trigger('invitables_expanded', [
+            state('active', style(
+                {
+                    height: '500px',
+                    visibility: 'visible'
+                }
+            )),
+            state('inactive', style(
+                {
+                    height: '0px',
+                    visibility: 'hidden'
+                }
+            )),
+            transition('inactive => active', animate('500ms ease-in')),
+            transition('active => inactive', animate('500ms ease-out'))
+        ])
+    ]
 })
 export class TournamentComponent implements OnInit {
     public tournament: Tournament;
@@ -23,6 +42,8 @@ export class TournamentComponent implements OnInit {
     public today: Date = new Date();
     public start: Date;
     // public stringarray = ['lol', 'lmao', 'xd'];
+
+    public invitableListState = 'inactive';
 
     constructor(
         private tournamentService: TournamentService,
@@ -52,13 +73,18 @@ export class TournamentComponent implements OnInit {
     }
 
     public getUserList() {
-        console.log('getuserlist activated');
+        if (this.invitableListState == 'active') {
+            this.invitableListState = 'inactive';
+            return;
+        }
+
         this.tournamentService.getAllUsers().subscribe(
             data => {
                 this.users = data;
+                this.invitableListState = 'active';
             }
         );
-        console.log(this.users);
+
     }
 
     public invite(id) {
@@ -82,12 +108,10 @@ export class TournamentComponent implements OnInit {
         this.tournamentService.startTournament(this.tournament.id).subscribe(
           succes => {
             this.toastr.success('Tournament started!');
+              this.goOverview();
           },
           failure => {
             this.toastr.error('Zie console.');
-          },
-          () => {
-            this.goOverview();
           }
         );
       }
