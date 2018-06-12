@@ -7,6 +7,7 @@ import {User} from '../../shared/model/user';
 import {Enrollment} from '../../shared/model/enrollment';
 import {Team} from '../../shared/model/team';
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-tournament',
@@ -47,7 +48,8 @@ export class TournamentComponent implements OnInit {
     constructor(
         private tournamentService: TournamentService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private toastr: ToastrService
     ) {
     }
 
@@ -104,8 +106,12 @@ export class TournamentComponent implements OnInit {
       if (confirm('Starting the tournament finalizes enrollments. No players or teams can be added after this point.')) {
         console.log('Starting tournament..');
         this.tournamentService.startTournament(this.tournament.id).subscribe(
-          repsonse => {
-            this.goOverview();
+          succes => {
+            this.toastr.success('Tournament started!');
+              this.goOverview();
+          },
+          failure => {
+            this.toastr.error('Zie console.');
           }
         );
       }
