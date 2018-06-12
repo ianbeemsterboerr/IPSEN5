@@ -11,9 +11,9 @@ import { MatchResultComponent } from './match-result/match-result.component';
 
 import {JwtInterceptor} from './interceptors/jwt-interceptor';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
-import {LoginComponent} from './login/login.component';
-import {CreateaccountComponent} from './createaccount/createaccount.component';
-import {ForgotpasswordComponent} from './forgotpassword/forgotpassword.component';
+import {LoginComponent} from './user/login/login.component';
+import {CreateaccountComponent} from './user/createaccount/createaccount.component';
+import {ForgotpasswordComponent} from './user/forgotpassword/forgotpassword.component';
 import {FormsModule} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import {TournamentModule} from './tournament/tournament.module';
@@ -22,6 +22,7 @@ import {ToastrModule} from 'ngx-toastr';
 import { UserService } from './shared/user.service';
 import {RouterModule} from '@angular/router';
 import {ApiService} from './shared/api.service';
+import { ProfileComponent } from './user/profile/profile.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {ApiService} from './shared/api.service';
         LoginComponent,
         CreateaccountComponent,
         ForgotpasswordComponent,
-        PasswordEqualValidator
+        PasswordEqualValidator,
+        ProfileComponent
     ],
     imports: [
         BrowserModule,

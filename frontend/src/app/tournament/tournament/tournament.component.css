@@ -27,5 +27,11 @@ table{
   width: 100%;
 }
 
+tbody {
+  max-height: 120px;
+  overflow-y: scroll;
+}
+
+
 
 
