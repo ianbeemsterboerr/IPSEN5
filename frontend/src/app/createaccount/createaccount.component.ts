@@ -8,32 +8,32 @@ import { User } from '../shared/model/user';
   styleUrls: ['./createaccount.component.css']
 })
 export class CreateaccountComponent implements OnInit {
-  public password_repeat:string;
-  public user:User;
-  
-  
+  public password_repeat: string;
+  public user: User;
+
+
   constructor(private api: ApiService) {
-    this.user = new User(null, null, null, null, null, null, null, null)
+    this.user = new User(null, null, null, null, null, null, null, null, null);
    }
 
-  register(){
+  register() {
       this.api.post('users/register', this.user).subscribe(
-        data=>{
+        data => {
           console.log(data);
-        }, err=>{ 
+        }, err => {
           console.log(err);
-        }, ()=>{
+        }, () => {
 
         }
-      )
+      );
 
   }
 
   ngOnInit() {
-    
+
   }
 
-  onSubmit(){
+  onSubmit() {
     this.register();
   }
 

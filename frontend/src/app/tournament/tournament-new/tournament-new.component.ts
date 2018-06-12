@@ -8,7 +8,7 @@ import {Tournament} from '../../shared/model/tournament';
 import {AbstractControl, FormControl, FormGroup, FormsModule, ValidatorFn, Validators} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ValidateFn} from 'codelyzer/walkerFactory/walkerFn';
-import {ToastrService} from "ngx-toastr";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-tournament-new',
@@ -85,10 +85,10 @@ export class TournamentNewComponent implements OnInit {
     submitForm() {
         this.api.post('tournament/new', this.newTournament).subscribe(
             succes => {
-                this.toastr.success("Tournament created!");
+                this.toastr.success('Tournament created!');
             },
             failure => {
-                this.toastr.error("Zie console.");
+                this.toastr.error('Zie console.');
             },
             () => {
                 this.router.navigate(['/tournaments']);
@@ -156,7 +156,7 @@ export class TournamentNewComponent implements OnInit {
             const today = new Date();
             const input = new Date(control.value + 'T23:59:59');
             const signupStart = new Date(this.newTournament.signup_start + 'T00:00:00');
-            const tournamentStart = new Date(this.newTournament.tournament_start + 'T23:59:59')
+            const tournamentStart = new Date(this.newTournament.tournament_start + 'T23:59:59');
 
             const invalidPast = input < today && !empty;
             const invalidSignupStart = input < signupStart && !empty;

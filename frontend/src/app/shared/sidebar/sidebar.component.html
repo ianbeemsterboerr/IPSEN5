@@ -24,6 +24,18 @@
                 <div class="item-name" [@expanded]="state">Hall Of Fame</div>
             </a>
         </li>
+        <li class="navItem" *ngIf="userService.isUserLoggedIn">
+            <a (click)="userService.logout()">
+                <fa name="sign-out-alt" style="color: red;"></fa>
+                <div class="item-name" [@expanded]="state">Log-out</div>
+            </a>
+        </li>
+        <li class="navItem" *ngIf="!userService.isUserLoggedIn">
+            <a [routerLink]="['/login']">
+                <fa name="sign-in-alt" style="color: green;"></fa>
+                <div class="item-name" [@expanded]="state">Log-in</div>
+            </a>
+        </li>
         <li>
             <select class="" id="game-picker" [(ngModel)]='activeGame' (ngModelChange)='onGameChanged()' title="game" [@expanded]="state">
                 <option class='option' *ngFor='let game of gameService.availableGames' [ngValue]="game">{{game.title}}</option>

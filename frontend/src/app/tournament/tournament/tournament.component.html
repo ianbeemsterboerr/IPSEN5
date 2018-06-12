@@ -46,11 +46,12 @@
         <button class="btn">
           Settings
         </button>
-        <button class="btn">
+        <a class="btn btn-primary" (click)="getUserList()" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+           aria-controls="collapseExample">
           Invite players
-        </button>
-
+        </a>
       </div>
+
       <div class="card bg-light" *ngIf="!isOrganizer">
         <div class="card-header">Organiser: {{tournament.organiser.username}}</div>
         <div class="card-body">
@@ -64,37 +65,63 @@
       </div>
     </div>
 
+  <div class="collapse" id="collapseExample">
+    <div class="card card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Invite</th>
+          </tr>
+        </thead>
 
-    <div class="card bg-light mt-3">
-      <div class="card-header text-center">
-        Enrolled teams
-      </div>
-      <div class="card-body">
-        <div id="team-table" class="table-responsive">
-          <table class="table-hover">
-            <thead>
-              <tr>
-                <th scope="col">Team name</th>
-                <th scope="col" *ngIf="additionalMembers">Leader name</th>
-                <th scope="col" *ngIf="additionalMembers">Additional members</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let enrollment of tournament.enrollments">
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.username }}</td>
+            <td>
+              <button class="btn btn-info" (click)="invite(user.id)">
 
-                <td class="align-text-top">{{enrollment.team.name}}</td>
-                <td class="align-text-top" *ngIf="additionalMembers">{{enrollment.team.team_leader.username}}</td>
-                <td *ngIf="additionalMembers">
-                  <div *ngFor="let member of enrollment.team.team_members">{{member.user.username}}</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                Invite
+
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <div class="card bg-light mt-3">
+    <div class="card-header text-center">
+      Enrolled teams
+    </div>
+    <div class="card-body">
+      <div id="team-table" class="table-responsive">
+        <table class="table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Team name</th>
+              <th scope="col" *ngIf="additionalMembers">Leader name</th>
+              <th scope="col" *ngIf="additionalMembers">Additional members</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let enrollment of tournament.enrollments">
+
+              <td class="align-text-top">{{enrollment.team.name}}</td>
+              <td class="align-text-top" *ngIf="additionalMembers">{{enrollment.team.team_leader.username}}</td>
+              <td *ngIf="additionalMembers">
+                <div *ngFor="let member of enrollment.team.team_members">{{member.user.username}}</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-
-
-
-
+  </div>
 </div>
+
+
+
+

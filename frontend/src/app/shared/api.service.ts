@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ApiService {
@@ -11,9 +11,10 @@ export class ApiService {
     let queryString = '';
 
     if (typeof queryParameters === 'object') {
-      for (let key in queryParameters) {
-        let value = queryParameters[key];
-        let prefix = queryString.length === 0 ? '?' : '&';
+      // tslint:disable-next-line:forin
+      for (const key in queryParameters) {
+        const value = queryParameters[key];
+        const prefix = queryString.length === 0 ? '?' : '&';
 
         queryString += `${prefix}${key}=${value}`;
       }
