@@ -27,6 +27,11 @@ export class CountdownComponent implements OnInit, OnDestroy {
         this.minutes = Math.floor(time / 60) % 60;
         time -= this.minutes * 60;
         this.seconds = time % 60;
+        if (this.hours < 0) {
+          this.hours = 0;
+          this.minutes = 0;
+          this.seconds = 0;
+        }
     }
 
     ngOnInit() {
