@@ -15,6 +15,7 @@ import { TournamentOverviewComponent } from './tournament-overviews/tournament-o
 import {TournamentDirective} from "./tournament-directive";
 import { MatchResultComponent } from '../match-result/match-result.component';
 import { AcceptinviteComponent } from './invite/acceptinvite/acceptinvite.component';
+import { PoulesComponent } from './tournament-overviews/fifa/poules/poules.component';
 
 @NgModule({
     imports: [
@@ -33,12 +34,14 @@ import { AcceptinviteComponent } from './invite/acceptinvite/acceptinvite.compon
         TournamentNewComponent,
         TournamentComponent,
         TournamentOverviewComponent,
-        AcceptinviteComponent
+        AcceptinviteComponent,
+        PoulesComponent
     ],
     providers: [ApiService, TournamentService],
     entryComponents: [
         FifaEliminationComponent,
-        MatchResultComponent
+        MatchResultComponent,
+        PoulesComponent
     ]
 })
 export class TournamentModule {

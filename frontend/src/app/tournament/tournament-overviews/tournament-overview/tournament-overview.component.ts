@@ -6,6 +6,7 @@ import {TournamentService} from '../../tournament.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Tournament} from '../../../shared/model/tournament';
 import {ToastrService} from "ngx-toastr";
+import {PoulesComponent} from '../fifa/poules/poules.component';
 
 @Component({
     selector: 'app-tournament-overview',
@@ -20,7 +21,7 @@ export class TournamentOverviewComponent implements OnInit {
     private components = {
         'Fifa': {
             'Single elimination': FifaEliminationComponent,
-            'Poules': FifaEliminationComponent // test
+            'Poules': PoulesComponent
         }
     };
 
