@@ -163,10 +163,28 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
         return `${a}, ${b}, ${c}, ${d}`;
     }
 
+    findMatchByID(id: number): Match {
+        for (let match of this.tournament.matches) {
+            if (match.id == id) {
+                return match;
+            }
+        }
+
+        return null;
+    }
+
     matchClicked(match: Match) {
+        const parentMatch = this.findMatchByID(match.parent_match_id);
+
+        console.log(parentMatch.opponents.length);
+        if (parentMatch.opponents.length >= 2) {
+            if (!confirm("WARNING: Entering score for this match will reset progress to all linked matches.")) return;
+        }
+
         if(match.opponents.length > 1 && localStorage.getItem('activeUserId')!=null){
             const modalRef = this.modalService.open(MatchResultComponent);
             modalRef.componentInstance.match = match;
+            modalRef.componentInstance.tournament = this;
         }
     }
 
