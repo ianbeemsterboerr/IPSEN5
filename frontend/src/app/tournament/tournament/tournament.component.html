@@ -30,7 +30,7 @@
           <button class="btn guest">
             Settings
           </button>
-          <button class="btn guest" *ngIf="isNotInMatch">
+          <button class="btn guest" *ngIf="isNotInMatch" (click)="enrollment()">
             Aanmelden
           </button>
         </div>

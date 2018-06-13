@@ -3,28 +3,16 @@
       <div class="form-group row">
         <label for="name" class="col-sm-2 col-form-label">Team name:</label>
         <input type="text" id="name" name="name" class="form-control col-sm-10" formControlName="name"
-              [(ngModel)]="newteam.name"  >
-        <div class="alert alert-danger  col-sm-10 offset-2">
-          <div *ngIf="name.errors.required">
-            Name is required.
-          </div>
+              [(ngModel)]="newTeam.name"  >
         </div>
-      </div>
       <div class="form-group row">
         <label for="invite code" class="col-sm-2 col-form-label">Invite code:</label>
-        <input type="text" id="inviteCode" name="invite Code" class="form-control col-sm-10"
-               formControlName="date" [(ngModel)]="newteam.inviteCode" ><br>
-        <div class="alert alert-danger  col-sm-10 offset-2">
-          <div *ngIf="date?.errors.required">
-            Code is required.
-          </div>
-        </div>
+        <input type="text" id="invitecode" name="invitecode" class="form-control col-sm-10"
+               formControlName="invitecode" [(ngModel)]="newTeam.invitecode" ><br>
       </div>
   
       <input type="button" id="submit" name="submit" value="Submit"
              (click)="submitForm()"><br>
   
     </form>
-  
-  </div>
-  
+</div>

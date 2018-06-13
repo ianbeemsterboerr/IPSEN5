@@ -18,6 +18,7 @@ export class TournamentComponent implements OnInit {
     public hasMatches: boolean;
     public isNotInMatch: boolean;
     public additionalMembers: boolean;
+    public user_id = localStorage.getItem('activeUserId');
 
     public today: Date = new Date();
     public start: Date;
@@ -25,7 +26,8 @@ export class TournamentComponent implements OnInit {
     constructor(
         private tournamentService: TournamentService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private api: ApiService
     ) {
     }
 
@@ -41,7 +43,8 @@ export class TournamentComponent implements OnInit {
                   this.start = new Date(this.tournament.signup_end);
                   this.isOrganizer = localStorage.getItem('activeUserId') === this.tournament.organizer_user_id.toString();
                   this.hasMatches = this.tournament.matches.length > 0;
-                  //this.isNotInMatch = this.tournament.matches.length > 0;
+
+                  this.isNotInMatch = this.tournament.matches.length > -1;
                   this.additionalMembers = this.tournament.max_team_size > 1;
                 },
                 error => {/*todo: resolve error case*/},
@@ -53,6 +56,16 @@ export class TournamentComponent implements OnInit {
       const id = this.tournament.id;
       this.router.navigate(['tournaments/overview/' + id.toString()]);
     }
+
+    enrollment(){
+        this.api.post('tournament/enroll', this.tournament).subscribe();     
+    }
+
+    //goTeamView(){
+    //  const id = this.tournament.id;
+    //  this.router.navigate(['createteam/' + id.toString()]);
+    //}
+    
     startTournament() {
       const id = this.tournament.id;
       if (confirm('Starting the tournament finalizes enrollments. No players or teams can be added after this point.')) {

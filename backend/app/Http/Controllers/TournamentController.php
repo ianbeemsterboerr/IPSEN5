@@ -11,12 +11,14 @@ namespace App\Http\Controllers;
 
 use App\Team;
 use Illuminate\Http\Request;
+use App\Enrollment;
 use App\Tournament;
 use App\Result;
 use App\Match;
 use App\Opponent;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
 use PDO;
 
@@ -72,11 +74,35 @@ class TournamentController extends Controller
             $result->score = $resultClient["score"];
             $result->save();
         }   
-
         return Response::HTTP_OK;
     }
 
-    public function getTest() {
-        return (string) Tournament::with(['matches.opponents.team'])->find(4);
+    public function checkEnrollment(request $request){
+        $user_id = 5051;
+        foreach($request->json()->all()['enrollments'] as $team){
+            if($team['team']['leader_user_id'] == $user_id){
+                return "user found";
+            }            
+        }
+        //newEnrollment(10,1,1);
+    }
+
+    public function checkTeam(){
+        return false;
+    }
+
+    public function newEnrollment($user_id, $tournament_id, $team_size) {
+        $team_results = DB::table('team')->where([
+            ['leader_user_id', $user_id],
+            ['Max_size', $max_size]])->first();
+
+        $enrollment = new Enrollment();
+        $enrollment->fill([
+            'tournament_id' => $tournament_id,
+            'team_id' => $team_results->id
+        ]);
+
+        $enrollment->save();
+        return Response::HTTP_OK;
     }
 }

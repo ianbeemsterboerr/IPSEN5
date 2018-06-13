@@ -21,7 +21,7 @@ const routes: Routes = [
     {path: 'tournaments/new', component: TournamentNewComponent},
     {path: 'tournaments/:id', component: TournamentComponent},
     {path: 'tournaments/overview/:id', component: TournamentOverviewComponent},
-    {path: 'team', component: TeamComponent}
+    {path: 'createteam/:id', component: TeamComponent}
 ];
 
 @NgModule({
