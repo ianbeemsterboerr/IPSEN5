@@ -237,4 +237,8 @@ class EliminationTournament implements ITournament
     }
 
 
+    public function onResultsUpdated(Match $match)
+    {
+        // TODO: Implement onNewResult() method.
+    }
 }

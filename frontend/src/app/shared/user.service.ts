@@ -29,6 +29,7 @@ export class UserService {
 
                     this.setLoginStatus(true);
                     this.toastr.info("Hello 👋!");
+                    this.toastr.error()
                     this.router.navigate(['/']);
                 },
                 error => {
