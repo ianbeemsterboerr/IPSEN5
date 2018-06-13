@@ -64,7 +64,7 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
         }
 
         if (new_bracket.length > 0) {
-            this.brackets.unshift(new_bracket);  
+            this.brackets.unshift(new_bracket);
             this.loadNextBracket(new_bracket);
         }
     }
