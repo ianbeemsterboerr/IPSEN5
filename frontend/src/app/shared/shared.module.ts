@@ -1,3 +1,4 @@
+import { ErrorhandlerService } from './errorhandler.service';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SidebarComponent} from './sidebar/sidebar.component';
@@ -9,6 +10,7 @@ import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import { CountdownComponent } from './countdown/countdown.component';
 import { SearchPipe } from './search.pipe';
+
 
 
 @NgModule({
@@ -24,6 +26,9 @@ import { SearchPipe } from './search.pipe';
         HttpClientModule,
         RouterModule,
         FormsModule
+    ],
+    providers: [
+      ErrorhandlerService
     ],
     exports: [SidebarComponent, CountdownComponent, SearchPipe]
 })

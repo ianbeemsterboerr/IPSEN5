@@ -1,6 +1,6 @@
 <div class="col">
   <div class="mx-auto w-50">
-    <form (ngSubmit)="register()" #registerForm="ngForm" class="rounded p-3">
+    <form (ngSubmit)="onSubmit()" #registerForm="ngForm" class="rounded p-3">
       <div class="form-group">
         <label for="firstname">First name</label>
         <input type="text" class="form-control" id="firstname" required [(ngModel)]="user.first_name" name="first_name" #firstname="ngModel">

@@ -1,13 +1,17 @@
+import { User } from './model/user';
+import { ErrorhandlerService } from './errorhandler.service';
+import { state } from '@angular/animations';
 import {Injectable} from '@angular/core';
-import {ToastrService} from "ngx-toastr";
-import {Router} from "@angular/router";
-import {ApiService} from "./api.service";
+import {ToastrService} from 'ngx-toastr';
+import {Router} from '@angular/router';
+import {ApiService} from './api.service';
+
 
 @Injectable()
 export class UserService {
-    public isUserLoggedIn: boolean = false;
+    public isUserLoggedIn = false;
 
-    constructor(private toastr: ToastrService, private router: Router, private api: ApiService) {
+    constructor(private errorService: ErrorhandlerService, private toastr: ToastrService, private router: Router, private api: ApiService) {
         this.checkLoginStatus();
     }
 
@@ -22,11 +26,11 @@ export class UserService {
                     localStorage.setItem('activeUserId', data['activeUserId']);
 
                     this.setLoginStatus(true);
-                    this.toastr.info("Hello 👋!");
+                    this.toastr.info('Hello 👋!');
                     this.router.navigate(['/']);
                 },
                 error => {
-                    this.toastr.error(error.error.message, "Could not log in!");
+                  this.errorService.handleError(error, 'Couldn\'t log in: ');
                 }
             );
     }
@@ -37,7 +41,7 @@ export class UserService {
         localStorage.removeItem('activeUser');
 
         this.setLoginStatus(false);
-        this.toastr.info("Goodbye.");
+        this.toastr.info('Goodbye.');
     }
 
     public isLoggedIn() {
@@ -53,14 +57,25 @@ export class UserService {
     }
 
     public getActiveUserId() {
-        if (!this.isUserLoggedIn) return null;
+        if (!this.isUserLoggedIn) { return null; }
 
         return localStorage.getItem('activeUserId');
     }
 
     public getActiveUser() {
-        if (!this.isUserLoggedIn) return null;
+        if (!this.isUserLoggedIn) { return null; }
 
         return localStorage.getItem('activeUser');
+    }
+
+    public register(user: User) {
+      this.api.post('users/register', user).subscribe(
+        data => {
+          this.toastr.success('User created');
+          this.login(user.username, user.password);
+        }, err => {
+          this.errorService.handleError(err, 'Could\'t register user:');
+        }
+      );
     }
 }

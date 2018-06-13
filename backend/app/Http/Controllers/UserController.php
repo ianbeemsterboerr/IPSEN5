@@ -37,13 +37,12 @@ class UserController extends Controller
             return response()->json(
                 array(
                     'status' => 'error',
-                    'message' => 'Unauthorized, User doesnt exist'
+                    'message' => 'Unauthorized'
                 ),
                 401
             );
         }
 
-        //$hashedPassword = app('hash')->make($plainPassword);
         if (password_verify($password, $userFromDatabase->password)) {
             $key = "JWT";
             $token = array(
@@ -53,29 +52,43 @@ class UserController extends Controller
                 "username" => $userFromDatabase->username
             );
             $jwt = JWT::encode($token, $key, 'HS256');
-            //TO DO: FIX BEARER SYSTEM
             $jwtstring = array(
                 "bearer" => $jwt,
                 "activeUserId" => $userFromDatabase->id,
                 "user" => (string) $userFromDatabase
             );
             return json_encode($jwtstring);
-            // return json_encode(JWT::decode($jwt, $key, array('HS256')));
         } else {
             return response()->json(array(
                 'status' => 'error',
-                'message' => 'Unauthorized, Wrong password'
+                'message' => 'Unauthorized'
             ), 401);
         }
     }
 
     public function get(int $id)
     {
-        return User::find($id);
+        $user =  User::find($id);
+
+        if($user !== null){
+            return $user;
+        }
+
+        return response()->json(array(
+            'status' => 'error',
+            'message' => 'User not found'
+        ), 404);
     }
 
     public function register(Request $request){
         $data = $request->json()->all();
+            
+        if (User::where('username', '=', $request->json('username'))->orWhere('email', '=', $request->json('email'))->count() > 0){
+            return response()->json(array(
+                'status' => 'error',
+                'message' => 'User already exists'
+            ), 409);
+        }
 
         $newUser = User::create($data);
         $newUser->password = password_hash($data['password'], PASSWORD_BCRYPT);
