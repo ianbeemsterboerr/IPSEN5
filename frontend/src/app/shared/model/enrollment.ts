@@ -5,6 +5,5 @@ export class Enrollment {
         public tournament_id: number,
         public team_id: number,
         public team?: Team,
-        public poule_id?: number
     ) {}
 }

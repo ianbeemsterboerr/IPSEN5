@@ -16,7 +16,6 @@ class CreateEnrollmentTable extends Migration
         Schema::create('enrollment', function (Blueprint $table) {
             $table->integer('tournament_id')->unsigned();
             $table->integer('team_id')->unsigned();
-			$table->integer('poule_id')->unsigned();
             $table->timestamps();
 
             $table->primary(['tournament_id', 'team_id']);

@@ -37,16 +37,8 @@ class PouleTournament implements ITournament
     {
         $pouleCount = ($enrollmentCount / 4);
         $pouleCount > floor($pouleCount)? $pouleCount = floor($pouleCount + 1) : null;
-        $counter = 1;
 
-        foreach ($enrollments as $enrollment)
-        {
-            Enrollment::with('team')->where(
-                ['team_id' => $enrollment['team_id'], 'tournament_id' => $enrollment['tournament_id']]
-                                                )->update(['poule_id'=> $counter]);
-            $counter++;
-            $counter > $pouleCount? $counter = 1: null;
-        }
+
 
 
 
@@ -54,12 +46,7 @@ class PouleTournament implements ITournament
 
     private function generateMatches($tournament, &$tournamentBracketsArray, $enrollmentCount)
     {
-
-        $match = new Match();
-        $match->fill([
-            'tournament_id' => $tournament->id
-        ]);
-        $match->save();
+        
 
     }
 

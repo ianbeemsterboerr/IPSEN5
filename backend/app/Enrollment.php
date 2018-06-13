@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class Enrollment extends Model
 {
     protected $table = 'enrollment';
-    protected $fillable = ['tournament_id', 'team_id', 'poule_id'];
+    protected $fillable = ['tournament_id', 'team_id'];
 
     function team() {
         return $this->hasOne('App\Team', 'id', 'team_id');
