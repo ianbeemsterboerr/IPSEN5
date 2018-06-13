@@ -27,7 +27,7 @@
             </a>
         </li>
         <li class="navItem" *ngIf="userService.isUserLoggedIn">
-            <a [routerLink]="['/user', userService.getActiveUserId()]">
+            <a [routerLink]="['/user', userService.activeUserId]">
                 <fa name="sign-out-alt" style="color: red;"></fa>
                 <div class="item-name" [@expanded]="state">My profile</div>
             </a>
