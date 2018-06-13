@@ -71,11 +71,12 @@
             <tr>
                 <th>Name</th>
                 <th>Invite</th>
+                <th><input [(ngModel)]="searchString" placeholder="search text goes here"></th>
             </tr>
             </thead>
 
             <tbody>
-            <tr *ngFor="let user of users">
+            <tr *ngFor="let user of users | search : searchString">
                 <td>{{ user.username }}</td>
                 <td>
                     <button class="btn btn-info" (click)="invite(user.id)">

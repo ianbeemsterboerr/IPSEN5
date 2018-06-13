@@ -1,4 +1,5 @@
-
+import { SearchPipe } from './shared/search.pipe';
+import { CreateaccountComponent } from './user/createaccount/createaccount.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -12,7 +13,6 @@ import { MatchResultComponent } from './match-result/match-result.component';
 import {JwtInterceptor} from './interceptors/jwt-interceptor';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {LoginComponent} from './user/login/login.component';
-import {CreateaccountComponent} from './user/createaccount/createaccount.component';
 import {ForgotpasswordComponent} from './user/forgotpassword/forgotpassword.component';
 import {FormsModule} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -33,7 +33,7 @@ import { ProfileComponent } from './user/profile/profile.component';
         CreateaccountComponent,
         ForgotpasswordComponent,
         PasswordEqualValidator,
-        ProfileComponent
+        ProfileComponent,
     ],
     imports: [
         BrowserModule,
@@ -45,7 +45,7 @@ import { ProfileComponent } from './user/profile/profile.component';
         HttpClientModule,
         TournamentModule,
         NgbModule.forRoot(),
-        ToastrModule.forRoot()
+        ToastrModule.forRoot(),
     ],
     providers: [
         ApiService,
