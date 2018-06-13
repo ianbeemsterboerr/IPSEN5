@@ -54,7 +54,7 @@ class UserController extends Controller
             $jwt = JWT::encode($token, $key, 'HS256');
             $jwtstring = array(
                 "bearer" => $jwt,
-                "activeUserId" => $userFromDatabase->id,
+                "userID" => $userFromDatabase->id,
                 "user" => (string) $userFromDatabase
             );
             return json_encode($jwtstring);

@@ -5,11 +5,12 @@ import {Injectable} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 import {ApiService} from './api.service';
-
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class UserService {
     public isUserLoggedIn = false;
+    public activeUserId: number;
 
     constructor(private errorService: ErrorhandlerService, private toastr: ToastrService, private router: Router, private api: ApiService) {
         this.checkLoginStatus();
@@ -19,11 +20,14 @@ export class UserService {
         this.api.post('login', {'username': username, 'password': password})
             .subscribe(
                 data => {
+
                     localStorage.removeItem('bearer');
                     localStorage.setItem('bearer', data['bearer']);
 
                     localStorage.removeItem('activeUserId');
-                    localStorage.setItem('activeUserId', data['activeUserId']);
+                    localStorage.setItem('activeUserId', data['userID']);
+
+                    this.checkLoginStatus();
 
                     this.setLoginStatus(true);
                     this.toastr.info('Hello 👋!');
@@ -38,13 +42,13 @@ export class UserService {
     logout() {
         localStorage.removeItem('bearer');
         localStorage.removeItem('activeUserId');
-        localStorage.removeItem('activeUser');
 
         this.setLoginStatus(false);
         this.toastr.info('Goodbye.');
     }
 
-    public isLoggedIn() {
+    public isLoggedIn(): boolean {
+        this.checkLoginStatus();
         return this.isUserLoggedIn;
     }
 
@@ -53,19 +57,22 @@ export class UserService {
     }
 
     public checkLoginStatus() {
-        this.setLoginStatus(localStorage.getItem('activeUserId') != null);
+        this.activeUserId = +localStorage.getItem('activeUserId');
+        this.setLoginStatus(this.activeUserId !== 0);
     }
 
     public getActiveUserId() {
         if (!this.isUserLoggedIn) { return null; }
-
-        return localStorage.getItem('activeUserId');
     }
 
-    public getActiveUser() {
-        if (!this.isUserLoggedIn) { return null; }
+    public getActiveUser(): Observable<User> {
+        if (!this.isLoggedIn()) { return null; }
 
-        return localStorage.getItem('activeUser');
+        return this.getUserByID(this.activeUserId);
+    }
+
+    public getUserByID(id: number): Observable<User> {
+        return this.api.get<User>(`users/get/${id}`);
     }
 
     public register(user: User) {

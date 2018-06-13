@@ -58,23 +58,20 @@ class FifaEliminationTest extends TestCase
 
         $enrollments = $tournament->enrollments()->get()->toArray();
         $brackets = [];
-        $matchmaker->generatePlacementMatches($tournament, $brackets, $enrollments);
+        $matchmaker->generatePlacementMatches($tournament, $brackets, $enrollments, 0);
         $matchmaker->connectMatches($brackets);
 
-        // first opponent of last match should be first team that was generated if algorithm completed successfully
-        $this->assertEquals(1, $tournament->matches()->get()->last()->opponents()->get()->first()->team_id);
+        // 2 brackets would be needed to house 10 teams
+        $this->assertEquals(2, count($brackets));
 
-        // 3 brackets would be needed to house 10 teams
-        $this->assertEquals(3, count($brackets));
-
-        // first bracket should have 1 match
-        $this->assertEquals(1, count($brackets[0]));
+        // first bracket should have 2 matches
+        $this->assertEquals(2, count($brackets[0]));
 
         // first bracket's match should have 2 opponents
         $this->assertEquals(2, $brackets[0][0]->opponents()->count());
 
         // first bracket's match should be connected to second bracket's match
-        $this->assertEquals($brackets[1][0]->id, $brackets[0][0]->parent_match_id);
+        $this->assertEquals($brackets[1][2]->id, $brackets[0][0]->parent_match_id);
     }
 
     public function testPlacementMatchesWithPower2AmountOfTeams() {
@@ -83,7 +80,7 @@ class FifaEliminationTest extends TestCase
 
         $enrollments = $tournament->enrollments()->get()->toArray();
         $brackets = [];
-        $matchmaker->generatePlacementMatches($tournament, $brackets, $enrollments);
+        $matchmaker->generatePlacementMatches($tournament, $brackets, $enrollments, 0);
 
         //With a power of 2 amount of teams no placement matches should be required. 8/2= 4 matches expected
         $this->assertEquals(4, count($brackets[0]));

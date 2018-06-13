@@ -25,7 +25,7 @@ class EliminationTournament implements ITournament
         $enrollmentCount = count($enrollments);
         $tournamentBracketsArray = [];
 
-        $this->generatePlacementMatches($tournament, $tournamentBracketsArray, $enrollments);
+        $this->generatePlacementMatches($tournament, $tournamentBracketsArray, $enrollments, 0);
         $this->generateMatches($tournament, $tournamentBracketsArray, $enrollmentCount);
         $this->connectMatches($tournamentBracketsArray);
     }
@@ -58,7 +58,7 @@ class EliminationTournament implements ITournament
         }
     }
 
-    public function generatePlacementMatches(Tournament $tournament, &$brackets, &$enrollments)
+    public function generatePlacementMatches(Tournament $tournament, &$brackets, &$enrollments, $lastBracketIncompleteMatchCount)
     {
         $teamCount = count($enrollments);
 
@@ -83,33 +83,30 @@ class EliminationTournament implements ITournament
             return;
         }
 
-        // Placement matches are required
-        $optimalTeamCount = $this->next_pow($teamCount) / 2;
-        $optimalMatchCount = $optimalTeamCount / 2;
-        $teamDifference = $teamCount - $optimalTeamCount;
+        if ($lastBracketIncompleteMatchCount > 0) {
+            $optimalMatchCount = $lastBracketIncompleteMatchCount;
+            $optimalTeamCount = $optimalMatchCount * 2;
+        } else {
+            $optimalTeamCount = $this->next_pow($teamCount) / 2;
+            $optimalMatchCount = $optimalTeamCount / 2;
+        }
 
+        $teamDifference = $teamCount - $optimalTeamCount;
         $possibleConnections = floor($teamDifference / 2);
 
-        // amount of matches with 2 teams playing against each other
         $completeMatchCount = $optimalMatchCount - $possibleConnections;
-
-
-        // amount of matches with one undetermined opponent
         $incompleteMatchCount = min($optimalMatchCount - $completeMatchCount, $optimalMatchCount);
 
-        $takenTeams =$completeMatchCount*2 + $incompleteMatchCount;
-        $remainingTeams = $teamCount-$takenTeams;
-        $possibleConnections = floor($remainingTeams / 2);
-
-        if ($possibleConnections > $incompleteMatchCount) {
+        while ($this->calculatePossibleConnections($teamCount, $completeMatchCount, $incompleteMatchCount) > $incompleteMatchCount) {
             $completeMatchCount--;
             $incompleteMatchCount++;
         }
 
-        if ($remainingTeams == 1) {
-            $completeMatchCount--;
-            $incompleteMatchCount++;
+        while ($this->calculatePossibleConnections($teamCount, $completeMatchCount, $incompleteMatchCount) < $incompleteMatchCount) {
+            $completeMatchCount++;
+            $incompleteMatchCount--;
         }
+
 
 //        if ($teamCount != 19) {
 //            dd([
@@ -119,8 +116,7 @@ class EliminationTournament implements ITournament
 //                'diff' => $teamDifference,
 //                'complete matches' => $completeMatchCount,
 //                'incomplete matches' => $incompleteMatchCount,
-//                'taken teams' => $takenTeams,
-//                'remaining teams' => $teamCount-$takenTeams
+//                'possible connections' => $this->calculatePossibleConnections($teamCount, $completeMatchCount, $incompleteMatchCount)
 //            ]);
 //        }
 
@@ -135,9 +131,15 @@ class EliminationTournament implements ITournament
             array_push($bracket, $match);
         }
 
-        $this->generatePlacementMatches($tournament, $brackets, $enrollments);
+        $this->generatePlacementMatches($tournament, $brackets, $enrollments, $incompleteMatchCount);
 
         array_push($brackets, $bracket);
+    }
+
+    private function calculatePossibleConnections($teamCount, $completes, $partials) {
+        $takenTeams =$completes*2 + $partials;
+        $remainingTeams = $teamCount-$takenTeams;
+        return $remainingTeams / 2;
     }
 
     public function connectMatches($brackets)
