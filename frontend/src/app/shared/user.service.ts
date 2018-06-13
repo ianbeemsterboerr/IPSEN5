@@ -1,6 +1,5 @@
 import { User } from './model/user';
 import { ErrorhandlerService } from './errorhandler.service';
-import { state } from '@angular/animations';
 import {Injectable} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
