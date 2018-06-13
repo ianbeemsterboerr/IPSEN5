@@ -27,26 +27,35 @@ class PouleTournament implements ITournament
         $enrollments = $tournament->enrollments()->with('team')->inRandomOrder()->get()->toArray();
         $enrollmentCount = count($enrollments);
 
-        $this->generatePoules($tournament, $enrollments, $enrollmentCount);
-
-
-        $this->generateMatches($tournament, $tournamentBracketsArray, $enrollmentCount);
+        $this->generateMatches($tournament, $tournamentBracketsArray, $enrollments, $enrollmentCount);
     }
 
-    private function generatePoules($tournament, $enrollments, $enrollmentCount)
+
+    private function generateMatches($tournament, &$tournamentBracketsArray, $enrollments, $enrollmentCount)
     {
         $pouleCount = ($enrollmentCount / 4);
         $pouleCount > floor($pouleCount)? $pouleCount = floor($pouleCount + 1) : null;
+        $counter = 0;
+
+        $poules = [];
+
+        for($i = 0; $i < $pouleCount; $i++){
+            array_push($poules, []);
+        }
+
+        foreach ($enrollments as $enrollment){
+            array_push($poules[$counter], $enrollment);
+            $counter++;
+            $counter > $pouleCount - 1? $counter = 0: null;
+        }
 
 
+        dd($poules); // working
+
+        $match = $this->makeMatchWithOpponents($tournament, [$enrollments[1], $enrollments[2]]);
+        $match->save();
 
 
-
-    }
-
-    private function generateMatches($tournament, &$tournamentBracketsArray, $enrollmentCount)
-    {
-        
 
     }
 
