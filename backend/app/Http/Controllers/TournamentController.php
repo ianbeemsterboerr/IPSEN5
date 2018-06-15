@@ -89,13 +89,20 @@ class TournamentController extends Controller
 
     public function storeScore(Request $request)
     {
-        foreach ($request->json()->all()["opponents"] as $opponent) {
+        $matchJSON = $request->json()->all();
+
+        foreach ($matchJSON["opponents"] as $opponent) {
             $resultClient = $opponent["result"];
 
             $result = Result::find($resultClient["opponent_id"]);
             $result->score = $resultClient["score"];
             $result->save();
-        }   
+        }
+
+        $match = Match::find($matchJSON['id']);
+
+        $controller = TournamentFactory::getTournamentController($match->tournament()->first());
+        $controller->onResultsUpdated($match);
 
         return Response::HTTP_OK;
     }

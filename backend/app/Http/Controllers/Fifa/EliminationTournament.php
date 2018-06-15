@@ -236,5 +236,41 @@ class EliminationTournament implements ITournament
         return ($number & ($number - 1)) == 0;
     }
 
+    public function removeOpponentRecursive(Match $match, $opponents) {
+        if ($match->parentMatch == null) return;
 
+        foreach ($opponents as $opponent) {
+            $opponentInParent = $match->parentMatch->opponents->where('team_id', $opponent->team_id)->first();
+            $this->removeOpponentRecursive($match->parentMatch, $match->parentMatch->opponents);
+
+            if ($opponentInParent == null) continue;
+            $opponentInParent->delete();
+
+            if ($match->parentMatch != null) $this->removeOpponentRecursive($match->parentMatch, $opponents);
+        }
+    }
+
+    public function onResultsUpdated(Match $match)
+    {
+        $highscore = 0;
+        $highscore_team = null;
+
+        foreach ($match->opponents as $opponent) {
+            $score = $opponent->result->score;
+
+            if ($score > $highscore) {
+                $highscore = $score;
+                $highscore_team =$opponent->team;
+            } elseif ($score == $highscore) {
+                return;
+            }
+        }
+
+        if ($match->parentMatch == null) return;
+        $this->removeOpponentRecursive($match, $match->opponents);
+
+        $opponent = new Opponent(['team_id' => $highscore_team->id]);
+        $match->parentMatch->opponents()->save($opponent);
+        $opponent->result()->save(new Result(['score' => 0]));
+    }
 }

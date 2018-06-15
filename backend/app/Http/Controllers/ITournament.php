@@ -10,8 +10,11 @@ namespace App\Http\Controllers;
 
 
 use App\Tournament;
+use App\Match;
 
 interface ITournament
 {
     public function runMatchmaker(Tournament $tournament);
+
+    public function onResultsUpdated(Match $match);
 }
