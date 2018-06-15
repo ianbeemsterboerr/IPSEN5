@@ -62,13 +62,10 @@ export class UserService {
     public checkLoginStatus() {
         this.activeUserId = +localStorage.getItem('activeUserId');
         this.setLoginStatus(this.activeUserId !== 0);
-<<<<<<< HEAD
-=======
     }
 
     public getActiveUserId() {
         if (!this.isUserLoggedIn) { return null; }
->>>>>>> invitelink-admins
     }
 
     public getActiveUser(): Observable<User> {
