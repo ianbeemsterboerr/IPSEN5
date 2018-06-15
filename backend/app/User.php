@@ -41,4 +41,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function teamMembers() {
         return $this->hasMany('App\TeamMember');
     }
+
+    public function isParticipating(Tournament $tournament) {
+        foreach ($tournament->enrollments as $enrollment) {
+            if ($enrollment->team->teamMembers()->whereUserId($this->user_id)->first() != null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

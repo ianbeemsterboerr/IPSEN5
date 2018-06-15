@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tournament;
 use App\User;
 use App\Team;
 use Illuminate\Http\Request;
@@ -20,6 +21,14 @@ class UserController extends Controller
     public function getAll(Request $request)
     {
         return User::all();
+    }
+
+    public function getAllNotParticipating(int $tournament_id) {
+        return User::all()->filter(
+            function (User $user) use ($tournament_id) {
+                return !$user->isParticipating(Tournament::find($tournament_id));
+            }
+        )->all();
     }
 
     public function getUserNames() {
