@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Fifa;
 use App\Enrollment;
 use App\Http\Controllers\ITournament;
 use App\Match;
+use App\MatchSpecial;
 use App\Opponent;
 use App\Tournament;
 use App\Result;
@@ -26,7 +27,6 @@ class PouleTournament implements ITournament
 
         $enrollments = $tournament->enrollments()->with('team')->inRandomOrder()->get()->toArray();
         $enrollmentCount = count($enrollments);
-
         $this->generateMatches($tournament, $tournamentBracketsArray, $enrollments, $enrollmentCount);
     }
 
@@ -40,22 +40,32 @@ class PouleTournament implements ITournament
         $poules = [];
 
         for($i = 0; $i < $pouleCount; $i++){
-            array_push($poules, []);
+            $poules[$i] = [];
+
         }
 
         foreach ($enrollments as $enrollment){
-            array_push($poules[$counter], $enrollment);
+            $poules[$counter][count($poules[$counter])] = $enrollment;
             $counter++;
             $counter > $pouleCount - 1? $counter = 0: null;
         }
 
 
-        dd($poules); // working
+        foreach ($poules as $poule){
+            $this->generatePouleMatches($tournament, $poule);
+        }
 
-        $match = $this->makeMatchWithOpponents($tournament, [$enrollments[1], $enrollments[2]]);
-        $match->save();
+    }
 
+    private function generatePouleMatches($tournament, $poule){
 
+        foreach ($poule as $enrollment1){
+            foreach ($poule as $enrollment2){
+                if (array_search($enrollment1, $poule) < array_search($enrollment2, $poule)){
+                    $this->makeMatchWithOpponents($tournament, [$enrollment1, $enrollment2]);
+                }
+            }
+        }
 
     }
 
@@ -66,6 +76,8 @@ class PouleTournament implements ITournament
             'tournament_id' => $tournament->id
         ]);
         $match->save();
+
+        $match_special = new Match_special();
 
         foreach ($opponents as $opponent) {
             $opponent_object = new Opponent();
