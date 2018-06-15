@@ -16,14 +16,11 @@ use App\Tournament;
 use Mailgun\Mailgun;
 use App\Result;
 use App\Match;
-use App\Opponent;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Enrollment;
 use App\User;
 
 use Illuminate\Http\Response;
-use PDO;
-
 
 class TournamentController extends Controller
 {
@@ -62,6 +59,26 @@ class TournamentController extends Controller
 
     public function runMatchmaker(int $id) {
         $tournament = Tournament::find($id);
+
+        //todo: Look for duplicate players
+        $teamMember_count = DB::table('team_member')
+            ->select('user_id', DB::raw('count(*) as times_participating'))
+            ->groupBy('user_id')
+            ->join('enrollment', 'team_member.team_id', '=', 'enrollment.team_id')
+            ->where('enrollment.tournament_id', '=', $tournament->id)
+            ->having('times_participating', '>', 1)->get();
+
+        if ($teamMember_count->count() > 0) {
+            $message = "Could not start match, one or more users is participating in multiple teams:\n";
+            foreach ($teamMember_count as $conflict) {
+                $user = User::find($conflict->user_id);
+
+                $message .= $user->username . ' is part of ' . $conflict->times_participating . " teams\n";
+            }
+
+            return response($message,400);
+        }
+
 
         $controller = TournamentFactory::getTournamentController($tournament);
         $controller->runMatchmaker($tournament);
@@ -103,7 +120,7 @@ class TournamentController extends Controller
         // $linkToFrontend = env('FRONTEND_URL')."/tournaments/invite?tournament={$tournamentid}&user={$inviterUserId}";
         // $mg->messages()->send(env('MAILGUN_DOMAIN'), [
         //     'from'    => 'invites@'.env('MAILGUN_DOMAIN'),
-        //     'to'      => 'itje023@live.com',
+        //     'to'      => //ADD ENV REFERENCE
         //     'subject' => 'The PHP SDK is awesome!',
         //     'text'    => "{$linkToFrontend}"
         //   ]);

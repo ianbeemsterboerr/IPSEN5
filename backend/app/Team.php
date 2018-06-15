@@ -21,7 +21,21 @@ class Team extends Model
         return $this->hasMany('App\TeamMember', 'team_id', 'id');
     }
 
+    function memberCount() {
+        return $this->teamMembers()->count();
+    }
+
     function teamLeader() {
         return $this->hasOne('App\User', 'id', 'leader_user_id');
+    }
+
+    public function canParticipate(Tournament $tournament) {
+        foreach ($this->teamMembers as $teamMember) {
+            if ($teamMember->user->isParticipating($tournament)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
