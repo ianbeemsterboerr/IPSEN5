@@ -4,10 +4,6 @@ import {Injectable} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 import {ApiService} from './api.service';
-<<<<<<< HEAD
-import {User} from './model/user';
-=======
->>>>>>> invitelink-admins
 import {Observable} from 'rxjs/Observable';
 
 @Injectable()
