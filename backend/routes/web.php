@@ -41,7 +41,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
         $router->group(['prefix' => 'teams'], function () use ($router) {
             $router->get('getidbyuserid/{id}', 'TeamController@getUsersTeamId');   
-            $router->get('all', 'TeamController@getall');  
+            $router->get('all/{size}', 'TeamController@getall');  
         });
 
         

@@ -16,7 +16,7 @@ class TeamController extends Controller
         return $team->id;
     }
 
-    public function getAll(){
-        return Team::all();
+    public function getAll(int $size){
+        return Team::where('size', $size)->get();
     }
 }

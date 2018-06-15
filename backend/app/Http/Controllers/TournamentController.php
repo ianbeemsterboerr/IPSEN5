@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Team;
+use App\Invitees;
 use Illuminate\Http\Request;
 use App\Tournament;
 use Mailgun\Mailgun;
@@ -18,6 +19,7 @@ use App\Match;
 use App\Opponent;
 use App\Http\Controllers\Controller;
 use App\Enrollment;
+use App\User;
 
 use Illuminate\Http\Response;
 use PDO;
@@ -66,22 +68,52 @@ class TournamentController extends Controller
     }
 
     public function invite(Request $request){
-        $userid = $request->json()->get('userId');
-        $tournamentid = $request->json()->get('tournamentId');
-        //HANDLE INVITE LOGIC HERE
-        $mg = Mailgun::create(env('MAILGUN_SECRET'));
+        $tournament = Tournament::where('id', $request->json()->get('tournamentId'))->first();
+        $inviterUserId = $request->user()->id;
+        $inviteeTeamId = $request->json()->get('teamId');
 
-        $linkToFrontend = env('FRONTEND_URL')."/tournaments/invite?tournament={$tournamentid}&user={$userid}";
-        $mg->messages()->send(env('MAILGUN_DOMAIN'), [
-            'from'    => 'invites@'.env('MAILGUN_DOMAIN'),
-            'to'      => 'jelle.metzlar@outlook.com',
-            'subject' => 'The PHP SDK is awesome!',
-            'text'    => "{$linkToFrontend}"
-          ]);
+        if(!$tournament->organizer_user_id === $inviterUserId){
+            return response()->json(array(
+                'status' => 'error',
+                'message' => 'User not authorized to invite for this tournament.'
+            ), 401);
+        }
+
+        if(Team::where('id', $inviteeTeamId)->count() < 1){
+            return response('User or team not found', 404);
+        }
+        //get userId as described in JWT, instead of client sending id in request.
+
+        //flawed query:
+        if(Invitees::where('team_id', $inviteeTeamId)->where('tournament_id',$tournament->id)->count() > 0){
+            return response()->json(array(
+                'status' => 'error',
+                'message' => 'User or team already invited.'
+            ), 400);
+        }
+
+        $invitee = new Invitees;
+        $invitee->tournament_id = $tournament->id;
+        $invitee->team_id = $inviteeTeamId;
+        $invitee->save();
+
+        $tournamentid = $request->json()->get('tournamentId');
+        // $mg = Mailgun::create(env('MAILGUN_SECRET'));
+
+        // $linkToFrontend = env('FRONTEND_URL')."/tournaments/invite?tournament={$tournamentid}&user={$inviterUserId}";
+        // $mg->messages()->send(env('MAILGUN_DOMAIN'), [
+        //     'from'    => 'invites@'.env('MAILGUN_DOMAIN'),
+        //     'to'      => 'itje023@live.com',
+        //     'subject' => 'The PHP SDK is awesome!',
+        //     'text'    => "{$linkToFrontend}"
+        //   ]);
+
+          return Team::select('name')->where('id', $inviteeTeamId)->first();
     }
 
     public function acceptInvite(Request $request){
-        $userid = $request->json()->get('userId');
+        //TODO: 
+        $inviterUserId = $request->json()->get('userId');
         $tournamentid = $request->json()->get('tournamentId');
         //HANDLE ACCEPT INVITE LOGIC HERE
         enroll();
@@ -108,6 +140,7 @@ class TournamentController extends Controller
     }
 
     public function enroll(int $tournamentId, int $teamId){
+        //TODO: check if invitee is on the invitee table in database (to be created)
         $tournament = Tournament::find($tournamentId);
         $enrollment = new Enrollment(['team_id'=>$teamId]);
         $tournament->enrollments()->save($enrollment);
