@@ -38,6 +38,6 @@ class Match extends Model
     }
 
     public function special() {
-        return $this->hasOne('App\Match_special', 'match_id');
+        return $this->hasOne('App\Match_special');
     }
 }

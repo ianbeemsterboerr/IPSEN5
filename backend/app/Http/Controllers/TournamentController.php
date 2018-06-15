@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Match_special;
 use App\Team;
 use Illuminate\Http\Request;
 use App\Tournament;
@@ -104,6 +105,11 @@ class TournamentController extends Controller
         $tournament = Tournament::find($tournamentId);
         $enrollment = new Enrollment(['team_id'=>$teamId]);
         $tournament->enrollments()->save($enrollment);
+    }
+
+    public function getPouleNumber(int $id){
+        $special = Match_special::all()->where('match_id', $id)->first();
+        return $special['data'];
     }
 
 }

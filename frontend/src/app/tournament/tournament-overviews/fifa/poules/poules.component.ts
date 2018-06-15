@@ -12,12 +12,23 @@ import {TeamMember} from '../../../../shared/model/team_member';
 })
 export class PoulesComponent extends ATournament implements OnInit {
 
+  tournamentService: TournamentService;
+  poules = [];
   constructor(private modalService: NgbModal, tournamentService: TournamentService) {
     super(tournamentService);
   }
 
   ngOnInit() {
-    console.log(this.tournament.matches);
+    for (let match of this.tournament.matches){
+      this.tournamentService.getPouleNumber(match.id).subscribe(
+        data => {
+          if (!this.poules.includes(data)) {
+            this.poules.push(data);
+          }
+        }
+      );
+    }
+    console.log(this.poules);
   }
   getMatches() {
     return this.tournament.matches;

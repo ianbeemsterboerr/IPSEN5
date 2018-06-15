@@ -28,6 +28,7 @@ class Match_special extends Model
     }
 
     public function data() {
+        return 5;
         return $this->hasOne('App\Match_special', 'id', 'data');
     }
 
