@@ -33,7 +33,7 @@ class TeamController extends Controller
             ->filter(
                 function (Team $team) use ($tournament_id) {
                     $tournament = Tournament::find($tournament_id);
-                    return $team->canParticipate($tournament) && $team->teamMembers->count() == $tournament->max_team_size;
+                    return $team->canParticipate($tournament) && $team->max_size == $tournament->max_team_size;
                 }
             );
     }

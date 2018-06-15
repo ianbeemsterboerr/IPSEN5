@@ -156,11 +156,15 @@ class TournamentController extends Controller
         return Response::HTTP_OK;
     }
 
-    public function enroll(int $tournamentId, int $teamId){
-        //TODO: check if invitee is on the invitee table in database (to be created)
+    public function enroll(Request $request, int $tournamentId, int $teamId){
         $tournament = Tournament::find($tournamentId);
-        $enrollment = new Enrollment(['team_id'=>$teamId]);
-        $tournament->enrollments()->save($enrollment);
+        $team = Team::find($teamId);
+        $request_user = $request->user();
+
+        if ($tournament->organizer_user_id != $request_user->id && $team->leader_user_id != $request_user->id)
+            return response('Cannot enroll other teams for a tournament you do not organize.', 400);
+
+        $tournament->enrollments()->create(['team_id'=>$teamId]);
     }
 
 }
