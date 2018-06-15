@@ -31,6 +31,7 @@ class Tournament extends Model
         return $this->hasMany('App\Match');
     }
 
+
     public function organiser() {
         return $this->hasOne('App\User', 'id', 'organizer_user_id');
     }

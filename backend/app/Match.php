@@ -36,4 +36,8 @@ class Match extends Model
     public function tournament() {
         return $this->belongsTo('App\Tournament');
     }
+
+    public function special() {
+        return $this->hasOne('App\Match_special', 'match_id');
+    }
 }

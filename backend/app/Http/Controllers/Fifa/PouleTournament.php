@@ -23,7 +23,17 @@ class PouleTournament implements ITournament
 
     public function runMatchmaker(Tournament $tournament)
     {
+
+
+        // deletes existing match_special data
+        foreach ($tournament->matches()->get()->toArray() as $match){
+            $special = new Match_special();
+            $special = $special->where('match_id', $match['id']);
+            $special->delete();
+        }
+
         $tournament->matches()->delete();
+
 
         $enrollments = $tournament->enrollments()->with('team')->inRandomOrder()->get()->toArray();
         $enrollmentCount = count($enrollments);
@@ -83,7 +93,6 @@ class PouleTournament implements ITournament
             'data' => $pouleNumber
         ]);
         $match_special->save();
-
 
         foreach ($opponents as $opponent) {
             $opponent_object = new Opponent();
