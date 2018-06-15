@@ -25,4 +25,7 @@ export class TournamentService {
         return this.api.get(`tournament/matchmake/${id}`);
     }
 
+    enroll(team_id: number, tournament_id: number) {
+        return this.api.get(`tournament/enroll/${team_id}/${tournament_id}`);
+    }
 }
