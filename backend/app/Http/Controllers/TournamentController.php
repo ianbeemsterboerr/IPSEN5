@@ -91,7 +91,7 @@ class TournamentController extends Controller
         $linkToFrontend = env('FRONTEND_URL')."/tournaments/invite?tournament={$tournamentid}&user={$userid}";
         $mg->messages()->send(env('MAILGUN_DOMAIN'), [
             'from'    => 'invites@'.env('MAILGUN_DOMAIN'),
-            'to'      => 'jelle.metzlar@outlook.com',
+            'to'      => env('MAIL_TARGET'),
             'subject' => 'The PHP SDK is awesome!',
             'text'    => "{$linkToFrontend}"
           ]);
