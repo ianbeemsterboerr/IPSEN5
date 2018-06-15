@@ -14,7 +14,7 @@ export class ErrorhandlerService {
 console.log('server error');
     } else {
       console.log('httperror');
-      this.toastr.error(error.error.message, title);
+      this.toastr.error(error.error, title);
     }
 
 

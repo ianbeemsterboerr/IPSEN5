@@ -21,6 +21,10 @@ class Team extends Model
         return $this->hasMany('App\TeamMember', 'team_id', 'id');
     }
 
+    function memberCount() {
+        return $this->teamMembers()->count();
+    }
+
     function teamLeader() {
         return $this->hasOne('App\User', 'id', 'leader_user_id');
     }
