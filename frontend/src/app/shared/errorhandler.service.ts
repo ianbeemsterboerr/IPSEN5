@@ -10,6 +10,7 @@ export class ErrorhandlerService {
   public handleError(error: HttpErrorResponse, title: any= 'Error!') {
     if (error.error instanceof ErrorEvent) {
       this.toastr.error( 'Could not connect to server!');
+
 console.log('server error');
     } else {
       console.log('httperror');

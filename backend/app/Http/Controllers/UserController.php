@@ -37,14 +37,14 @@ class UserController extends Controller
             return response()->json(
                 array(
                     'status' => 'error',
-                    'message' => 'Unauthorized'
+                    'message' => 'Wrong username or password!'
                 ),
                 401
             );
         }
 
         if (password_verify($password, $userFromDatabase->password)) {
-            $key = "JWT";
+            $key = env('JSON_WEBTOKEN_KEY');
             $token = array(
                 "iss" => "compufifi.test",
                 "aud" => "angularClient",
@@ -54,14 +54,14 @@ class UserController extends Controller
             $jwt = JWT::encode($token, $key, 'HS256');
             $jwtstring = array(
                 "bearer" => $jwt,
-                "userID" => $userFromDatabase->id,
+                "activeUserId" => $userFromDatabase->id,
                 "user" => (string) $userFromDatabase
             );
             return json_encode($jwtstring);
         } else {
             return response()->json(array(
                 'status' => 'error',
-                'message' => 'Unauthorized'
+                'message' => 'Wrong username or password!'
             ), 401);
         }
     }
