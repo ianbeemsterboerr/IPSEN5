@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin \Eloquent
  */
-class Match extends Model
+class Match_special extends Model
 {
     protected $table = 'match_special';
     protected $fillable = ['match_id', 'data'];

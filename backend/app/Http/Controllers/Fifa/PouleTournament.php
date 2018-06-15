@@ -12,7 +12,7 @@ namespace App\Http\Controllers\Fifa;
 use App\Enrollment;
 use App\Http\Controllers\ITournament;
 use App\Match;
-use App\MatchSpecial;
+use App\Match_special;
 use App\Opponent;
 use App\Tournament;
 use App\Result;
@@ -52,24 +52,24 @@ class PouleTournament implements ITournament
 
 
         foreach ($poules as $poule){
-            $this->generatePouleMatches($tournament, $poule);
+            $this->generatePouleMatches($tournament, $poule, array_search($poule, $poules));
         }
 
     }
 
-    private function generatePouleMatches($tournament, $poule){
+    private function generatePouleMatches($tournament, $poule, $pouleNumber){
 
         foreach ($poule as $enrollment1){
             foreach ($poule as $enrollment2){
                 if (array_search($enrollment1, $poule) < array_search($enrollment2, $poule)){
-                    $this->makeMatchWithOpponents($tournament, [$enrollment1, $enrollment2]);
+                    $this->makeMatchWithOpponents($tournament, [$enrollment1, $enrollment2], $pouleNumber);
                 }
             }
         }
 
     }
 
-    private function makeMatchWithOpponents($tournament, $opponents)
+    private function makeMatchWithOpponents($tournament, $opponents, $pouleNumber)
     {
         $match = new Match();
         $match->fill([
@@ -78,6 +78,12 @@ class PouleTournament implements ITournament
         $match->save();
 
         $match_special = new Match_special();
+        $match_special->fill([
+            'match_id' => $match->id,
+            'data' => $pouleNumber
+        ]);
+        $match_special->save();
+
 
         foreach ($opponents as $opponent) {
             $opponent_object = new Opponent();
