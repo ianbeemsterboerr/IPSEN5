@@ -1,7 +1,7 @@
 import {Injectable, Injector} from '@angular/core';
 import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs/Rx';
-import 'rxjs/add/observable/throw'
+import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 
 
@@ -11,7 +11,6 @@ export class JwtInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
         let authReq;
 
         if (localStorage.getItem('bearer') != null) {
@@ -22,10 +21,6 @@ export class JwtInterceptor implements HttpInterceptor {
 
         return next.handle(authReq)
             .catch((error, caught) => {
-
-                console.log("Error Occurred");
-                console.log(error);
-
                 return Observable.throw(error);
             }) as any;
     }
