@@ -1,3 +1,4 @@
+import { ErrorhandlerService } from './../../../shared/errorhandler.service';
 import { HttpParams } from '@angular/common/http';
 import { User } from './../../../shared/model/user';
 import { ApiService } from './../../../shared/api.service';
@@ -14,17 +15,17 @@ export class AcceptinviteComponent implements OnInit {
   public tournamentId;
   public teamId;
 
-  constructor(private route: ActivatedRoute, private api: ApiService) {
+  constructor(private errorHandler: ErrorhandlerService, private route: ActivatedRoute, private api: ApiService) {
     this.route.queryParams.subscribe(params => {
       this.userId = params['user'];
       this.tournamentId = params['tournament'];
+
       this.api.get('teams/getidbyuserid/' + this.userId).subscribe(
         data => {
-          console.log(data);
           this.teamId = data;
         },
         err => {
-          console.log(err);
+          this.errorHandler.handleError(err);
         }
       );
   });

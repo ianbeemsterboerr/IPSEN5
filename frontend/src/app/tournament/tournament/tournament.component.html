@@ -46,7 +46,7 @@
             <button class="btn">
                 Settings
             </button>
-            <a class="btn btn-primary" (click)="getUserList()" role="button">
+            <a class="btn btn-primary" (click)="getTeamList()" role="button">
                 Invite players
             </a>
         </div>
@@ -76,10 +76,10 @@
             </thead>
 
             <tbody>
-            <tr *ngFor="let user of users | search : searchString">
-                <td>{{ user.username }}</td>
+            <tr *ngFor="let team of teams | search : searchString">
+                <td>{{ team.name }}</td>
                 <td>
-                    <button class="btn btn-info" (click)="invite(user.id)">
+                    <button class="btn btn-info" (click)="invite(team.id)">
 
                         Invite
 

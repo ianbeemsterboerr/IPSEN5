@@ -24,7 +24,7 @@ export class UserService {
                     localStorage.setItem('bearer', data['bearer']);
 
                     localStorage.removeItem('activeUserId');
-                    localStorage.setItem('activeUserId', data['userID']);
+                    localStorage.setItem('activeUserId', data['activeUserId']);
 
                     this.checkLoginStatus();
 

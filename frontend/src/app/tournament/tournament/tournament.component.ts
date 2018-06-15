@@ -1,3 +1,4 @@
+import { ErrorhandlerService } from './../../shared/errorhandler.service';
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../shared/api.service';
 import {Tournament} from '../../shared/model/tournament';
@@ -35,7 +36,7 @@ import { SearchPipe } from '../../shared/search.pipe';
 })
 export class TournamentComponent implements OnInit {
     public tournament: Tournament;
-    public users: User[];
+    public teams: Team[];
     public isOrganizer: boolean;
     public hasMatches: boolean;
     public additionalMembers: boolean;
@@ -51,7 +52,8 @@ export class TournamentComponent implements OnInit {
         private tournamentService: TournamentService,
         private route: ActivatedRoute,
         private router: Router,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private errorHandler: ErrorhandlerService
     ) {
       this.searchString = '';
     }
@@ -75,15 +77,15 @@ export class TournamentComponent implements OnInit {
         });
     }
 
-    public getUserList() {
+    public getTeamList() {
         if (this.invitableListState === 'active') {
             this.invitableListState = 'inactive';
             return;
         }
 
-        this.tournamentService.getAllUsers().subscribe(
+        this.tournamentService.getAllTeams(this.tournament.max_team_size).subscribe(
             data => {
-                this.users = data;
+                this.teams = data;
                 this.invitableListState = 'active';
             }
         );
@@ -93,11 +95,10 @@ export class TournamentComponent implements OnInit {
     public invite(id) {
         this.tournamentService.inviteForTournament(this.tournament.id, id).subscribe(
             data => {
-                console.log(data);
-                // give notification of success..
+              console.log(data);
+              this.toastr.success( data['name'] + ' invited for tournament: ' + this.tournament.name, 'Success!');
             }, err =>  {
-                // give notification of error..
-                console.log(err);
+              this.errorHandler.handleError(err);
             }
         );
       }
