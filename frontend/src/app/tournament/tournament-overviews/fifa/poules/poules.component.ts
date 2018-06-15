@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ɵEMPTY_ARRAY} from '@angular/core';
 import {ATournament} from '../../ATournament';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {TournamentService} from '../../../tournament.service';
@@ -12,8 +12,8 @@ import {TeamMember} from '../../../../shared/model/team_member';
 })
 export class PoulesComponent extends ATournament implements OnInit {
 
-  tournamentService: TournamentService;
   poules = [];
+  teams: {'bla': 4};
   constructor(private modalService: NgbModal, tournamentService: TournamentService) {
     super(tournamentService);
   }
@@ -25,8 +25,16 @@ export class PoulesComponent extends ATournament implements OnInit {
           if (!this.poules.includes(data)) {
             this.poules.push(data);
           }
+          // for(let opponent of match.opponents){
+          //   if (!this.teams[data].includes(opponent.id)){
+          //     this.teams[data.toString()].push(opponent.id);
+          //   }
+          // }
+          console.log(this.teams['bla']);
         }
-      );
+
+
+    );
     }
     console.log(this.poules);
   }

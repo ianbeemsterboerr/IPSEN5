@@ -5,7 +5,7 @@ import {TournamentService} from "../tournament.service";
 export abstract class ATournament {
     @Input() tournament: Tournament;
 
-    protected constructor (private tournamentService: TournamentService) {}
+    protected constructor (public tournamentService: TournamentService) {}
 
     reshuffle(): void {
         this.tournamentService.getTournament(this.tournament.id).subscribe(

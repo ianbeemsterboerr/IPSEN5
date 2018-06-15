@@ -1,6 +1,14 @@
 <ngb-tabset>
   <ngb-tab>
     <ng-template ngbTabTitle>Overview</ng-template>
+    <ng-template ngbTabContent>
+      <div class="card-columns">
+        <div *ngFor="let poule of poules" class="card bg-dark col-md-5">
+          <div class="card-header"> {{poule}} </div>
+          <div class="card-body"> HELLO HELLO</div>
+        </div>
+      </div>
+    </ng-template>
   </ngb-tab>
 
   <ngb-tab>
