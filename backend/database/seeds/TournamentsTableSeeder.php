@@ -1,5 +1,7 @@
 <?php
 
+use App\Team;
+use App\Tournament;
 use Illuminate\Database\Seeder;
 
 class TournamentsTableSeeder extends Seeder
@@ -15,18 +17,16 @@ class TournamentsTableSeeder extends Seeder
             [
                 'organizer_user_id' => 1
             ]
-        )->each(function ($tournament) {
-            $teams = App\Team::inRandomOrder()->where('max_size', '<=', $tournament->max_team_size)->take(rand(5, 20))->get();
-
-            foreach ($teams as $team) {
-                $enrollment = new App\Enrollment();
-                $enrollment->fill(
-                    [
-                        'team_id' => $team->id,
-                        'tournament_id' => $tournament->id
-                    ]
-                )->save();
-            }
+        )->each(function (Tournament $tournament) {
+            App\Team::inRandomOrder()->get()->filter(
+                function (Team $team) use ($tournament) {
+                    return $team->memberCount() == $tournament->max_team_size;
+                }
+            )->take(10)->each(
+                function (Team $team) use ($tournament) {
+                    $tournament->enrollments()->create(['team_id' => $team->id]);
+                }
+            );
         });
     }
 }

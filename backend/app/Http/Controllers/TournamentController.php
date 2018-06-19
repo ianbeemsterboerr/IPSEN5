@@ -10,21 +10,17 @@ namespace App\Http\Controllers;
 
 
 use App\Team;
-use App\TeamMember;
-use App\User;
+use App\Invitees;
 use Illuminate\Http\Request;
 use App\Enrollment;
 use App\Tournament;
 use Mailgun\Mailgun;
 use App\Result;
 use App\Match;
-use App\Opponent;
-use App\Http\Controllers\Controller;
-
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Response;
-use PDO;
+use App\User;
 
+use Illuminate\Http\Response;
 
 class TournamentController extends Controller
 {
@@ -64,27 +60,77 @@ class TournamentController extends Controller
     public function runMatchmaker(int $id) {
         $tournament = Tournament::find($id);
 
+        //todo: Look for duplicate players
+        $teamMember_count = DB::table('team_member')
+            ->select('user_id', DB::raw('count(*) as times_participating'))
+            ->groupBy('user_id')
+            ->join('enrollment', 'team_member.team_id', '=', 'enrollment.team_id')
+            ->where('enrollment.tournament_id', '=', $tournament->id)
+            ->having('times_participating', '>', 1)->get();
+
+        if ($teamMember_count->count() > 0) {
+            $message = "Could not start match, one or more users is participating in multiple teams:\n";
+            foreach ($teamMember_count as $conflict) {
+                $user = User::find($conflict->user_id);
+
+                $message .= $user->username . ' is part of ' . $conflict->times_participating . " teams\n";
+            }
+
+            return response($message,400);
+        }
+
+
         $controller = TournamentFactory::getTournamentController($tournament);
         $controller->runMatchmaker($tournament);
     }
 
     public function invite(Request $request){
-        $userid = $request->json()->get('userId');
-        $tournamentid = $request->json()->get('tournamentId');
-        //HANDLE INVITE LOGIC HERE
-        $mg = Mailgun::create(env('MAILGUN_SECRET'));
+        $tournament = Tournament::where('id', $request->json()->get('tournamentId'))->first();
+        $inviterUserId = $request->user()->id;
+        $inviteeTeamId = $request->json()->get('teamId');
 
-        $linkToFrontend = env('FRONTEND_URL')."tournaments/invite?tournament={$tournamentid}&user={$userid}";
-        $mg->messages()->send(env('MAILGUN_DOMAIN'), [
-            'from'    => 'invites@'.env('MAILGUN_DOMAIN'),
-            'to'      => 'jelle.metzlar@outlook.com',
-            'subject' => 'The PHP SDK is awesome!',
-            'text'    => "{$linkToFrontend}"
-          ]);
+        if(!$tournament->organizer_user_id === $inviterUserId){
+            return response()->json(array(
+                'status' => 'error',
+                'message' => 'User not authorized to invite for this tournament.'
+            ), 401);
+        }
+
+        if(Team::where('id', $inviteeTeamId)->count() < 1){
+            return response('User or team not found', 404);
+        }
+        //get userId as described in JWT, instead of client sending id in request.
+
+        //flawed query:
+        if(Invitees::where('team_id', $inviteeTeamId)->where('tournament_id',$tournament->id)->count() > 0){
+            return response()->json(array(
+                'status' => 'error',
+                'message' => 'User or team already invited.'
+            ), 400);
+        }
+
+        $invitee = new Invitees;
+        $invitee->tournament_id = $tournament->id;
+        $invitee->team_id = $inviteeTeamId;
+        $invitee->save();
+
+        $tournamentid = $request->json()->get('tournamentId');
+        // $mg = Mailgun::create(env('MAILGUN_SECRET'));
+
+        // $linkToFrontend = env('FRONTEND_URL')."/tournaments/invite?tournament={$tournamentid}&user={$inviterUserId}";
+        // $mg->messages()->send(env('MAILGUN_DOMAIN'), [
+        //     'from'    => 'invites@'.env('MAILGUN_DOMAIN'),
+        //     'to'      => //ADD ENV REFERENCE
+        //     'subject' => 'The PHP SDK is awesome!',
+        //     'text'    => "{$linkToFrontend}"
+        //   ]);
+
+          return Team::select('name')->where('id', $inviteeTeamId)->first();
     }
 
     public function acceptInvite(Request $request){
-        $userid = $request->json()->get('userId');
+        //TODO:
+        $inviterUserId = $request->json()->get('userId');
         $tournamentid = $request->json()->get('tournamentId');
         //HANDLE ACCEPT INVITE LOGIC HERE
         enroll();
@@ -92,13 +138,22 @@ class TournamentController extends Controller
 
     public function storeScore(Request $request)
     {
-        foreach ($request->json()->all()["opponents"] as $opponent) {
+        $matchJSON = $request->json()->all();
+
+        foreach ($matchJSON["opponents"] as $opponent) {
             $resultClient = $opponent["result"];
 
             $result = Result::find($resultClient["opponent_id"]);
             $result->score = $resultClient["score"];
             $result->save();
-        }   
+        }
+
+
+        $match = Match::find($matchJSON['id']);
+
+        $controller = TournamentFactory::getTournamentController($match->tournament()->first());
+        $controller->onResultsUpdated($match);
+
         return Response::HTTP_OK;
     }
 
@@ -108,21 +163,28 @@ class TournamentController extends Controller
                 return response()->json([
                     'response' => "Found"
                 ]);
-                }     
-            } 
+                }
+            }
         return response()->json([
             'response' => "Not found"
-        ]);  
+        ]);
     }
 
     public function enrollSolo(request $request, int $tournament_id) {
         return $this->enroll($tournament_id, $request->user()->teams()->whereMaxSize(1)->first()->id );
     }
 
-    public function enroll(int $tournamentId, int $teamId){
-        Tournament::find($tournamentId)->enrollments()->create(['team_id'=>$teamId]);
+    public function enroll(Request $request, int $tournamentId, int $teamId)
+    {
+        $tournament = Tournament::find($tournamentId);
+        $team = Team::find($teamId);
+        $request_user = $request->user();
 
-        return Response::HTTP_OK;
+        if ($tournament->organizer_user_id != $request_user->id && $team->leader_user_id != $request_user->id)
+            return response('Cannot enroll other teams for a tournament you do not organize.', 400);
+
+        $tournament->enrollments()->create(['team_id' => $teamId]);
     }
+
 
 }

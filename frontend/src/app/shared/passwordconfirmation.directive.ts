@@ -1,5 +1,5 @@
-import { Validator, NG_VALIDATORS, ValidationErrors, AbstractControl } from "@angular/forms";
-import { Directive, Input } from "@angular/core";
+import { Validator, NG_VALIDATORS, ValidationErrors, AbstractControl } from '@angular/forms';
+import { Directive, Input } from '@angular/core';
 
 @Directive({
     selector: '[appConfirmEqualValidator]',
@@ -20,3 +20,4 @@ export class PasswordEqualValidator implements Validator {
         return null;
     }
 }
+

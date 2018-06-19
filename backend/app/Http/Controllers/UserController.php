@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tournament;
 use App\User;
 use App\Team;
 use Illuminate\Http\Request;
@@ -22,6 +23,14 @@ class UserController extends Controller
         return User::all();
     }
 
+    public function getAllNotParticipating(int $tournament_id) {
+        return User::all()->filter(
+            function (User $user) use ($tournament_id) {
+                return !$user->isParticipating(Tournament::find($tournament_id));
+            }
+        )->all();
+    }
+
     public function getUserNames() {
         return User::all(['username']);
     }
@@ -34,18 +43,11 @@ class UserController extends Controller
         $userFromDatabase = User::whereUsername($username)->first();
 
         if (is_null($userFromDatabase)) {
-            return response()->json(
-                array(
-                    'status' => 'error',
-                    'message' => 'Unauthorized, User doesnt exist'
-                ),
-                401
-            );
+            return response('Wrong username or password!', 401);
         }
 
-        //$hashedPassword = app('hash')->make($plainPassword);
         if (password_verify($password, $userFromDatabase->password)) {
-            $key = "JWT";
+            $key = env('JSON_WEBTOKEN_KEY');
             $token = array(
                 "iss" => "compufifi.test",
                 "aud" => "angularClient",
@@ -56,26 +58,33 @@ class UserController extends Controller
             //TO DO: FIX BEARER SYSTEM
             $jwtstring = array(
                 "bearer" => $jwt,
-                "userID" => $userFromDatabase->id,
+                "activeUserId" => $userFromDatabase->id,
                 "user" => (string) $userFromDatabase
             );
             return json_encode($jwtstring);
             // return json_encode(JWT::decode($jwt, $key, array('HS256')));
         } else {
-            return response()->json(array(
-                'status' => 'error',
-                'message' => 'Unauthorized, Wrong password'
-            ), 401);
+            return response('Wrong username or password!', 401);
         }
     }
 
     public function get(int $id)
     {
-        return User::find($id);
+        $user =  User::find($id);
+
+        if($user !== null){
+            return $user;
+        }
+
+        return response('User not found', 404);
     }
 
     public function register(Request $request){
         $data = $request->json()->all();
+
+        if (User::whereUsername($request->json('username'))->orWhere('email', '=', $request->json('email'))->first() != null){
+            return response('User already exists', 409);
+        }
 
         $newUser = User::create($data);
         $newUser->password = password_hash($data['password'], PASSWORD_BCRYPT);

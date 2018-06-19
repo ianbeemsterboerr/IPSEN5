@@ -1,3 +1,4 @@
+import { ErrorhandlerService } from './../../shared/errorhandler.service';
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../shared/api.service';
 import {Tournament} from '../../shared/model/tournament';
@@ -9,6 +10,7 @@ import {Team} from '../../shared/model/team';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ToastrService} from 'ngx-toastr';
 import { SearchPipe } from '../../shared/search.pipe';
+import {ErrorhandlerService} from "../../shared/errorhandler.service";
 
 @Component({
     selector: 'app-tournament',
@@ -35,7 +37,7 @@ import { SearchPipe } from '../../shared/search.pipe';
 })
 export class TournamentComponent implements OnInit {
     public tournament: Tournament;
-    public users: User[];
+    public teams: Team[];
     public isOrganizer: boolean;
     public hasMatches: boolean;
     public isNotInMatch: boolean;
@@ -45,7 +47,6 @@ export class TournamentComponent implements OnInit {
     public searchString;
     public today: Date = new Date();
     public start: Date;
-    // public stringarray = ['lol', 'lmao', 'xd'];
 
     public invitableListState = 'inactive';
 
@@ -54,6 +55,7 @@ export class TournamentComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastrService,
+        private errorHandler: ErrorhandlerService,
         private api: ApiService
     ) {
       this.searchString = '';
@@ -80,15 +82,15 @@ export class TournamentComponent implements OnInit {
         });
     }
 
-    public getUserList() {
+    public getTeamList() {
         if (this.invitableListState === 'active') {
             this.invitableListState = 'inactive';
             return;
         }
 
-        this.tournamentService.getAllUsers().subscribe(
+        this.tournamentService.getAllTeams(this.tournament.max_team_size).subscribe(
             data => {
-                this.users = data;
+                this.teams = data;
                 this.invitableListState = 'active';
             }
         );
@@ -98,11 +100,10 @@ export class TournamentComponent implements OnInit {
     public invite(id) {
         this.tournamentService.inviteForTournament(this.tournament.id, id).subscribe(
             data => {
-                console.log(data);
-                // give notification of success..
+              console.log(data);
+              this.toastr.success( data['name'] + ' invited for tournament: ' + this.tournament.name, 'Success!');
             }, err =>  {
-                // give notification of error..
-                console.log(err);
+              this.errorHandler.handleError(err);
             }
         );
       }
@@ -130,7 +131,7 @@ export class TournamentComponent implements OnInit {
 
     enrollment(){
         this.api.get('tournament/enroll/' + this.tournament.id).subscribe(
-            succes => {                
+            succes => {
                 this.toastr.success("U bent aangemeld.");
                 this.isNotInMatch = false;
             },
@@ -139,7 +140,7 @@ export class TournamentComponent implements OnInit {
             }
          );
     }
-    
+
     startTournament() {
       if (confirm('Starting the tournament finalizes enrollments. No players or teams can be added after this point.')) {
         console.log('Starting tournament..');
@@ -149,7 +150,7 @@ export class TournamentComponent implements OnInit {
               this.goOverview();
           },
           failure => {
-            this.toastr.error('Zie console.');
+                this.errorHandler.handleError(failure)
           }
         );
       }

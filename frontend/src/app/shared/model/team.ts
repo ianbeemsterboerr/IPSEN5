@@ -1,5 +1,5 @@
-import {Player} from "./player";
-import {User} from "./user";
+import {Player} from './player';
+import {User} from './user';
 import {TeamMember} from './team_member';
 
 export class Team {

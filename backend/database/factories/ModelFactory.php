@@ -22,7 +22,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'description' => $faker->text($maxNbChars = 200),
         'salt' => str_random(126),
         'password' => password_hash('welkom123', PASSWORD_BCRYPT),
-        'avatar_url' => $faker->imageUrl($width = 640, $height = 480),
+        'avatar_url' => $faker->imageUrl($width = 640, $height = 480, 'cats'),
         'force_pw_change' => false,
         'force_name_change' => false,
         'guest' => false,
