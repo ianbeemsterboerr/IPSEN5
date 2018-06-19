@@ -24,6 +24,7 @@ export class PoulesComponent extends ATournament implements OnInit {
 
   ngOnInit() {
     this.loadTournament();
+    this.sortPoules();
   }
   loadTournament() {
     this.poules = [];
@@ -126,6 +127,28 @@ export class PoulesComponent extends ATournament implements OnInit {
       }
     }
     return count;
+  }
+  sortPoules() {
+    for (let poule of this.teams) {
+      this.teams[this.teams.indexOf(poule)] = this.sortPoule(poule);
+    }
+  }
+  sortPoule(teams: Team[]){
+    let teamsSorted = [];
+    teamsSorted.push(teams.pop());
+
+    for (let team of teams) {
+      for (let sortedTeam of teamsSorted) {
+        if (this.getWins(team) > this.getWins(sortedTeam)) {
+          teamsSorted.splice(teamsSorted.indexOf(sortedTeam), 0, team);
+          break;
+        }
+      }
+      if (!teamsSorted.includes(team)) {
+        teamsSorted.push(team);
+      }
+    }
+    return teamsSorted;
   }
 
 }
