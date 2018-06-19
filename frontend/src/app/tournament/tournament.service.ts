@@ -3,7 +3,7 @@ import {Tournament} from '../shared/model/tournament';
 import {ApiService} from '../shared/api.service';
 import {Observable} from 'rxjs/Observable';
 import { Team } from '../shared/model/team';
-import {Enrollment} from "../shared/model/enrollment";
+import {Enrollment} from '../shared/model/enrollment';
 
 @Injectable()
 export class TournamentService {
@@ -21,7 +21,7 @@ export class TournamentService {
 
     // Teams that can be enrolled.
     getAllQualifyingTeams(tournament: Tournament): Observable<Team[]> {
-        return this.api.get<Team[]>(`teams/qualifying/${tournament.id}`)
+        return this.api.get<Team[]>(`teams/qualifying/${tournament.id}`);
     }
 
     inviteForTournament(tournamentId, teamId) {

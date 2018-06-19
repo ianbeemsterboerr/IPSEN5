@@ -173,7 +173,7 @@ class TournamentController extends Controller
             return response('Cannot enroll team, make sure team is able to participate. Perhaps team members of this team are already participating in this tournament.', 400);
 
         $tournament->enrollments()->create(['team_id'=>$teamId]);
-        deleteInvitation($tournamentId, $teamId);
+        $this->deleteInvitation($tournamentId, $teamId);
     }
 /**
  * Take a user id and get all the tournaments this user is invited for. better name?
