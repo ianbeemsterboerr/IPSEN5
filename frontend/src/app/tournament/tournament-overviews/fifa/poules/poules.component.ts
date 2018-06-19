@@ -133,13 +133,16 @@ export class PoulesComponent extends ATournament implements OnInit {
       this.teams[this.teams.indexOf(poule)] = this.sortPoule(poule);
     }
   }
-  sortPoule(teams: Team[]){
+  sortPoule(teams: Team[]) {
     let teamsSorted = [];
     teamsSorted.push(teams.pop());
 
     for (let team of teams) {
       for (let sortedTeam of teamsSorted) {
         if (this.getWins(team) > this.getWins(sortedTeam)) {
+          teamsSorted.splice(teamsSorted.indexOf(sortedTeam), 0, team);
+          break;
+        } else if ((this.getGoals(team) > this.getGoals(sortedTeam)) && (this.getWins(team) === this.getWins(sortedTeam))) {
           teamsSorted.splice(teamsSorted.indexOf(sortedTeam), 0, team);
           break;
         }
