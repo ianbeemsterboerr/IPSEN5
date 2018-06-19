@@ -33,4 +33,24 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'email', 'salt', 'force_pw_change', 'force_name_change', 'webtoken'
     ];
+
+    public function teams(){
+        return $this->hasMany('App\Team','leader_user_id', 'id');
+    }
+
+    public function teamMembers() {
+        return $this->hasMany('App\TeamMember');
+    }
+
+    public function isParticipating(Tournament $tournament) {
+        foreach ($tournament->enrollments as $enrollment) {
+            if ($enrollment->team->teamMembers()->whereUserId($this->id)->first() != null) {
+                return true;
+            }
+        }
+
+//        dd('user ' . $this->id . ' not participating');
+
+        return false;
+    }
 }

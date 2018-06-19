@@ -69,7 +69,7 @@ export class TournamentOverviewComponent implements OnInit {
         if (confirm('WARNING: All progress will be lost and teams will be reshuffled!!')) {
             this.tournamentService.startTournament(this.id).subscribe(
                 next => {
-                    this.tournamentComponent.instance.reshuffle();
+                    this.tournamentComponent.instance.update();
                 },
                 error => { /*todo: */ }
             );

@@ -1,0 +1,18 @@
+#profile-image {
+    max-height: 300px;
+    max-width: 200px;
+
+    margin: 20px;
+    padding: 5px;
+
+    border: #222222 solid 2px;
+}
+
+#basic-info {
+    display: flex;
+    flex-direction: row;
+}
+
+* {
+    color: #FFF;
+}

@@ -7,7 +7,7 @@ export abstract class ATournament {
 
     protected constructor (public tournamentService: TournamentService) {}
 
-    reshuffle(): void {
+    update(): void {
         this.tournamentService.getTournament(this.tournament.id).subscribe(
             next => {
                 this.tournament = next;

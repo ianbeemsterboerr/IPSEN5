@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEnrollmentTable extends Migration
+class CreateInviteesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class CreateEnrollmentTable extends Migration
      */
     public function up()
     {
-        Schema::create('enrollment', function (Blueprint $table) {
+        Schema::create('invitees', function (Blueprint $table) {
             $table->integer('tournament_id')->unsigned();
             $table->integer('team_id')->unsigned();
             $table->timestamps();
 
             $table->primary(['tournament_id', 'team_id']);
+
         });
 
-        Schema::table('enrollment', function (Blueprint $table) {
+        Schema::table('invitees', function (Blueprint $table) {
             $table->foreign('tournament_id')->references('id')->on('tournament');
             $table->foreign('team_id')->references('id')->on('team');
 
@@ -35,11 +36,11 @@ class CreateEnrollmentTable extends Migration
      */
     public function down()
     {
-        Schema::table('enrollment', function (Blueprint $table) {
+        Schema::table('invitees', function (Blueprint $table) {
             $table->dropForeign(['tournament_id']);
-            //$table->dropForeign(['team_id']);
+            $table->dropForeign(['team_id']);
 
         });
-        Schema::dropIfExists('enrollment');
+        Schema::dropIfExists('invitees');
     }
 }

@@ -39,6 +39,16 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->get('matchmake/{id}', 'TournamentController@runMatchmaker');
         });
 
+        $router->group(['prefix' => 'teams'], function () use ($router) {
+            $router->get('getidbyuserid/{id}', 'TeamController@getUsersTeamId');   
+            $router->get('all/{size}', 'TeamController@getAllWithSize');  
+            $router->get('getAllowedTeams/{tournament_id}', 'TeamController@getAllowedTeams');
+            $router->get('all', 'TeamController@getall');
+        });
+
+        
+
+
     });
 
     /**
@@ -46,5 +56,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
      */
     $router->post('/login', 'UserController@login');
     $router->post('/users/register', 'UserController@register');
+     
+    $router->get('users/unsafeall', 'UserController@getAll');   
+     
+     
 });
 

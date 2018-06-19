@@ -12,16 +12,24 @@
                 <div class="item-name" [@expanded]="state">Home</div>
             </a>
         </li>
-        <li class="navItem">
+
+        <!--ITEMS REQUIRING LOGGED IN USER-->
+        <li class="navItem" *ngIf="userService.isUserLoggedIn">
             <a [routerLink]="['/tournaments']">
                 <fa name="flag-checkered" style="color: lawngreen;"></fa>
                 <div class="item-name" [@expanded]="state">Toernooien</div>
             </a>
         </li>
-        <li class="navItem">
+        <li class="navItem" *ngIf="userService.isUserLoggedIn">
             <a>
                 <fa name="trophy" style="color: yellow;"></fa>
                 <div class="item-name" [@expanded]="state">Hall Of Fame</div>
+            </a>
+        </li>
+        <li class="navItem" *ngIf="userService.isUserLoggedIn">
+            <a [routerLink]="['/user', userService.activeUserId]">
+                <fa name="sign-out-alt" style="color: red;"></fa>
+                <div class="item-name" [@expanded]="state">My profile</div>
             </a>
         </li>
         <li class="navItem" *ngIf="userService.isUserLoggedIn">
@@ -30,6 +38,8 @@
                 <div class="item-name" [@expanded]="state">Log-out</div>
             </a>
         </li>
+
+        <!--ITEMS REQUIRING NO LOGIN-->
         <li class="navItem" *ngIf="!userService.isUserLoggedIn">
             <a [routerLink]="['/login']">
                 <fa name="sign-in-alt" style="color: green;"></fa>

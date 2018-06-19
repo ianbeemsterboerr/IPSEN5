@@ -1,0 +1,13 @@
+<div *ngIf="user" class="bg-dark container-fluid" id="">
+  <div id="basic-info">
+    <img id="profile-image" class="bg-light" [src]="user.avatar_url" />
+
+    <div>
+      <h1>{{user.username}}</h1>
+      <sub>{{user.first_name +  ' ' + user.last_name}}</sub>
+    </div>
+  </div>
+
+
+  <p>{{user.description}}</p>
+</div>
