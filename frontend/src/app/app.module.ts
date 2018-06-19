@@ -33,7 +33,6 @@ import { ProfileComponent } from './user/profile/profile.component';
         CreateaccountComponent,
         ForgotpasswordComponent,
         PasswordEqualValidator,
-        TeamComponent
         PasswordEqualValidator,
         ProfileComponent,
     ],

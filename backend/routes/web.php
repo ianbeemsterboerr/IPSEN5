@@ -32,11 +32,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('invite', 'TournamentController@invite');
             $router->post('acceptinvite', 'TournamentController@acceptInvite');
             $router->get('enroll/{tournamentId}/{teamId}', 'TournamentController@enroll');
+            $router->get('enroll/{tournamentId}', 'TournamentController@enrollSolo');
             $router->post('score', 'TournamentController@storeScore');
             $router->get('all', 'TournamentController@getAll');
             $router->get('get/{id}', 'TournamentController@get');
             $router->get('names', 'TournamentController@getNames');
             $router->get('matchmake/{id}', 'TournamentController@runMatchmaker');
+            $router->get('checkEnrollment/{id}', 'TournamentController@checkEnroll');
         });
 
         $router->group(['prefix' => 'teams'], function () use ($router) {

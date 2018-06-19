@@ -10,6 +10,8 @@ namespace App\Http\Controllers;
 
 
 use App\Team;
+use App\TeamMember;
+use App\User;
 use Illuminate\Http\Request;
 use App\Enrollment;
 use App\Tournament;
@@ -18,7 +20,6 @@ use App\Result;
 use App\Match;
 use App\Opponent;
 use App\Http\Controllers\Controller;
-use App\Enrollment;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
@@ -101,39 +102,27 @@ class TournamentController extends Controller
         return Response::HTTP_OK;
     }
 
-    public function checkEnrollment(request $request){
-        $user_id = 5051;
-        foreach($request->json()->all()['enrollments'] as $team){
-            if($team['team']['leader_user_id'] == $user_id){
-                return "user found";
-            }
-        }
-        //newEnrollment(10,1,1);
+    public function checkEnroll(request $request, int $tournament_id){
+        foreach(TeamMember::where("user_id", $request->user()->id)->get() as $teamMember){
+            if(Enrollment::where('team_id',$teamMember->team_id)->where('tournament_id', $tournament_id)->first()){
+                return response()->json([
+                    'response' => "Found"
+                ]);
+                }     
+            } 
+        return response()->json([
+            'response' => "Not found"
+        ]);  
     }
 
-    public function checkTeam(){
-        return false;
-    }
-
-    public function newEnrollment($user_id, $tournament_id, $team_size) {
-        $team_results = DB::table('team')->where([
-            ['leader_user_id', $user_id],
-            ['Max_size', $max_size]])->first();
-
-        $enrollment = new Enrollment();
-        $enrollment->fill([
-            'tournament_id' => $tournament_id,
-            'team_id' => $team_results->id
-        ]);
-
-        $enrollment->save();
-        return Response::HTTP_OK;
+    public function enrollSolo(request $request, int $tournament_id) {
+        return $this->enroll($tournament_id, $request->user()->teams()->whereMaxSize(1)->first()->id );
     }
 
     public function enroll(int $tournamentId, int $teamId){
-        $tournament = Tournament::find($tournamentId);
-        $enrollment = new Enrollment(['team_id'=>$teamId]);
-        $tournament->enrollments()->save($enrollment);
+        Tournament::find($tournamentId)->enrollments()->create(['team_id'=>$teamId]);
+
+        return Response::HTTP_OK;
     }
 
 }

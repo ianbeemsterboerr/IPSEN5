@@ -1,21 +1,16 @@
+import { AcceptinviteComponent } from './tournament/invite/acceptinvite/acceptinvite.component';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {HomeComponent} from './home/home/home.component';
 import {TournamentHomeComponent} from './tournament/tournament-home/tournament-home.component';
 import {TournamentNewComponent} from './tournament/tournament-new/tournament-new.component';
+import {ProfileComponent} from './user/profile/profile.component';
 import {LoginComponent} from './user/login/login.component';
 import {ForgotpasswordComponent} from './user/forgotpassword/forgotpassword.component';
 import {CreateaccountComponent} from './user/createaccount/createaccount.component';
-import {TournamentComponent} from './tournament/tournament/tournament.component';
-import {TournamentOverviewComponent} from './tournament/tournament-overviews/tournament-overview/tournament-overview.component';
-import {ProfileComponent} from './user/profile/profile.component';
-import {LoginComponent} from './login/login.component';
-import {ForgotpasswordComponent} from './forgotpassword/forgotpassword.component';
-import {CreateaccountComponent} from './createaccount/createaccount.component';
 import {TournamentComponent} from "./tournament/tournament/tournament.component";
 import {TournamentOverviewComponent} from "./tournament/tournament-overviews/tournament-overview/tournament-overview.component";
-import { TeamComponent } from './team/team.component';
 
 
 const routes: Routes = [
@@ -29,7 +24,6 @@ const routes: Routes = [
     {path: 'tournaments/:id', component: TournamentComponent},
     {path: 'tournaments/overview/:id', component: TournamentOverviewComponent},
     {path: 'user/:id', component: ProfileComponent}
-    {path: 'createteam/:id', component: TeamComponent}
 ];
 
 @NgModule({
