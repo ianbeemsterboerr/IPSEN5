@@ -28,4 +28,8 @@ export class TournamentService {
     enroll(team_id: number, tournament_id: number) {
         return this.api.get(`tournament/enroll/${team_id}/${tournament_id}`);
     }
+
+    getTournamentsInvited(userId: number) {
+      return this.api.get<Tournament[]>(`tournament/invitedfor/${userId}`);
+    }
 }

@@ -79,7 +79,7 @@
             <tr *ngFor="let team of teams | search : searchString">
                 <td>{{ team.name }}</td>
                 <td>
-                    <button class="btn btn-info" (click)="invite(team.id)">
+                    <button class="btn btn-info" (click)="invite(team)">
 
                         Invite
 

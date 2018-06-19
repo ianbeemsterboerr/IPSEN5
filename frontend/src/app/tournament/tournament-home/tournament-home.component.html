@@ -55,3 +55,57 @@
     </div>
 </div>
 
+<div id="tournament-list" class="mx-auto w-100 rounded p-1">
+  <form class="p-1">
+      <h3>Filter</h3>
+      <div class="row">
+          <div class="col">
+              <label for="typeSelect" class="">Game: </label>
+              <select id="typeSelect" class="form-control">
+                  <option *ngFor="let game of getGames()">{{game.title}}</option>
+              </select>
+          </div>
+
+          <div class="col">
+              <label for="dateField" class="">After: </label>
+              <input id="dateField" type="date" class="form-control"/>
+          </div>
+      </div>
+  </form>
+
+  <!--<h4>Tournaments</h4>-->
+  <div class="p-1">
+      <table class="table">
+          <thead>
+          <tr>
+              <th>X</th>
+              <th>Naam</th>
+              <th>Type</th>
+              <th>Signup einde</th>
+              <th>Details</th>
+              <th>Doe mee</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr *ngFor="let tournament of tournamentsInvitedFor">
+              <td><input type="checkbox"></td>
+              <td>{{tournament.name}}</td>
+              <td>{{tournament.tournament_typename}}</td>
+              <td>{{tournament.signup_end}}</td>
+              <td>
+                <button class="btn btn-info" >
+                  Details
+                </button>
+              </td>
+              <td>
+              <button class="btn btn-info" (click)="enroll(tournament)">
+                Doe mee!
+              </button>
+            </td>
+          </tr>
+          </tbody>
+      </table>
+  </div>
+</div>
+

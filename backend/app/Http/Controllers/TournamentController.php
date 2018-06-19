@@ -165,6 +165,21 @@ class TournamentController extends Controller
             return response('Cannot enroll other teams for a tournament you do not organize.', 400);
 
         $tournament->enrollments()->create(['team_id'=>$teamId]);
+        deleteInvitation($tournamentId, $teamId);
+    }
+/**
+ * Take a user id and get all the tournaments this user is invited for. better name?
+ */
+    public function getAllInvitedFor(Request $request, int $userId){
+         return DB::table('team')
+         ->join('invitees', 'team.id', '=', 'invitees.team_id')
+         ->join('tournament', 'invitees.tournament_id', '=', 'tournament.id')
+         ->where('leader_user_id', $userId)
+         ->select('tournament.*', 'team.id as inviteteamid')
+         ->get();
     }
 
+    private function deleteInvitation(int $tournamentId, int $teamId){
+        return Invitees::where('team_id', $teamId)->where('tournament_id', $tournamentId)->delete();
+    }
 }
