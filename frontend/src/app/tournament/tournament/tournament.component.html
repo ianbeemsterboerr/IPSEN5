@@ -60,10 +60,26 @@
                 <button class="btn guest">
                     Settings
                 </button>
+                <div *ngIf="isNotInMatch">
+                    <button class="btn guest" *ngIf="additionalMembers" (click)="enrollment()">
+                            Aanmelden
+                    </button>
+                    <div class="dropdown" *ngIf="additionalMembers">
+                        <button class="btn guest dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Create a new team.</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
+    <button (click)="checkTrueOrFalse()">test</button>
+    <button (click)="checkEnrollment()">test1</button>
     <div class="card card-body mt-3" [@invitables_expanded]="invitableListState"
          [hidden]="invitableListState == 'inactive'">
         <table class="table-responsive">

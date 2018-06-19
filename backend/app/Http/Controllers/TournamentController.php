@@ -19,6 +19,7 @@ use App\Result;
 use App\Match;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\TeamMember;
 
 use Illuminate\Http\Response;
 
@@ -171,7 +172,7 @@ class TournamentController extends Controller
     }
 
     public function enrollSolo(request $request, int $tournament_id) {
-        return $this->enroll($tournament_id, $request->user()->teams()->whereMaxSize(1)->first()->id );
+        return $this->enroll($request, $tournament_id, $request->user()->teams()->whereMaxSize(1)->first()->id );
     }
 
     public function enroll(Request $request, int $tournamentId, int $teamId)

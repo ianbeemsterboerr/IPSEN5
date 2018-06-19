@@ -111,11 +111,15 @@ export class TournamentComponent implements OnInit {
     }
 
     public checkEnrollment(){
+        console.log('click');
         this.api.get('tournament/checkEnrollment/' + this.tournament.id).subscribe(
             data => {
                 if(data['response'] == 'Found'){
-                  this.isNotInMatch = false;
+                    console.log(data['response']);
+                    this.isNotInMatch = false;
                 } else {
+                    
+                    console.log(data['response']);
                     this.isNotInMatch = true;
                 };
             }, err => {
