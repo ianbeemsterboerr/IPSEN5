@@ -10,7 +10,6 @@ import {Team} from '../../shared/model/team';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ToastrService} from 'ngx-toastr';
 import { SearchPipe } from '../../shared/search.pipe';
-import {ErrorhandlerService} from "../../shared/errorhandler.service";
 
 @Component({
     selector: 'app-tournament',
@@ -45,6 +44,7 @@ export class TournamentComponent implements OnInit {
     public searchString;
     public today: Date = new Date();
     public start: Date;
+    // public stringarray = ['lol', 'lmao', 'xd'];
 
     public invitableListState = 'inactive';
 
@@ -95,7 +95,6 @@ export class TournamentComponent implements OnInit {
     public invite(id) {
         this.tournamentService.inviteForTournament(this.tournament.id, id).subscribe(
             data => {
-              console.log(data);
               this.toastr.success( data['name'] + ' invited for tournament: ' + this.tournament.name, 'Success!');
             }, err =>  {
               this.errorHandler.handleError(err);
@@ -115,7 +114,7 @@ export class TournamentComponent implements OnInit {
               this.goOverview();
           },
           failure => {
-                this.errorHandler.handleError(failure)
+            this.toastr.error('Zie console.');
           }
         );
       }
