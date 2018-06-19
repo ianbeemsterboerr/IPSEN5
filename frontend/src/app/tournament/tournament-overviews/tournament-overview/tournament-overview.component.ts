@@ -5,6 +5,7 @@ import {ATournament} from '../ATournament';
 import {TournamentService} from '../../tournament.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Tournament} from '../../../shared/model/tournament';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'app-tournament-overview',
@@ -31,7 +32,8 @@ export class TournamentOverviewComponent implements OnInit {
         private componentFactoryResolver: ComponentFactoryResolver,
         private tournamentService: TournamentService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private toast: ToastrService,
     ) {
     }
 
@@ -67,7 +69,7 @@ export class TournamentOverviewComponent implements OnInit {
                 next => {
                     this.tournamentComponent.instance.reshuffle();
                 },
-                error => {}
+                error => { /*todo: */ }
             );
         }
     }

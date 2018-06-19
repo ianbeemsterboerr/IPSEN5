@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Team;
 use Illuminate\Http\Request;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Response;
@@ -55,7 +56,7 @@ class UserController extends Controller
             //TO DO: FIX BEARER SYSTEM
             $jwtstring = array(
                 "bearer" => $jwt,
-                "activeUserId" => $userFromDatabase->id,
+                "userID" => $userFromDatabase->id,
                 "user" => (string) $userFromDatabase
             );
             return json_encode($jwtstring);
@@ -76,11 +77,15 @@ class UserController extends Controller
     public function register(Request $request){
         $data = $request->json()->all();
 
-        $newUser = new User();
-        $newUser->fill($data);
+        $newUser = User::create($data);
         $newUser->password = password_hash($data['password'], PASSWORD_BCRYPT);
         $newUser->save();
-        
+
+        $newUser->teams()->create(
+            ['name' => $newUser->username,
+            'size' => 1,
+            'max_size' => 1
+        ]);
         return $newUser;
     }
 }

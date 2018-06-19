@@ -35,39 +35,123 @@
           </button>
         </div>
       </div>
+        <div class="card bg-light col-3">
+            <div class="card-body">
+                {{tournament.description}}
+            </div>
+        </div>
+        <div class="card bg-light">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tr>
+                        <td>Tournament date:</td>
+                        <td>{{tournament.tournament_start}}</td>
+                    </tr>
+                    <tr>
+                        <td>Tournament type:</td>
+                        <td>{{tournament.tournament_typename}}</td>
+                    </tr>
+                    <tr>
+                        <td>Signup type:</td>
+                        <td>{{tournament.signup_typename}}</td>
+                    </tr>
+                    <tr>
+                        <td>Team size:</td>
+                        <td>{{tournament.max_team_size}}</td>
+                    </tr>
+                    <tr>
+                        <td>Signup period:</td>
+                        <td>{{tournament.signup_start}} to {{tournament.signup_end}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="card bg-light" *ngIf="isOrganizer">
+            <button class="btn" (click)="startTournament()" *ngIf="!hasMatches">
+                Start tournament
+            </button>
+            <button class="btn" *ngIf="hasMatches" (click)="goOverview()">
+                Match schedule
+            </button>
+            <button class="btn">
+                Settings
+            </button>
+            <a class="btn btn-primary" (click)="getUserList()" role="button">
+                Invite players
+            </a>
+        </div>
+
+        <div class="card bg-light" *ngIf="!isOrganizer">
+            <div class="card-header">Organiser: {{tournament.organiser.username}}</div>
+            <div class="card-body">
+                <button class="btn guest" *ngIf="hasMatches" (click)="goOverview()">
+                    Match schedule
+                </button>
+                <button class="btn guest">
+                    Settings
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-body mt-3" [@invitables_expanded]="invitableListState"
+         [hidden]="invitableListState == 'inactive'">
+        <table class="table-responsive">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Invite</th>
+                <th><input [(ngModel)]="searchString" placeholder="search text goes here"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr *ngFor="let user of users | search : searchString">
+                <td>{{ user.username }}</td>
+                <td>
+                    <button class="btn btn-info" (click)="invite(user.id)">
+
+                        Invite
+
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
 
     <div class="card bg-light mt-3">
-      <div class="card-header text-center">
-        Enrolled teams
-      </div>
-      <div class="card-body">
-        <div id="team-table" class="table-responsive">
-          <table class="table-hover">
-            <thead>
-              <tr>
-                <th scope="col">Team name</th>
-                <th scope="col" *ngIf="additionalMembers">Leader name</th>
-                <th scope="col" *ngIf="additionalMembers">Additional members</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let enrollment of tournament.enrollments">
-
-                <td class="align-text-top">{{enrollment.team.name}}</td>
-                <td class="align-text-top" *ngIf="additionalMembers">{{enrollment.team.team_leader.username}}</td>
-                <td *ngIf="additionalMembers">
-                  <div *ngFor="let member of enrollment.team.team_members">{{member.user.username}}</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="card-header text-center">
+            Enrolled teams
         </div>
-      </div>
+        <div class="card-body">
+            <div id="team-table" class="table-responsive">
+                <table class="table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Team name</th>
+                        <th scope="col" *ngIf="additionalMembers">Leader name</th>
+                        <th scope="col" *ngIf="additionalMembers">Additional members</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let enrollment of tournament.enrollments">
+
+                        <td class="align-text-top">{{enrollment.team.name}}</td>
+                        <td class="align-text-top" *ngIf="additionalMembers">{{enrollment.team.team_leader.username}}
+                        </td>
+                        <td *ngIf="additionalMembers">
+                            <div *ngFor="let member of enrollment.team.team_members">{{member.user.username}}</div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-
-
-
-
 </div>
+
+
+
+

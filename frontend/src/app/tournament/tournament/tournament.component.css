@@ -11,6 +11,7 @@
   height: 100px;
   padding-top: 20px;
   margin-bottom: 16px;
+  text-align: center;
 }
 
 .btn {
@@ -25,3 +26,12 @@
 table{
   width: 100%;
 }
+
+tbody {
+  max-height: 120px;
+  overflow-y: scroll;
+}
+
+
+
+

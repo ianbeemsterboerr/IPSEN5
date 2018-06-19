@@ -11,6 +11,13 @@ class UsersSeed extends Seeder
      */
     public function run()
     {
+        factory(App\User::class)->create(
+            [
+                'username' => 'admin',
+                'password' => password_hash('admin', PASSWORD_BCRYPT)
+            ]
+        );
+
         factory(App\User::class, 50)->create()->each(function ($u) {
             $team = new \App\Team();
             $team->fill(

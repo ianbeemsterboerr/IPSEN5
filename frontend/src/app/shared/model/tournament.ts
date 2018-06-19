@@ -1,6 +1,6 @@
-import {User} from "./user";
-import {Enrollment} from "./enrollment";
-import {Match} from "./match";
+import {User} from './user';
+import {Enrollment} from './enrollment';
+import {Match} from './match';
 
 export class Tournament {
     constructor (

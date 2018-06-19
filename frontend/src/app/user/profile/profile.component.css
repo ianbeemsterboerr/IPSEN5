@@ -1,0 +1,19 @@
+#profile-image {
+    max-height: 300px;
+    max-width: 200px;
+
+    float: left;
+
+    margin: 20px;
+    padding: 5px;
+
+    border: #222222 solid 2px;
+}
+
+#container {
+    min-height: 380px;
+}
+
+* {
+    color: #FFF;
+}

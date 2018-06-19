@@ -33,4 +33,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'email', 'salt', 'force_pw_change', 'force_name_change', 'webtoken'
     ];
+    public function teams(){
+        return $this->hasMany('App\Team','leader_user_id', 'id');
+    }
 }
