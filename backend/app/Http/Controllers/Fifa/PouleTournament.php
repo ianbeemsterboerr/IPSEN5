@@ -113,15 +113,9 @@ class PouleTournament implements ITournament
         return $match;
     }
 
-    private function takeXTeams(&$teams, $amount)
+    public function onResultsUpdated(Match $match)
     {
-        $takenTeams = [];
-
-        for ($i = 0; $i < $amount; $i++) {
-            array_push($takenTeams, array_pop($teams));
-        }
-
-        return $takenTeams;
+        // TODO: Implement onResultsUpdated() method.
     }
 
 }

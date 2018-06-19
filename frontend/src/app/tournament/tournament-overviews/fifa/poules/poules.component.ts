@@ -22,6 +22,11 @@ export class PoulesComponent extends ATournament implements OnInit {
   }
 
   ngOnInit() {
+    this.loadTournament();
+  }
+  loadTournament() {
+    this.poules = [];
+    this.teams = [];
     for (const match of this.tournament.matches) {
       const pouleNumber = Number(match.special.data);
       if (!this.poules.includes(pouleNumber)) {
@@ -41,10 +46,6 @@ export class PoulesComponent extends ATournament implements OnInit {
         }
       }
     }
-
-
-    console.log(this.poules);
-    console.log(this.teams);
   }
   getMatches() {
     return this.tournament.matches;
@@ -59,8 +60,8 @@ export class PoulesComponent extends ATournament implements OnInit {
   }
 
   onUpdate(tournament: Tournament): void {
-    // this.tournament = tournament;
-    // this.loadTournament();
+    this.tournament = tournament;
+    this.loadTournament();
   }
 
   matchClicked(match: Match) {

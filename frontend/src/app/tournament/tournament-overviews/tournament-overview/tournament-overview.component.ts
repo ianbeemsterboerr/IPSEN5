@@ -67,9 +67,11 @@ export class TournamentOverviewComponent implements OnInit {
 
     shuffle() {
         if (confirm('WARNING: All progress will be lost and teams will be reshuffled!!')) {
+            console.log('Shuffling...')
             this.tournamentService.startTournament(this.id).subscribe(
                 next => {
-                    this.tournamentComponent.instance.update();
+                  console.log('Shuffled.');
+                  this.tournamentComponent.instance.update();
                 },
                 error => { /*todo: */ }
             );
