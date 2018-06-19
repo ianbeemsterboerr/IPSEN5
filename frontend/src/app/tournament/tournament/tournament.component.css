@@ -32,6 +32,12 @@ tbody {
   overflow-y: scroll;
 }
 
+#invite-table-wrapper {
+  max-height: 340px;
+  overflow: auto;
+  display: block;
+}
+
 
 
 

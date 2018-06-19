@@ -1,0 +1,3 @@
+<button class="btn btn-link" [routerLink]="['/tournaments', id]"><-Back to tournament home</button>
+<ng-template overview-host></ng-template>
+<button id="shuffleBtn" class="btn-secondary offset-10" (click)="shuffle()" *ngIf="isOrganiser"> Shuffle match-ups </button>
