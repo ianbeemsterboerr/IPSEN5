@@ -107,6 +107,6 @@ class TournamentController extends Controller
         $enrollment = new Enrollment(['team_id'=>$teamId]);
         $tournament->enrollments()->save($enrollment);
     }
-    
+
 
 }

@@ -2,12 +2,29 @@
   <ngb-tab>
     <ng-template ngbTabTitle>Overview</ng-template>
     <ng-template ngbTabContent>
-      <div class="card-columns">
-        <div *ngFor="let poule of poules" class="card bg-dark col-md-5">
-          <div class="card-header"> {{poule}} </div>
-          <div class="card-body"> HELLO HELLO</div>
+      <!--<div class="card-columns pouleCards">-->
+      <div *ngFor="let poule of teams" class="card bg-dark col-md-5 pouleCard">
+        <div class="card-header"> Poule {{teams.indexOf(poule) + 1}} </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Wins</th>
+                <th>Goal Difference</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let team of poule">
+                <td>{{team.name}}</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
+      <!--</div>-->
     </ng-template>
   </ngb-tab>
 

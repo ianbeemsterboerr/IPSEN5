@@ -32,6 +32,15 @@
   margin: 10px 0;
 }
 
+.pouleCard {
+  float: left;
+  margin: 10px;
+}
+
+.pouleCards {
+  column-count: 2;
+}
+
 
 .tournament-match > * {
   padding: 0 5px;
