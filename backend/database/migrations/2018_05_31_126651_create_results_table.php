@@ -21,6 +21,15 @@ class CreateResultsTable extends Migration
             $table->foreign('opponent_id')->references('id')->on('opponent')->onDelete('CASCADE');
             $table->primary('opponent_id');
         });
+
+        Schema::create('result_special', function (Blueprint $table) {
+            $table->integer('result_opponent_id')->unsigned();
+            $table->binary('data');
+            $table->timestamps();
+
+            $table->foreign('result_opponent_id')->references('opponent_id')->on('result')->onDelete('CASCADE');
+            $table->primary('result_opponent_id');
+        });
     }
 
     /**
@@ -34,6 +43,11 @@ class CreateResultsTable extends Migration
             $table->dropForeign(['opponent_id']);
         });
 
+        Schema::table('result_special', function (Blueprint $table) {
+            $table->dropForeign(['result_opponent_id']);
+        });
+
         Schema::dropIfExists('result');
+        Schema::dropIfExists('result_special');
     }
 }
