@@ -5,6 +5,8 @@ import {TournamentService} from '../../../tournament.service';
 import {Tournament} from '../../../../shared/model/tournament';
 import {TeamMember} from '../../../../shared/model/team_member';
 import {containsElement} from '@angular/animations/browser/src/render/shared';
+import {Match} from '../../../../shared/model/match';
+import {MatchResultComponent} from '../../../../match-result/match-result.component';
 
 @Component({
   selector: 'app-poules',
@@ -59,6 +61,13 @@ export class PoulesComponent extends ATournament implements OnInit {
   onUpdate(tournament: Tournament): void {
     // this.tournament = tournament;
     // this.loadTournament();
+  }
+
+  matchClicked(match: Match) {
+    if(match.opponents.length > 1 && localStorage.getItem('activeUserId')!=null){
+      const modalRef = this.modalService.open(MatchResultComponent);
+      modalRef.componentInstance.match = match;
+    }
   }
 
 }

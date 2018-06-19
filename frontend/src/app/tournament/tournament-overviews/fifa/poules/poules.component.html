@@ -32,7 +32,7 @@
     <ng-template ngbTabTitle>Poule matches</ng-template>
     <ng-template ngbTabContent>
       <div>
-        <div *ngFor="let match of getMatches()" class="tournament-match">
+        <div *ngFor="let match of getMatches()" class="tournament-match" (click)="matchClicked(match)">
           <div class="match-header">
             <h3 class="header-team text-left">{{match.opponents[0].team.name}}</h3>
             <h3 class="versus text-center">VS</h3>
