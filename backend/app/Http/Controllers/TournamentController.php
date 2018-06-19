@@ -35,6 +35,7 @@ class TournamentController extends Controller
             [
                 'enrollments.team.teamMembers.user',
                 'enrollments.team.teamLeader',
+                'matches.special',
                 'matches.opponents.team',
                 'matches.opponents.result',
                 'organiser'
@@ -106,10 +107,6 @@ class TournamentController extends Controller
         $enrollment = new Enrollment(['team_id'=>$teamId]);
         $tournament->enrollments()->save($enrollment);
     }
-
-    public function getPouleNumber(int $id){
-        $special = Match_special::all()->where('match_id', $id)->first();
-        return $special['data'];
-    }
+    
 
 }

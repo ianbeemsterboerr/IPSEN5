@@ -37,7 +37,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->get('get/{id}', 'TournamentController@get');
             $router->get('names', 'TournamentController@getNames');
             $router->get('matchmake/{id}', 'TournamentController@runMatchmaker');
-            $router->get('pouleNumber/{id}', 'TournamentController@getPouleNumber');
         });
 
     });

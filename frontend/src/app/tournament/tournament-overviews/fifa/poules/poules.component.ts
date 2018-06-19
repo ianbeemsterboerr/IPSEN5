@@ -13,28 +13,13 @@ import {TeamMember} from '../../../../shared/model/team_member';
 export class PoulesComponent extends ATournament implements OnInit {
 
   poules = [];
-  teams: {'bla': 4};
   constructor(private modalService: NgbModal, tournamentService: TournamentService) {
     super(tournamentService);
   }
 
   ngOnInit() {
-    for (let match of this.tournament.matches){
-      this.tournamentService.getPouleNumber(match.id).subscribe(
-        data => {
-          if (!this.poules.includes(data)) {
-            this.poules.push(data);
-          }
-          // for(let opponent of match.opponents){
-          //   if (!this.teams[data].includes(opponent.id)){
-          //     this.teams[data.toString()].push(opponent.id);
-          //   }
-          // }
-          console.log(this.teams['bla']);
-        }
-
-
-    );
+    for (let match of this.tournament.matches) {
+      this.poules.push(match.special.data);
     }
     console.log(this.poules);
   }
