@@ -32,6 +32,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('invite', 'TournamentController@invite');
             $router->post('acceptinvite', 'TournamentController@acceptInvite');
             $router->get('enroll/{tournamentId}/{teamId}', 'TournamentController@enroll');   
+            $router->get('unEnroll/{tournamentId}/{teamId}', 'TournamentController@unEnroll');
             $router->post('score', 'TournamentController@storeScore');
             $router->get('all', 'TournamentController@getAll');
             $router->get('get/{id}', 'TournamentController@get');
@@ -42,7 +43,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->group(['prefix' => 'teams'], function () use ($router) {
             $router->get('getidbyuserid/{id}', 'TeamController@getUsersTeamId');   
             $router->get('all/{size}', 'TeamController@getAllWithSize');  
-            $router->get('getAllowedTeams/{tournament_id}', 'TeamController@getAllowedTeams');
+            $router->get('qualifying/{tournament_id}', 'TeamController@getQualifyingTeams');
             $router->get('all', 'TeamController@getall');
         });
 
