@@ -10,6 +10,7 @@
             <thead>
               <tr>
                 <th>Name</th>
+                <th>Played</th>
                 <th>Wins</th>
                 <th>Goal Difference</th>
               </tr>
@@ -17,8 +18,9 @@
             <tbody>
               <tr *ngFor="let team of poule">
                 <td>{{team.name}}</td>
-                <td>0</td>
-                <td>0</td>
+                <td>{{getPlayed(team)}}</td>
+                <td>{{getWins(team)}}</td>
+                <td>{{getGoals(team)}}</td>
               </tr>
             </tbody>
           </table>

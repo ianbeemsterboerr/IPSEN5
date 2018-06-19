@@ -7,6 +7,7 @@ import {TeamMember} from '../../../../shared/model/team_member';
 import {containsElement} from '@angular/animations/browser/src/render/shared';
 import {Match} from '../../../../shared/model/match';
 import {MatchResultComponent} from '../../../../match-result/match-result.component';
+import {Team} from '../../../../shared/model/team';
 
 @Component({
   selector: 'app-poules',
@@ -69,6 +70,62 @@ export class PoulesComponent extends ATournament implements OnInit {
       const modalRef = this.modalService.open(MatchResultComponent);
       modalRef.componentInstance.match = match;
     }
+  }
+  getWins(team: Team) {
+    let score = 0;
+    for (let match of this.tournament.matches) {
+      let highest_score = 0;
+      let highest_team = null;
+      for (let opponent of match.opponents) {
+        if (opponent.result.score > highest_score) {
+          highest_score = opponent.result.score;
+          highest_team = opponent.team;
+        }
+      }
+      if (highest_team) {
+        if (team.id === highest_team.id) {
+          score += 1;
+        }
+      }
+    }
+    return score;
+  }
+  getGoals(team: Team) {
+    let goals = 0;
+    for (let match of this.tournament.matches) {
+      let hasTeam = false;
+      let matchGoals = 0;
+      for (let opponent of match.opponents) {
+          matchGoals -= opponent.result.score;
+          if (opponent.team.id === team.id) {
+            hasTeam = true;
+            matchGoals += 2 * opponent.result.score;
+        }
+      }
+      if (hasTeam) {
+        goals += matchGoals;
+      }
+    }
+    return goals;
+  }
+  getPlayed(team: Team) {
+    let count = 0;
+    for (let match of this.tournament.matches) {
+      let played = false;
+      let hasTeam = false;
+      for (let opponent of match.opponents) {
+        if (opponent.result.score !== 0) {
+          played = true;
+        }
+        if (opponent.team.id === team.id) {
+          hasTeam = true;
+        }
+      }
+      if (played && hasTeam) {
+        count += 1;
+      }
+    }
+    return count;
   }
 
 }
