@@ -1,3 +1,4 @@
+import { ErrorhandlerService } from './../../shared/errorhandler.service';
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ApiService} from '../../shared/api.service';
 import {Tournament} from '../../shared/model/tournament';
@@ -7,7 +8,6 @@ import {Team} from '../../shared/model/team';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ToastrService} from 'ngx-toastr';
 import {SearchPipe} from '../../shared/search.pipe';
-import {ErrorhandlerService} from '../../shared/errorhandler.service';
 import {ATournament} from '../tournament-overviews/ATournament';
 import {Enrollment} from '../../shared/model/enrollment';
 import {forEach} from '@angular/router/src/utils/collection';
@@ -103,13 +103,14 @@ export class TournamentComponent extends ATournament implements OnInit {
         );
     }
 
-    public invite(id) {
-        this.tournamentService.inviteForTournament(this.tournament.id, id).subscribe(
+    public invite(team) {
+        this.tournamentService.inviteForTournament(this.tournament.id, team.id).subscribe(
             data => {
-                console.log(data);
-                this.toastr.success(data['name'] + ' invited for tournament: ' + this.tournament.name, 'Success!');
-            }, err => {
-                this.errorHandler.handleError(err);
+              this.toastr.success( data['name'] + ' invited for tournament: ' + this.tournament.name, 'Success!');
+              const index = this.teams.indexOf(team);
+              this.teams.splice(index, 1);
+            }, err =>  {
+              this.errorHandler.handleError(err);
             }
         );
     }

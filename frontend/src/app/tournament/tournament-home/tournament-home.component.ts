@@ -1,9 +1,12 @@
+import { ToastrService } from 'ngx-toastr';
+import { ErrorhandlerService } from './../../shared/errorhandler.service';
+import { UserService } from './../../shared/user.service';
+import { TournamentService } from './../tournament.service';
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {GameService} from "../../games/game.service";
-import {Game} from "../../games/game";
-import {ApiService} from "../../shared/api.service";
-import {Tournament} from "../../shared/model/tournament";
+import {GameService} from '../../games/game.service';
+import {Game} from '../../games/game';
+import {ApiService} from '../../shared/api.service';
+import {Tournament} from '../../shared/model/tournament';
 
 @Component({
     selector: 'app-tournament-home',
@@ -13,8 +16,8 @@ import {Tournament} from "../../shared/model/tournament";
 export class TournamentHomeComponent implements OnInit {
 
     tournaments: Tournament[];
-
-    constructor(private gameService: GameService, private api: ApiService) {
+    tournamentsInvitedFor: Tournament[];
+    constructor(private tournamentService: TournamentService , private gameService: GameService, private api: ApiService, private userService: UserService, private errorHandler: ErrorhandlerService, private toastr: ToastrService) {
     }
 
     ngOnInit() {
@@ -23,13 +26,34 @@ export class TournamentHomeComponent implements OnInit {
                 this.tournaments = data;
             },
             error => {
-
             }
         );
+
+        this.tournamentService.getTournamentsInvited(this.userService.getActiveUserId()).subscribe(
+        data => {
+          console.log(data);
+          this.tournamentsInvitedFor = data;
+        }, err => {
+          this.errorHandler.handleError(err);
+        }
+      );
     }
 
     getGames(): Game[] {
         return this.gameService.availableGames;
+    }
+
+    enroll(tournament: Tournament) {
+      // delete from invitees table:(handled serverside).
+
+      // add to enrollment table:
+      this.tournamentService.enroll(tournament.inviteteamid, tournament.id).subscribe(
+        data => {
+          this.toastr.success('Succesfully enrolled for ' + tournament.name + '!', 'Success!');
+        }, err => {
+          this.errorHandler.handleError(err);
+        }
+      );
     }
 
 }

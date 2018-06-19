@@ -91,7 +91,7 @@
                             <td><input type="checkbox" (change)="inviteCheckedChange($event, team)"></td>
                             <td>{{ team.name }}</td>
                             <td>
-                                <button class="btn btn-info" (click)="invite(team.id)" title="Send invite by email.">Invite</button>
+                                <button class="btn btn-info" (click)="invite(team)" title="Send invite by email.">Invite</button>
                                 <button class="btn btn-info" (click)="enroll(team)" title="Adds team to participants.">Enroll</button>
                             </td>
                         </tr>
