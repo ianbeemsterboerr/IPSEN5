@@ -30,11 +30,12 @@ class Team extends Model
     }
 
     public function canParticipate(Tournament $tournament) {
-        foreach ($this->teamMembers as $teamMember) {
-            if ($teamMember->user->isParticipating($tournament)) {
+        if ($this->max_size != $tournament->max_team_size)
+            return false;
+
+        foreach ($this->teamMembers as $teamMember)
+            if ($teamMember->user->isParticipating($tournament))
                 return false;
-            }
-        }
 
         return true;
     }

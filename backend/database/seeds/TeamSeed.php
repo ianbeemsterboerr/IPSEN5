@@ -11,11 +11,20 @@ class TeamSeed extends Seeder
      */
     public function run()
     {
-        factory(App\Team::class, 50)->create(['max_size'=>rand(2, 5)])->each(function ($u) {
-            $memberCount = rand(2, $u->max_size);
-            App\User::inRandomOrder()->take($memberCount)->get()->each(function ($member) use ($u) {
-                $u->teamMembers()->create(['user_id' => $member->id]);
+        for ($memberCount = 1; $memberCount <= 3; $memberCount++) {
+            $members = App\User::inRandomOrder()->take($memberCount * 15)->get()->toArray();
+
+            factory(App\Team::class, 15)->create(['max_size'=>$memberCount])->each(function (App\Team $u) use (&$members, $memberCount) {
+                for ($member = 0; $member < $memberCount; $member++) {
+                    $member_object = array_pop($members);
+
+                    $u->teamMembers()->create(['user_id' => $member_object['id']]);
+
+                    if ($member == 0) {
+                        $u->leader_user_id = $member_object['id'];
+                    }
+                }
             });
-        });
+        }
     }
 }
