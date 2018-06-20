@@ -56,7 +56,8 @@ class TournamentController extends Controller
         $tournament->organizer_user_id = $request->user()->id;
         $tournament->save();
 
-        return Response::HTTP_OK;
+        return Tournament::all()->last();
+//        return Response::HTTP_OK;
     }
 
     public function runMatchmaker(int $id) {

@@ -8,6 +8,9 @@ import {containsElement} from '@angular/animations/browser/src/render/shared';
 import {Match} from '../../../../shared/model/match';
 import {MatchResultComponent} from '../../../../match-result/match-result.component';
 import {Team} from '../../../../shared/model/team';
+import {ApiService} from '../../../../shared/api.service';
+import {ToastrService} from 'ngx-toastr';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-poules',
@@ -18,7 +21,8 @@ export class PoulesComponent extends ATournament implements OnInit {
 
   poules = [];
   teams = [];
-  constructor(private modalService: NgbModal, tournamentService: TournamentService) {
+  constructor(private modalService: NgbModal, public tournamentService: TournamentService, private api: ApiService,
+              private toastr: ToastrService, private router: Router) {
     super(tournamentService);
   }
 
@@ -153,5 +157,37 @@ export class PoulesComponent extends ATournament implements OnInit {
     }
     return teamsSorted;
   }
+  toBracket() {
+    let winners = [];
 
+
+    for (let poule of this.teams) {
+      winners.push(poule[0]);
+    }
+    console.log(winners);
+
+    let eliminationTournament = this.tournament;
+    eliminationTournament.name += ' Elimination Phase';
+    eliminationTournament.matches = [];
+    eliminationTournament.tournament_typename = 'Single elimination';
+
+
+    this.api.post('tournament/new', eliminationTournament).subscribe(
+      succes => {
+        eliminationTournament.id = succes['id'];
+        for (let team of winners) {
+          this.api.get(`tournament/enroll/${succes['id']}/${team.id}`).subscribe();
+        }
+        this.toastr.success('Elimination Phase created!');
+      },
+      failure => {
+        this.toastr.error('Zie console.');
+      },
+      () => {
+        this.router.navigate([`tournaments/${eliminationTournament.id}`]);
+      }
+    );
+
+
+  }
 }
