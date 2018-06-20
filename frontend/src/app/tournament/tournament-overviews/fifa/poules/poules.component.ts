@@ -28,7 +28,9 @@ export class PoulesComponent extends ATournament implements OnInit {
 
   ngOnInit() {
     this.loadTournament();
-    this.sortPoules();
+    if (this.tournament.matches) {
+      this.sortPoules();
+    }
   }
   loadTournament() {
     this.poules = [];
