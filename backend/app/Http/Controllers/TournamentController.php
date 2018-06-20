@@ -85,6 +85,8 @@ class TournamentController extends Controller
 
         $controller = TournamentFactory::getTournamentController($tournament);
         $controller->runMatchmaker($tournament);
+
+        return Response::HTTP_OK;
     }
 
     public function invite(Request $request){
@@ -104,7 +106,7 @@ class TournamentController extends Controller
         }
         //get userId as described in JWT, instead of client sending id in request.
 
-        //flawed query:
+        // todo: fix error message handling see above.
         if(Invitees::where('team_id', $inviteeTeamId)->where('tournament_id',$tournament->id)->count() > 0){
             return response()->json(array(
                 'status' => 'error',
@@ -164,10 +166,31 @@ class TournamentController extends Controller
         $team = Team::find($teamId);
         $request_user = $request->user();
 
+        if ($tournament->isStarted())
+            return response('Cannot enroll team, tournament is already started.', 400);
+
         if ($tournament->organizer_user_id != $request_user->id && $team->leader_user_id != $request_user->id)
             return response('Cannot enroll other teams for a tournament you do not organize.', 400);
 
+        if (!$team->canParticipate($tournament))
+            return response('Cannot enroll team, make sure team is able to participate. Perhaps team members of this team are already participating in this tournament.', 400);
+
         $tournament->enrollments()->create(['team_id'=>$teamId]);
+    }
+
+    public function unEnroll(Request $request, int $tournamentId, int $teamId) {
+        $tournament = Tournament::find($tournamentId);
+        $enrollment = $tournament->enrollments()->where('team_id', '=', $teamId);
+
+        if ($tournament->isStarted())
+            return response('Cannot unEnroll team, tournament is already started. To disqualify this team, give their opponent a 1-0 score.', 400);
+
+        if ($tournament->organizer_user_id != $request->user()->id && $enrollment->team->leader_user_id != $request->user()->id)
+            return response('Cannot unEnroll other teams for a tournament you do not organize.', 400);
+
+        $enrollment->delete();
+
+        return Response::HTTP_OK;
     }
 
 
