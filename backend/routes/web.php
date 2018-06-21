@@ -45,6 +45,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->get('getidbyuserid/{id}', 'TeamController@getUsersTeamId');   
             $router->get('all/{size}', 'TeamController@getAllWithSize');
             $router->get('getAllowedTeams/{tournament_id}', 'TeamController@getAllowedTeams');
+            $router->get('getAllowedTeamsByUser/{tournament_id}', 'TeamController@getAllowedTeamsByUser');
             $router->get('all', 'TeamController@getall');
         });
 

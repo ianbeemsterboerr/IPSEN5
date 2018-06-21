@@ -37,6 +37,7 @@ import { SearchPipe } from '../../shared/search.pipe';
 export class TournamentComponent implements OnInit {
     public tournament: Tournament;
     public teams: Team[];
+    public allowedTeams: Team[];
     public isOrganizer: boolean;
     public hasMatches: boolean;
     public isNotInMatch: boolean;
@@ -73,6 +74,7 @@ export class TournamentComponent implements OnInit {
                   this.isOrganizer = localStorage.getItem('activeUserId') === this.tournament.organizer_user_id.toString();
                   this.hasMatches = this.tournament.matches.length > 0;
                   this.checkEnrollment();
+                  this.getTeamsAllowedByUser();
                   this.additionalMembers = this.tournament.max_team_size > 1;
                 },
                 error => {/*todo: resolve error case*/},
@@ -111,15 +113,11 @@ export class TournamentComponent implements OnInit {
     }
 
     public checkEnrollment(){
-        console.log('click');
         this.api.get('tournament/checkEnrollment/' + this.tournament.id).subscribe(
             data => {
                 if(data['response'] == 'Found'){
-                    console.log(data['response']);
                     this.isNotInMatch = false;
                 } else {
-                    
-                    console.log(data['response']);
                     this.isNotInMatch = true;
                 };
             }, err => {
@@ -142,6 +140,30 @@ export class TournamentComponent implements OnInit {
                 this.toastr.error("Zie console.");
             }
          );
+    }
+
+    enrollAsTeam(team_id){
+        this.api.get('tournament/enroll/' + this.tournament.id + '/' + team_id).subscribe(
+            succes => {
+                this.toastr.success("U bent aangemeld.");
+                this.isNotInMatch = false;
+            },
+            failure => {
+                this.toastr.error("Zie console.");
+            }
+         );
+    }
+
+    getTeamsAllowedByUser(){
+        this.tournamentService.getAllowedTeamsByUser(this.tournament.id).subscribe(
+            data => {
+                this.allowedTeams = data;
+            }
+        );
+    }
+
+    checkGetTeam(a){
+        console.log(a);
     }
 
     startTournament() {

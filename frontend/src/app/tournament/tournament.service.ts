@@ -18,6 +18,10 @@ export class TournamentService {
         return this.api.get<Team[]>('teams/all/' + size);
     }
 
+    getAllowedTeamsByUser(tournament_id: number): Observable<Team[]> {
+        return this.api.get<Team[]>('teams/getAllowedTeamsByUser/' + tournament_id);
+    }
+
     inviteForTournament(tournamentId, teamId) {
         return this.api.post('tournament/invite', {tournamentId, teamId});
     }
@@ -28,4 +32,6 @@ export class TournamentService {
     enroll(team_id: number, tournament_id: number) {
         return this.api.get(`tournament/enroll/${team_id}/${tournament_id}`);
     }
+
+
 }
