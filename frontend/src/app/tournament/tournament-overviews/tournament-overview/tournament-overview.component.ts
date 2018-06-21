@@ -10,7 +10,7 @@ import {PoulesComponent} from '../fifa/poules/poules.component';
 
 @Component({
     selector: 'app-tournament-overview',
-    templateUrl: './tournament-overview.html',
+    templateUrl: './tournament-overview.component.html',
     styles: ['#shuffleBtn { color: #888888; background-color: #2e2e2e;}']
 })
 export class TournamentOverviewComponent implements OnInit {
