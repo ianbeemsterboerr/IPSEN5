@@ -189,7 +189,14 @@ export class PoulesComponent extends ATournament implements OnInit {
         this.router.navigate([`tournaments/${eliminationTournament.id}`]);
       }
     );
-
-
+  }
+  isPlayed (match: Match) {
+    let played = false;
+    for (const opponent of match.opponents) {
+      if (opponent.result.score > 0) {
+        played = true;
+      }
+    }
+    return played;
   }
 }

@@ -51,8 +51,18 @@
   flex-direction: row;
 }
 
-.match-header {
+.match-header-notPlayed {
   background-color: #616161;
+
+  font-family: BigNoodleTitlingOblique, serif;
+  font-size: 1.5rem;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.match-header-played {
+  background-color: #2e2e2e;
 
   font-family: BigNoodleTitlingOblique, serif;
   font-size: 1.5rem;
