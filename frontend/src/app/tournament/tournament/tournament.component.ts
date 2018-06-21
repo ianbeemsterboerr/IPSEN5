@@ -1,4 +1,3 @@
-import { ErrorhandlerService } from './../../shared/errorhandler.service';
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ApiService} from '../../shared/api.service';
 import {Tournament} from '../../shared/model/tournament';
@@ -7,10 +6,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Team} from '../../shared/model/team';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ToastrService} from 'ngx-toastr';
-import {SearchPipe} from '../../shared/search.pipe';
+import {ErrorhandlerService} from '../../shared/errorhandler.service';
 import {ATournament} from '../tournament-overviews/ATournament';
 import {Enrollment} from '../../shared/model/enrollment';
-import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
     selector: 'app-tournament',

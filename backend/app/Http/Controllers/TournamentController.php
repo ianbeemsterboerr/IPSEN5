@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Match_special;
 use App\Team;
 use App\Invitees;
 use Illuminate\Http\Request;
@@ -33,6 +34,7 @@ class TournamentController extends Controller
             [
                 'enrollments.team.teamMembers.user',
                 'enrollments.team.teamLeader',
+                'matches.special',
                 'matches.opponents.team',
                 'matches.opponents.result',
                 'organiser'
@@ -54,7 +56,8 @@ class TournamentController extends Controller
         $tournament->organizer_user_id = $request->user()->id;
         $tournament->save();
 
-        return Response::HTTP_OK;
+        return Tournament::all()->last();
+//        return Response::HTTP_OK;
     }
 
     public function runMatchmaker(int $id) {
@@ -205,5 +208,6 @@ class TournamentController extends Controller
 
         return Response::HTTP_OK;
     }
+
 
 }
