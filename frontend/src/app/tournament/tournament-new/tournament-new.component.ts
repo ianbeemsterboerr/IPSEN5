@@ -22,7 +22,7 @@ export class TournamentNewComponent implements OnInit {
 
     newTournament = new Tournament(
         null,
-        '',
+        this.gameService.getActiveGame().title,
         'Single elimination',
         'Invite only',
         '',
