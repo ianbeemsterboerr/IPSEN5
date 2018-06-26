@@ -97,12 +97,12 @@ class EliminationTournament implements ITournament
         $completeMatchCount = $optimalMatchCount - $possibleConnections;
         $incompleteMatchCount = min($optimalMatchCount - $completeMatchCount, $optimalMatchCount);
 
-        while ($this->calculatePossibleConnections($teamCount, $completeMatchCount, $incompleteMatchCount) > $incompleteMatchCount) {
+        while ($this->calculatePossibleConnections($teamCount, $completeMatchCount, $incompleteMatchCount) > $incompleteMatchCount && $completeMatchCount > 0) {
             $completeMatchCount--;
             $incompleteMatchCount++;
         }
 
-        while ($this->calculatePossibleConnections($teamCount, $completeMatchCount, $incompleteMatchCount) < $incompleteMatchCount) {
+        while ($this->calculatePossibleConnections($teamCount, $completeMatchCount, $incompleteMatchCount) < $incompleteMatchCount && $incompleteMatchCount > 0) {
             $completeMatchCount++;
             $incompleteMatchCount--;
         }

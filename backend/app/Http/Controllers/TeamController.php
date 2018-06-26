@@ -28,20 +28,20 @@ class TeamController extends Controller
         return Team::all();
     }
 
-    public function getAllowedTeams(int $tournament_id)
+    public function getQualifyingTeams(int $tournament_id)
     {
         return Team::all()
             ->filter(
                 function (Team $team) use ($tournament_id) {
                     $tournament = Tournament::find($tournament_id);
-                    return $team->canParticipate($tournament) && $team->max_size == $tournament->max_team_size;
+                    return $team->canParticipate($tournament);
                 }
-            );
+            )->values();
     }
 
-    public function getAllowedTeamsByUser(Request $request, int $tournament_id) {
+    public function getQualifyingTeamsByUser(Request $request, int $tournament_id) {
         $user_id = $request->user()->id;
-        $teams = $this->getAllowedTeams($tournament_id)->filter(
+        $teams = $this->getQualifyingTeams($tournament_id)->filter(
             function (Team $team) use ($user_id) {
                 return $team->leader_user_id == $user_id;
             }

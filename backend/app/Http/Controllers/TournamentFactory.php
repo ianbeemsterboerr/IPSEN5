@@ -10,13 +10,15 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Controllers\Fifa\EliminationTournament;
+use App\Http\Controllers\Fifa\PouleTournament;
 use App\Tournament;
 
 class TournamentFactory
 {
     private static $controllers = [
         'Fifa' => [
-            'Single elimination' => EliminationTournament::class
+            'Single elimination' => EliminationTournament::class,
+            'Poules' => PouleTournament::class
         ]
     ];
 

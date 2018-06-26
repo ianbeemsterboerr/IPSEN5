@@ -20,7 +20,7 @@ class TournamentsTableSeeder extends Seeder
         )->each(function (Tournament $tournament) {
             App\Team::inRandomOrder()->get()->filter(
                 function (Team $team) use ($tournament) {
-                    return $team->memberCount() == $tournament->max_team_size;
+                    return $team->canParticipate($tournament);
                 }
             )->take(10)->each(
                 function (Team $team) use ($tournament) {
