@@ -60,7 +60,7 @@
                     <button class="btn guest" *ngIf="isStarted" (click)="goOverview()">
                         Match schedule
                     </button>
-                    <div *ngIf="isNotInMatch">
+                    <div *ngIf="isNotInMatch && tournament.signup_typename != 'Invite only'">
                             <div *ngIf="!additionalMembers">
                                 <button class="btn guest" (click)="enrollment()">
                                     Sign up
