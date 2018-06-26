@@ -158,9 +158,8 @@ class TournamentController extends Controller
         $match = Match::find($matchJSON['id']);
 
         $controller = TournamentFactory::getTournamentController($match->tournament()->first());
-        $controller->onResultsUpdated($match);
 
-        return Response::HTTP_OK;
+        return $controller->onResultsUpdated($match);
     }
 
     public function checkEnroll(request $request, int $tournament_id){

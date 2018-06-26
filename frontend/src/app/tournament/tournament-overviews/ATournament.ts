@@ -19,5 +19,5 @@ export abstract class ATournament {
         )
     };
 
-    abstract onUpdate(tournament: Tournament): void;
+    protected abstract onUpdate(tournament: Tournament): void;
 }
