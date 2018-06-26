@@ -11,6 +11,7 @@
     
         <div class="jumbotron container">
             {{tournament.description}}
+
         </div>
     
         <div class="card-group">
@@ -50,6 +51,7 @@
                 <button *ngIf="!isStarted" class="btn btn-primary" (click)="invitableListState = 'active'; getTeamList()">
                     Invite players
                 </button>
+
             </div>
     
             <div class="card bg-light" *ngIf="!isOrganizer">
