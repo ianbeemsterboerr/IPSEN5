@@ -17,7 +17,7 @@
         <li class="navItem" *ngIf="userService.isUserLoggedIn">
             <a [routerLink]="['/tournaments']">
                 <fa name="flag-checkered" style="color: lawngreen;"></fa>
-                <div class="item-name" [@expanded]="state">Toernooien</div>
+                <div class="item-name" [@expanded]="state">Tournaments</div>
             </a>
         </li>
         <li class="navItem" *ngIf="userService.isUserLoggedIn">
