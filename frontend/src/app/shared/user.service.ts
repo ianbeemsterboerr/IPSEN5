@@ -62,6 +62,7 @@ export class UserService {
 
     public getActiveUserId() {
         if (!this.isUserLoggedIn) { return null; }
+        return this.activeUserId;
     }
 
     public getActiveUser(): Observable<User> {

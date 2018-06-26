@@ -6,11 +6,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Team} from '../../shared/model/team';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ToastrService} from 'ngx-toastr';
-import {SearchPipe} from '../../shared/search.pipe';
-import {ErrorhandlerService} from "../../shared/errorhandler.service";
-import {ATournament} from "../tournament-overviews/ATournament";
-import {Enrollment} from "../../shared/model/enrollment";
-import {forEach} from "@angular/router/src/utils/collection";
+import {ErrorhandlerService} from '../../shared/errorhandler.service';
+import {ATournament} from '../tournament-overviews/ATournament';
+import {Enrollment} from '../../shared/model/enrollment';
 
 @Component({
     selector: 'app-tournament',
@@ -45,7 +43,7 @@ export class TournamentComponent extends ATournament implements OnInit {
     public isOrganizer: boolean;
     public isStarted: boolean;
 
-    public syncingTeams: boolean = false;
+    public syncingTeams = false;
     private checkedTeams: Team[] = [];
 
     public searchString;
@@ -75,14 +73,14 @@ export class TournamentComponent extends ATournament implements OnInit {
                 },
                 error => {
                     this.errorHandler.handleError(error);
-                    this.router.navigateByUrl('tournaments')
+                    this.router.navigateByUrl('tournaments');
                 }
             );
         });
     }
 
     public getTeamList() {
-        if (this.invitableListState != TournamentComponent.ACTIVE_STATE) {
+        if (this.invitableListState !== TournamentComponent.ACTIVE_STATE) {
             return;
         }
 
@@ -95,7 +93,7 @@ export class TournamentComponent extends ATournament implements OnInit {
             },
             error => {
                 this.errorHandler.handleError(error);
-                this.invitableListState = TournamentComponent.INACTIVE_STATE
+                this.invitableListState = TournamentComponent.INACTIVE_STATE;
             },
             () => {
                 this.syncingTeams = false;
@@ -103,13 +101,14 @@ export class TournamentComponent extends ATournament implements OnInit {
         );
     }
 
-    public invite(id) {
-        this.tournamentService.inviteForTournament(this.tournament.id, id).subscribe(
+    public invite(team) {
+        this.tournamentService.inviteForTournament(this.tournament.id, team.id).subscribe(
             data => {
-                console.log(data);
-                this.toastr.success(data['name'] + ' invited for tournament: ' + this.tournament.name, 'Success!');
-            }, err => {
-                this.errorHandler.handleError(err);
+              this.toastr.success( data['name'] + ' invited for tournament: ' + this.tournament.name, 'Success!');
+              const index = this.teams.indexOf(team);
+              this.teams.splice(index, 1);
+            }, err =>  {
+              this.errorHandler.handleError(err);
             }
         );
     }
@@ -127,7 +126,7 @@ export class TournamentComponent extends ATournament implements OnInit {
                     this.goOverview();
                 },
                 failure => {
-                    this.errorHandler.handleError(failure)
+                    this.errorHandler.handleError(failure);
                 }
             );
         }
@@ -162,7 +161,7 @@ export class TournamentComponent extends ATournament implements OnInit {
     }
 
     scroll(el) {
-        el.scrollIntoView({behavior:"smooth"});
+        el.scrollIntoView({behavior: 'smooth'});
     }
 
 
@@ -175,7 +174,7 @@ export class TournamentComponent extends ATournament implements OnInit {
     }
 
     inviteChecked() {
-        for (let team of this.checkedTeams) {
+        for (const team of this.checkedTeams) {
             this.tournamentService.enroll(team.id, this.tournament.id).subscribe(
                 success => {
                     this.toastr.success(`${team.name} was successfully enrolled.`);

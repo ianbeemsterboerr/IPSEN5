@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Match_special;
 use App\Team;
 use App\Invitees;
 use Illuminate\Http\Request;
@@ -33,6 +34,7 @@ class TournamentController extends Controller
             [
                 'enrollments.team.teamMembers.user',
                 'enrollments.team.teamLeader',
+                'matches.special',
                 'matches.opponents.team',
                 'matches.opponents.result',
                 'organiser'
@@ -54,7 +56,8 @@ class TournamentController extends Controller
         $tournament->organizer_user_id = $request->user()->id;
         $tournament->save();
 
-        return Response::HTTP_OK;
+        return Tournament::all()->last();
+//        return Response::HTTP_OK;
     }
 
     public function runMatchmaker(int $id) {
@@ -173,8 +176,24 @@ class TournamentController extends Controller
             return response('Cannot enroll team, make sure team is able to participate. Perhaps team members of this team are already participating in this tournament.', 400);
 
         $tournament->enrollments()->create(['team_id'=>$teamId]);
+        $this->deleteInvitation($tournamentId, $teamId);
+    }
+/**
+ * Take a user id and get all the tournaments this user is invited for. better name?
+ */
+    public function getAllInvitedFor(Request $request, int $userId){
+         return DB::table('team')
+         ->join('invitees', 'team.id', '=', 'invitees.team_id')
+         ->join('tournament', 'invitees.tournament_id', '=', 'tournament.id')
+         ->where('leader_user_id', $userId)
+         ->select('tournament.*', 'team.id as inviteteamid')
+         ->get();
     }
 
+    private function deleteInvitation(int $tournamentId, int $teamId){
+        return Invitees::where('team_id', $teamId)->where('tournament_id', $tournamentId)->delete();
+    }
+    
     public function unEnroll(Request $request, int $tournamentId, int $teamId) {
         $tournament = Tournament::find($tournamentId);
         $enrollment = $tournament->enrollments()->where('team_id', '=', $teamId);
@@ -189,5 +208,6 @@ class TournamentController extends Controller
 
         return Response::HTTP_OK;
     }
+
 
 }

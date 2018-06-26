@@ -5,8 +5,9 @@ import {ATournament} from '../ATournament';
 import {TournamentService} from '../../tournament.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Tournament} from '../../../shared/model/tournament';
-import {ToastrService} from "ngx-toastr";
-import {ErrorhandlerService} from "../../../shared/errorhandler.service";
+import {ToastrService} from 'ngx-toastr';
+import {ErrorhandlerService} from '../../../shared/errorhandler.service';
+import {PoulesComponent} from '../fifa/poules/poules.component';
 
 @Component({
     selector: 'app-tournament-overview',
@@ -20,6 +21,7 @@ export class TournamentOverviewComponent implements OnInit {
     private components = {
         'Fifa': {
             'Single elimination': FifaEliminationComponent,
+            'Poules': PoulesComponent
         }
     };
 
@@ -66,9 +68,10 @@ export class TournamentOverviewComponent implements OnInit {
 
     shuffle() {
         if (confirm('WARNING: All progress will be lost and teams will be reshuffled!!')) {
+            console.log('Shuffling...');
             this.tournamentService.startTournament(this.id).subscribe(
                 next => { this.tournamentComponent.instance.update(); },
-                error => { this.errorHandler.handleError(error) }
+                error => { this.errorHandler.handleError(error); }
             );
         }
     }

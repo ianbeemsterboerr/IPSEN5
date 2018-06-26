@@ -19,7 +19,8 @@ export class Tournament {
         public enrollments?: Enrollment[],
         public matches?: Match[],
         public created_at?: Date,
-        public updated_at?: Date
+        public updated_at?: Date,
+        public inviteteamid?: number
     ) {
 
     }

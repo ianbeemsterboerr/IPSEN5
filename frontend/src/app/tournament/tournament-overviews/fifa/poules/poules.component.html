@@ -1,0 +1,80 @@
+<ngb-tabset (tabChange)="sortPoules()">
+  <ngb-tab>
+    <ng-template ngbTabTitle>Overview</ng-template>
+    <ng-template ngbTabContent>
+      <!--<div class="card-columns pouleCards">-->
+      <div *ngFor="let poule of teams" class="card bg-dark col-md-11 pouleCard">
+        <div class="card-header"> Poule {{teams.indexOf(poule) + 1}} </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Played</th>
+                <th>Wins</th>
+                <th>Goal Difference</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let team of poule">
+                <td>{{team.name}}</td>
+                <td>{{getPlayed(team)}}</td>
+                <td>{{getWins(team)}}</td>
+                <td>{{getGoals(team)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!--</div>-->
+    </ng-template>
+  </ngb-tab>
+
+  <ngb-tab>
+    <ng-template ngbTabTitle>Poule matches</ng-template>
+    <ng-template ngbTabContent>
+      <div>
+        <div *ngFor="let match of getMatches()" class="tournament-match" (click)="matchClicked(match)">
+          <div class="match-header-played" *ngIf="isPlayed(match)">
+            <h3 class="header-team text-left">{{match.opponents[0].team.name}}</h3>
+            <h3 class="versus text-center">{{match.opponents[0].result.score}} VS {{match.opponents[1].result.score}}</h3>
+            <h3 class="header-team text-right">{{match.opponents[1].team.name}}</h3>
+          </div>
+
+          <div class="match-header-notPlayed" *ngIf="!isPlayed(match)">
+            <h3 class="header-team text-left">{{match.opponents[0].team.name}}</h3>
+            <h3 class="versus text-center">VS</h3>
+            <h3 class="header-team text-right">{{match.opponents[1].team.name}}</h3>
+          </div>
+
+
+          <div class="sectionTitle"><h4>Team members</h4></div>
+
+          <div class="match-content">
+            <div class="team text-left">
+              <p *ngFor="let teamMember of getTeamMembers(match.opponents[0].team.id)">
+                {{teamMember.user.username}}
+              </p>
+            </div>
+            <div class="center text-center">
+
+            </div>
+            <div class="team text-right">
+              <p *ngFor="let teamMember of getTeamMembers(match.opponents[1].team.id)">
+                {{teamMember.user.username}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
+
+<button id="confirmBtn" class="btn-secondary" (click)="toBracket()">
+  Continue to bracket stage
+</button>
+
+
+
+
