@@ -21,14 +21,8 @@
             </a>
         </li>
         <li class="navItem" *ngIf="userService.isUserLoggedIn">
-            <a>
-                <fa name="trophy" style="color: yellow;"></fa>
-                <div class="item-name" [@expanded]="state">Hall Of Fame</div>
-            </a>
-        </li>
-        <li class="navItem" *ngIf="userService.isUserLoggedIn">
             <a [routerLink]="['/user', userService.activeUserId]">
-                <fa name="sign-out-alt" style="color: red;"></fa>
+                <fa name="child" style="color: yellow;"></fa>
                 <div class="item-name" [@expanded]="state">My profile</div>
             </a>
         </li>
