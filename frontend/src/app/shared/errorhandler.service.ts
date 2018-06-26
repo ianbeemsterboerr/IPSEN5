@@ -11,10 +11,9 @@ export class ErrorhandlerService {
     if (error.error instanceof ErrorEvent) {
       this.toastr.error( 'Could not connect to server!');
 
-console.log('server error');
     } else {
       console.log('httperror');
-      this.toastr.error(error.error, title);
+      this.toastr.error(error.error.message, title);
     }
 
 
