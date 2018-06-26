@@ -19,6 +19,22 @@ class TeamController extends Controller
         return $team->id;
     }
 
+    public function getTeamsOfUser(Request $request){
+        $teams = $request->user()->teams()->get()->all();
+        if($teams != null){
+            return $teams; 
+        }
+        return Response('No teams found for user', 404);
+    }
+
+    public function getTeamMembers($teamId){
+    $teamMmembers = app('db')->select('SELECT username, id FROM user JOIN team_member ON team_member.user_id = user.id where team_member.team_id = '.$teamId);
+        if($teamMmembers != null){
+            return $teamMmembers;
+        }
+        return Response('No members found for team', 404);
+    }
+
     public function getAllWithSize(int $size){
         return Team::where('size', $size)->get();
     }

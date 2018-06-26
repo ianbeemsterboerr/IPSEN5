@@ -23,6 +23,8 @@ import { UserService } from './shared/user.service';
 import {RouterModule} from '@angular/router';
 import {ApiService} from './shared/api.service';
 import { ProfileComponent } from './user/profile/profile.component';
+import { TeamsComponent } from './teams/teams.component';
+import { TeamService } from './teams/team.service';
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import { ProfileComponent } from './user/profile/profile.component';
         ForgotpasswordComponent,
         PasswordEqualValidator,
         ProfileComponent,
+        TeamsComponent,
     ],
     imports: [
         BrowserModule,
@@ -50,6 +53,7 @@ import { ProfileComponent } from './user/profile/profile.component';
     providers: [
         ApiService,
         UserService,
+        TeamService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,

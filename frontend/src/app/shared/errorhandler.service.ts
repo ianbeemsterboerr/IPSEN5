@@ -15,7 +15,5 @@ export class ErrorhandlerService {
       console.log('httperror');
       this.toastr.error(error.error.message, title);
     }
-
-
   }
 }

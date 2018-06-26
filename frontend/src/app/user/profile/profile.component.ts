@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from "../../shared/model/user";
-import {UserService} from "../../shared/user.service";
-import {ActivatedRoute} from "@angular/router";
-import {ErrorhandlerService} from "../../shared/errorhandler.service";
-import {Team} from "../../shared/model/team";
+import {User} from '../../shared/model/user';
+import {UserService} from '../../shared/user.service';
+import {ActivatedRoute} from '@angular/router';
+import {ErrorhandlerService} from '../../shared/errorhandler.service';
+import {Team} from '../../shared/model/team';
 
 @Component({
     selector: 'app-profile',
@@ -27,13 +27,13 @@ export class ProfileComponent implements OnInit {
                 user => {
                     this.user = user;
                 },
-                error => {this.errorHandler.handleError(error)}
+                error => {this.errorHandler.handleError(error); }
             );
 
-            this.userService.getUserTeams(+params['id']).subscribe(
-                teams => {this.teams = teams},
-                error => {this.errorHandler.handleError(error)}
-            )
+            // this.userService.getUserTeams(+params['id']).subscribe(
+            //     teams => {this.teams = teams},
+            //     error => {this.errorHandler.handleError(error)}
+            // )
         });
     }
 

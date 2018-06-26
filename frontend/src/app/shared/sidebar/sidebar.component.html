@@ -27,6 +27,12 @@
             </a>
         </li>
         <li class="navItem" *ngIf="userService.isUserLoggedIn">
+          <a [routerLink]="['/teams']">
+              <fa name="transgender" style="color: rgb(214, 0, 252);"></fa>
+              <div class="item-name" [@expanded]="state">Teams</div>
+          </a>
+      </li>
+        <li class="navItem" *ngIf="userService.isUserLoggedIn">
             <a (click)="userService.logout()">
                 <fa name="sign-out-alt" style="color: red;"></fa>
                 <div class="item-name" [@expanded]="state">Log-out</div>

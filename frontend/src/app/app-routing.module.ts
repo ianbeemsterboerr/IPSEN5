@@ -11,6 +11,7 @@ import {CreateaccountComponent} from './user/createaccount/createaccount.compone
 import {TournamentComponent} from './tournament/tournament/tournament.component';
 import {TournamentOverviewComponent} from './tournament/tournament-overviews/tournament-overview/tournament-overview.component';
 import {ProfileComponent} from './user/profile/profile.component';
+import { TeamsComponent } from './teams/teams.component';
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
     {path: 'tournaments/new', component: TournamentNewComponent},
     {path: 'tournaments/:id', component: TournamentComponent},
     {path: 'tournaments/overview/:id', component: TournamentOverviewComponent},
-    {path: 'user/:id', component: ProfileComponent}
+    {path: 'user/:id', component: ProfileComponent},
+    {path: 'teams', component: TeamsComponent}
 ];
 
 @NgModule({
