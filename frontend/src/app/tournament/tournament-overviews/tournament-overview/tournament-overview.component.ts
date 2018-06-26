@@ -6,6 +6,7 @@ import {TournamentService} from '../../tournament.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Tournament} from '../../../shared/model/tournament';
 import {ToastrService} from "ngx-toastr";
+import {ErrorhandlerService} from "../../../shared/errorhandler.service";
 
 @Component({
     selector: 'app-tournament-overview',
@@ -33,6 +34,7 @@ export class TournamentOverviewComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private toast: ToastrService,
+        private errorHandler: ErrorhandlerService
     ) {
     }
 
@@ -65,10 +67,8 @@ export class TournamentOverviewComponent implements OnInit {
     shuffle() {
         if (confirm('WARNING: All progress will be lost and teams will be reshuffled!!')) {
             this.tournamentService.startTournament(this.id).subscribe(
-                next => {
-                    this.tournamentComponent.instance.update();
-                },
-                error => { /*todo: */ }
+                next => { this.tournamentComponent.instance.update(); },
+                error => { this.errorHandler.handleError(error) }
             );
         }
     }

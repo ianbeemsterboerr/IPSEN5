@@ -84,4 +84,8 @@ export class UserService {
         }
       );
     }
+
+    getUserTeams(user_id: number) {
+        this.api.get('')
+    }
 }

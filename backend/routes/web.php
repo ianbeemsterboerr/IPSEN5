@@ -41,9 +41,14 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         });
 
         $router->group(['prefix' => 'teams'], function () use ($router) {
-            $router->get('getidbyuserid/{id}', 'TeamController@getUsersTeamId');   
-            $router->get('all/{size}', 'TeamController@getAllWithSize');  
+            $router->post('new', 'TeamController@register');
+            $router->post('newMember/{teamid}', 'TeamController@registerMember');
+            $router->get('remove/{id}', 'TeamController@remove');
+
+            $router->get('getidbyuserid/{id}', 'TeamController@getUsersTeamId');
+            $router->get('withUser/{user_id}', 'TeamController@participating');
             $router->get('qualifying/{tournament_id}', 'TeamController@getQualifyingTeams');
+            $router->get('all/{size}', 'TeamController@getAllWithSize');
             $router->get('all', 'TeamController@getall');
         });
 
