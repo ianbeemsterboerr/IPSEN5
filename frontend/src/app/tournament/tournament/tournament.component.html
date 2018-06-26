@@ -47,9 +47,6 @@
             <button class="btn" *ngIf="isStarted" (click)="goOverview()">
                 Match schedule
             </button>
-            <button class="btn">
-                Settings
-            </button>
             <button *ngIf="!isStarted" class="btn btn-primary" (click)="invitableListState = 'active'; getTeamList()">
                 Invite players
             </button>
@@ -60,9 +57,6 @@
             <div class="card-body">
                 <button class="btn guest" *ngIf="isStarted" (click)="goOverview()">
                     Match schedule
-                </button>
-                <button class="btn guest">
-                    Settings
                 </button>
             </div>
         </div>
