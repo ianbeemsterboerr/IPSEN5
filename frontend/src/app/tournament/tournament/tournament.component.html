@@ -8,12 +8,12 @@
                 <span><b>Signups ending in: </b></span><app-countdown id="countdown" [target_date]="tournament.signup_end"></app-countdown>
             </div>
         </div>
-    
+
         <div class="jumbotron container">
             {{tournament.description}}
 
         </div>
-    
+
         <div class="card-group">
             <div class="card bg-light">
                 <div class="card-body">
@@ -53,23 +53,23 @@
                 </button>
 
             </div>
-    
+
             <div class="card bg-light" *ngIf="!isOrganizer">
                 <div class="card-header">Organiser: {{tournament.organiser.username}}</div>
                 <div class="card-body">
                     <button class="btn guest" *ngIf="isStarted" (click)="goOverview()">
                         Match schedule
                     </button>
-                    <div *ngIf="isNotInMatch">
+                    <div *ngIf="isNotInMatch && tournament.signup_typename != 'Invite only'">
                             <div *ngIf="!additionalMembers">
                                 <button class="btn guest" (click)="enrollment()">
-                                    Aanmelden
+                                    Sign up
                                 </button>
                             </div>
                             <br>
                             <div *ngIf="additionalMembers" >
                                 <div *ngIf="allowedTeams !=0">
-                                    Aanmelden met een team:
+                                    Sign up as team
                                     <button *ngFor="let team of allowedTeams" class="btn guest" (click)="enrollAsTeam(team.id, tournament.id)">
                                     {{team.name}}
                                     </button>
@@ -79,13 +79,13 @@
                 </div>
             </div>
         </div>
-    
+
         <div #inviteElement>
             <div class="card card-body mt-3"
                  [@invitables_expanded]="invitableListState"
                  [hidden]="invitableListState == 'inactive'">
                 <button class="btn btn-link" (click)="invitableListState = 'inactive'">Close</button>
-    
+
                 <div *ngIf="!syncingTeams">
                     <input class="form-control" [(ngModel)]="searchString" placeholder="search">
                     <div id="invite-table-wrapper">
@@ -97,7 +97,7 @@
                                 <th>Actions</th>
                             </tr>
                             </thead>
-    
+
                             <tbody>
                             <tr *ngFor="let team of teams | search : searchString">
                                 <td><input type="checkbox" (change)="inviteCheckedChange($event, team)"></td>
@@ -112,14 +112,14 @@
                     </div>
                     <button class="btn" (click)="inviteChecked()">Invite checked teams</button>
                 </div>
-    
+
                 <div *ngIf="syncingTeams">
                     <h2 class="loading">Getting qualifying teams, please wait.</h2>
                     <div class="loader"></div>
                 </div>
             </div>
         </div>
-    
+
         <div class="card bg-light mt-3">
             <div class="card-header text-center">
                 Enrolled teams
@@ -137,7 +137,7 @@
                         </thead>
                         <tbody>
                         <tr *ngFor="let enrollment of tournament.enrollments">
-    
+
                             <td class="align-text-top">{{enrollment.team.name}}</td>
                             <td class="align-text-top" *ngIf="tournament.max_team_size > 1">{{enrollment.team.team_leader.username}}
                             </td>
@@ -154,6 +154,6 @@
             </div>
         </div>
     </div>
-    
+
 
 
