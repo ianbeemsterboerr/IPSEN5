@@ -267,7 +267,8 @@ class EliminationTournament implements ITournament
             }
         }
 
-        if ($match->parentMatch == null) response('Failed to get parent match for match with id: ' . $match->id, 400);
+        if ($match->parentMatch == null) return Response::HTTP_OK; // Last match
+
         $this->removeOpponentRecursive($match, $match->opponents);
 
         $opponent = new Opponent(['team_id' => $highscore_team->id]);

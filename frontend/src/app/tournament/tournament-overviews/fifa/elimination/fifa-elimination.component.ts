@@ -72,21 +72,17 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
     private findMatchesWithParent(parent: Match) {
         const matches = [];
 
-        for (let match of this.tournament.matches) {
-            if (match.parent_match_id == parent.id) {
+        for (let match of this.tournament.matches)
+            if (match.parent_match_id == parent.id)
                 matches.push(match);
-            }
-        }
 
         return matches;
     }
 
     private findFinale(matches: Match[]) {
-        for (let match of matches) {
-            if (match.parent_match_id == null) {
+        for (let match of matches)
+            if (match.parent_match_id == null)
                 return match;
-            }
-        }
 
         return null;
     }
@@ -109,9 +105,8 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
     getNextBracket(bracket) {
         const current_index = this.brackets.indexOf(bracket);
 
-        if (current_index == this.brackets.length - 1) {
+        if (current_index == this.brackets.length - 1)
             return null;
-        }
 
         return this.brackets[current_index + 1];
     }
@@ -119,19 +114,16 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
     isNextBracketBigger(bracket): boolean {
         const nextBracket = this.getNextBracket(bracket);
 
-        if (nextBracket == null) {
+        if (nextBracket == null)
             return false;
-        }
 
         return bracket.length <= nextBracket.length;
     }
 
     getMatchById(id: number) {
-        for (let match of this.tournament.matches) {
-            if (match.id == id) {
+        for (let match of this.tournament.matches)
+            if (match.id == id)
                 return match;
-            }
-        }
 
         return null;
     }
@@ -164,11 +156,9 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
     }
 
     findMatchByID(id: number): Match {
-        for (let match of this.tournament.matches) {
-            if (match.id == id) {
+        for (let match of this.tournament.matches)
+            if (match.id == id)
                 return match;
-            }
-        }
 
         return null;
     }
@@ -176,8 +166,7 @@ export class FifaEliminationComponent extends ATournament implements OnInit {
     matchClicked(match: Match) {
         const parentMatch = this.findMatchByID(match.parent_match_id);
 
-        console.log(parentMatch.opponents.length);
-        if (parentMatch.opponents.length >= 2) {
+        if (parentMatch != null && parentMatch.opponents.length >= 2) {
             if (!confirm("WARNING: Entering score for this match will reset progress to all linked matches.")) return;
         }
 
