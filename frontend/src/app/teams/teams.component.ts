@@ -16,6 +16,7 @@ export class TeamsComponent implements OnInit {
     this.teamService.getTeamsOfUser().subscribe(
       data => {
         this.teams = data;
+
         for (const team of this.teams) {
           team.team_members = this.getTeamMembers(team.id);
         }
@@ -27,19 +28,22 @@ export class TeamsComponent implements OnInit {
   }
 
   getTeamMembers(id: number): TeamMember[] {  // TODO: Omdat deze functie async is returned hij het object pas later waardoor het runtime nog steeds null is.
-    this.teamService.getTeamMembers(id).subscribe(
-      data => {
-        console.log('returned data.');
-        return data;
-      }, err => {
-        this.errorHandler.handleError(err);
-      }
-    );
+    let teamMember: TeamMember[];
+    const member1 = new TeamMember(10, 'lmao123');
+    const member2 = new TeamMember(789, 'kmsafuiash');
+    teamMember = [member1, member2];
+
+    // this.teamService.getTeamMembers(id).subscribe(
+    //   data => {
+    //     console.log('returned data.');
+    //     teamMember = data;
+    //   }, err => {
+    //     this.errorHandler.handleError(err);
+    //   }
+    // );
+    return teamMember;
   }
 
   ngOnInit() {
-
   }
-  // public team_members: TeamMember[],
-
 }
