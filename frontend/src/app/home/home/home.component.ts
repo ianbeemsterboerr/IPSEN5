@@ -23,9 +23,6 @@ export class HomeComponent implements OnInit {
   goTournaments() {
     this.router.navigate(['/tournaments']);
   }
-  goTeams() {
-  //  todo: link to team page
-  }
   goProfile() {
     this.router.navigate(['/user', this.userService.activeUserId]);
   }

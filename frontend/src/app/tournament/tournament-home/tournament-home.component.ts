@@ -31,7 +31,6 @@ export class TournamentHomeComponent implements OnInit {
 
         this.tournamentService.getTournamentsInvited(this.userService.getActiveUserId()).subscribe(
         data => {
-          console.log(data);
           this.tournamentsInvitedFor = data;
         }, err => {
           this.errorHandler.handleError(err);
