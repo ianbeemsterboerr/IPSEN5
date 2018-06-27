@@ -39,7 +39,7 @@
 
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="text" class="form-control" id="password" required [(ngModel)]="user.password" name=password #password="ngModel">
+        <input type="password" class="form-control" id="password" required [(ngModel)]="user.password" name=password #password="ngModel">
 
         <div class="alert alert-danger" role="alert" *ngIf="password.touched && password.errors?.required">
           This field is required.
@@ -48,7 +48,7 @@
 
       <div class="form-group">
         <label for="repeatPassword">Repeat password</label>
-        <input type="text" class="form-control" id="repeatPassword" required [(ngModel)]="password_repeat" name=repeatPassword #repeatPassword="ngModel"
+        <input type="password" class="form-control" id="repeatPassword" required [(ngModel)]="password_repeat" name=repeatPassword #repeatPassword="ngModel"
           appConfirmEqualValidator="password">
 
         <div class="alert alert-danger" role="alert" *ngIf="repeatPassword.touched && repeatPassword.errors?.required">

@@ -57,7 +57,6 @@ class TournamentController extends Controller
         $tournament->save();
 
         return Tournament::all()->last();
-//        return Response::HTTP_OK;
     }
 
     public function runMatchmaker(int $id) {
@@ -106,7 +105,6 @@ class TournamentController extends Controller
         }
         //get userId as described in JWT, instead of client sending id in request.
 
-        // todo: fix error message handling see above.
         if(Invitees::where('team_id', $inviteeTeamId)->where('tournament_id',$tournament->id)->count() > 0){
             return response()->json(array(
                 'status' => 'error',

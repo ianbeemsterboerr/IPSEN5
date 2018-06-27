@@ -54,7 +54,7 @@
     <div class="form-group row">
       <label for="signupType" class="col-sm-2 col-form-label">Signup type:</label>
       <select id="signupType" class="form-control col-sm-10" [(ngModel)]="newTournament.signup_typename"
-             formControlName="signup_typename" (change)="updateButton()">
+             formControlName="signup_typename" >
         <option value="Invite only"> Invite only</option>
         <option value="User"> User</option>
       </select><br>
