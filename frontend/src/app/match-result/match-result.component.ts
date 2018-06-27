@@ -5,6 +5,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from "ngx-toastr";
 import {ATournament} from "../tournament/tournament-overviews/ATournament";
+import {ErrorhandlerService} from "../shared/errorhandler.service";
 
 @Component({
   selector: 'app-match-result',
@@ -15,7 +16,12 @@ export class MatchResultComponent implements OnInit {
   @Input() match: Match;
   @Input() tournament: ATournament;
 
-  constructor(private api: ApiService, public activeModal : NgbActiveModal, private toastr: ToastrService) { }
+  constructor(
+      private api: ApiService,
+      public activeModal : NgbActiveModal,
+      private toastr: ToastrService,
+      private errorHandler: ErrorhandlerService
+  ) { }
 
   ngOnInit() {  
   }
@@ -28,9 +34,7 @@ export class MatchResultComponent implements OnInit {
 
           this.tournament.update();
       },
-      failure => {
-          this.toastr.error("Zie console.");
-      }
+      failure => {this.errorHandler.handleError(failure)}
    );
   }
 

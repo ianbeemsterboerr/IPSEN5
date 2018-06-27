@@ -24,6 +24,10 @@ export class TournamentService {
         return this.api.get<Team[]>(`teams/qualifying/${tournament.id}`);
     }
 
+    getQualifyingByUser(tournament_id: number): Observable<Team[]> {
+        return this.api.get<Team[]>('teams/qualifyingByUser/' + tournament_id);
+    }
+
     inviteForTournament(tournamentId, teamId) {
         return this.api.post('tournament/invite', {tournamentId, teamId});
     }
@@ -42,4 +46,6 @@ export class TournamentService {
     getTournamentsInvited(userId: number) {
       return this.api.get<Tournament[]>(`tournament/invitedfor/${userId}`);
     }
+
+
 }

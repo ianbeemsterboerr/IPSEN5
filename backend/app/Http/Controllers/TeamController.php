@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tournament;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use App\Team;
 use App\User;
 
@@ -36,5 +37,15 @@ class TeamController extends Controller
                     return $team->canParticipate($tournament);
                 }
             )->values();
+    }
+
+    public function getQualifyingTeamsByUser(Request $request, int $tournament_id) {
+        $user_id = $request->user()->id;
+        $teams = $this->getQualifyingTeams($tournament_id)->filter(
+            function (Team $team) use ($user_id) {
+                return $team->leader_user_id == $user_id;
+            }
+        );
+        return $teams->values();
     }
 }

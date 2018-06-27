@@ -13,13 +13,14 @@ use App\Match_special;
 use App\Team;
 use App\Invitees;
 use Illuminate\Http\Request;
+use App\Enrollment;
 use App\Tournament;
 use Mailgun\Mailgun;
 use App\Result;
 use App\Match;
 use Illuminate\Support\Facades\DB;
-use App\Enrollment;
 use App\User;
+use App\TeamMember;
 
 use Illuminate\Http\Response;
 
@@ -132,7 +133,7 @@ class TournamentController extends Controller
     }
 
     public function acceptInvite(Request $request){
-        //TODO: 
+        //TODO:
         $inviterUserId = $request->json()->get('userId');
         $tournamentid = $request->json()->get('tournamentId');
         //HANDLE ACCEPT INVITE LOGIC HERE
@@ -151,15 +152,33 @@ class TournamentController extends Controller
             $result->save();
         }
 
+
         $match = Match::find($matchJSON['id']);
 
         $controller = TournamentFactory::getTournamentController($match->tournament()->first());
-        $controller->onResultsUpdated($match);
 
-        return Response::HTTP_OK;
+        return $controller->onResultsUpdated($match);
     }
 
-    public function enroll(Request $request, int $tournamentId, int $teamId){
+    public function checkEnroll(request $request, int $tournament_id){
+        foreach(TeamMember::where("user_id", $request->user()->id)->get() as $teamMember){
+            if(Enrollment::where('team_id',$teamMember->team_id)->where('tournament_id', $tournament_id)->first()){
+                return response()->json([
+                    'response' => "Found"
+                ]);
+                }
+            }
+        return response()->json([
+            'response' => "Not found"
+        ]);
+    }
+
+    public function enrollSolo(request $request, int $tournament_id) {
+        return $this->enroll($request, $tournament_id, $request->user()->teams()->whereMaxSize(1)->first()->id );
+    }
+
+    public function enroll(Request $request, int $tournamentId, int $teamId)
+    {
         $tournament = Tournament::find($tournamentId);
         $team = Team::find($teamId);
         $request_user = $request->user();
@@ -191,7 +210,7 @@ class TournamentController extends Controller
     private function deleteInvitation(int $tournamentId, int $teamId){
         return Invitees::where('team_id', $teamId)->where('tournament_id', $tournamentId)->delete();
     }
-    
+
     public function unEnroll(Request $request, int $tournamentId, int $teamId) {
         $tournament = Tournament::find($tournamentId);
         $enrollment = $tournament->enrollments()->where('team_id', '=', $teamId);
@@ -206,6 +225,7 @@ class TournamentController extends Controller
 
         return Response::HTTP_OK;
     }
+
 
 
 }

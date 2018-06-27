@@ -35,7 +35,7 @@ $factory->define(App\Tournament::class, function (Faker $faker) {
         'organizer_user_id' => App\User::inRandomOrder()->get()->first()->id,
         'gamename' => 'Fifa',
         'tournament_typename' => 'Single elimination',
-        'signup_typename' => str_random(10),
+        'signup_typename' => 'User',
         'name' => $faker->unique()->company,
         'description' => $faker->text($maxNbChars = 50),
         'max_team_size' => rand(1, 3),

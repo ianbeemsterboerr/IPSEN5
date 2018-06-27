@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Team} from '../../shared/model/team';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ToastrService} from 'ngx-toastr';
+import { SearchPipe } from '../../shared/search.pipe';
 import {ErrorhandlerService} from '../../shared/errorhandler.service';
 import {ATournament} from '../tournament-overviews/ATournament';
 import {Enrollment} from '../../shared/model/enrollment';
@@ -40,7 +41,12 @@ export class TournamentComponent extends ATournament implements OnInit {
     public static ACTIVE_STATE = 'active';
 
     public teams: Team[];
+    public allowedTeams: Team[];
     public isOrganizer: boolean;
+    public hasMatches: boolean;
+    public isNotInMatch: boolean;
+    public additionalMembers: boolean;
+    public user_id = localStorage.getItem('activeUserId');
     public isStarted: boolean;
 
     public syncingTeams = false;
@@ -55,7 +61,8 @@ export class TournamentComponent extends ATournament implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastrService,
-        private errorHandler: ErrorhandlerService
+        private errorHandler: ErrorhandlerService,
+        private api: ApiService
     ) {
         super(tournamentService);
         this.searchString = '';
@@ -70,6 +77,9 @@ export class TournamentComponent extends ATournament implements OnInit {
                     this.tournament = tournament;
                     this.isOrganizer = localStorage.getItem('activeUserId') === this.tournament.organizer_user_id.toString();
                     this.isStarted = this.tournament.matches.length > 0;
+                    this.checkEnrollment();
+                    this.getQualifyingByUser();
+                    this.additionalMembers = this.tournament.max_team_size > 1;
                 },
                 error => {
                     this.errorHandler.handleError(error);
@@ -115,6 +125,60 @@ export class TournamentComponent extends ATournament implements OnInit {
 
     goOverview() {
         this.router.navigate([`tournaments/overview/${this.tournament.id}`]);
+    }
+
+    public checkEnrollment(){
+        this.api.get('tournament/checkEnrollment/' + this.tournament.id).subscribe(
+            data => {
+                if(data['response'] == 'Found'){
+                    this.isNotInMatch = false;
+                } else {
+                    this.isNotInMatch = true;
+                };
+            }, err => {
+                console.log("Something has gone wrong");
+            }
+        );
+        return false;
+    }
+    checkTrueOrFalse(){
+        console.log(this.isNotInMatch);
+    }
+
+    enrollment(){
+        this.api.get('tournament/enroll/' + this.tournament.id).subscribe(
+            succes => {
+                this.toastr.success("U bent aangemeld.");
+                this.isNotInMatch = false;
+            },
+            failure => {
+                this.toastr.error("Zie console.");
+            }
+         );
+    }
+
+    enrollAsTeam(team_id){
+        this.api.get('tournament/enroll/' + this.tournament.id + '/' + team_id).subscribe(
+            succes => {
+                this.toastr.success("U bent aangemeld.");
+                this.isNotInMatch = false;
+            },
+            failure => {
+                this.toastr.error("Zie console.");
+            }
+         );
+    }
+
+    getQualifyingByUser(){
+        this.tournamentService.getQualifyingByUser(this.tournament.id).subscribe(
+            data => {
+                this.allowedTeams = data;
+            }
+        );
+    }
+
+    checkGetTeam(a){
+        console.log(a);
     }
 
     startTournament() {

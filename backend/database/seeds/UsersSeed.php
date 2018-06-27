@@ -16,7 +16,16 @@ class UsersSeed extends Seeder
                 'username' => 'admin',
                 'password' => password_hash('admin', PASSWORD_BCRYPT)
             ]
-        );
+        )->each(function ($admin) {
+            \App\Team::create(
+                [
+                    'name' => $admin->username,
+                    'leader_user_id' => $admin->id,
+                    'size' => 1,
+                    'max_size' => 1
+                ]
+            );
+        });
 
         factory(App\User::class, 75)->create()->each(function ($u) {
             $team = new \App\Team();

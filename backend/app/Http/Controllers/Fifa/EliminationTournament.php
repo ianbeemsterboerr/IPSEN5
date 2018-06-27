@@ -14,6 +14,7 @@ use App\Match;
 use App\Opponent;
 use App\Tournament;
 use App\Result;
+use Illuminate\Http\Response;
 
 class EliminationTournament implements ITournament
 {
@@ -261,16 +262,18 @@ class EliminationTournament implements ITournament
             if ($score > $highscore) {
                 $highscore = $score;
                 $highscore_team =$opponent->team;
-            } elseif ($score == $highscore) {
-                return;
+            } elseif ($highscore_team != null && $score == $highscore) {
+                return response('Cannot have equal scores, there needs to be a winner', 400);
             }
         }
 
-        if ($match->parentMatch == null) return;
+        if ($match->parentMatch == null) response('Failed to get parent match for match with id: ' . $match->id, 400);
         $this->removeOpponentRecursive($match, $match->opponents);
 
         $opponent = new Opponent(['team_id' => $highscore_team->id]);
         $match->parentMatch->opponents()->save($opponent);
         $opponent->result()->save(new Result(['score' => 0]));
+
+        return Response::HTTP_OK;
     }
 }

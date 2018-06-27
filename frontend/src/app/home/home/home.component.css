@@ -21,6 +21,7 @@
   flex-flow: row wrap;
 
   color: #FFFFFF;
+  height: 100%;
 }
 
 .centered {
@@ -36,4 +37,19 @@
 
 #trophy-container {
   min-height: 120px;
+}
+
+#button-container {
+  display: flex;
+}
+
+.btn-lg {
+  width: 100%;
+  min-height: 150px;
+
+}
+
+.homepage-btn {
+  width: 50%;
+  padding: 10px;
 }

@@ -1,142 +1,159 @@
 <div *ngIf="tournament" id="status-page" class="rounded p-3">
-    <div class="jumbotron container">
-        <h2 class="text-center">{{tournament.name}}</h2>
-        <div *ngIf="isStarted">
-            <span><b>Tournament is active.</b></span>
-        </div>
-        <div *ngIf="!isStarted">
-            <span><b>Signups ending in: </b></span><app-countdown id="countdown" [target_date]="tournament.signup_end"></app-countdown>
-        </div>
-    </div>
-
-    <div class="jumbotron container">
-        {{tournament.description}}
-    </div>
-
-    <div class="card-group">
-        <div class="card bg-light">
-            <div class="card-body">
-                <table class="table table-hover">
-                    <tr>
-                        <td>Tournament date:</td>
-                        <td>{{tournament.tournament_start}}</td>
-                    </tr>
-                    <tr>
-                        <td>Tournament type:</td>
-                        <td>{{tournament.tournament_typename}}</td>
-                    </tr>
-                    <tr>
-                        <td>Signup type:</td>
-                        <td>{{tournament.signup_typename}}</td>
-                    </tr>
-                    <tr>
-                        <td>Team size:</td>
-                        <td>{{tournament.max_team_size}}</td>
-                    </tr>
-                    <tr>
-                        <td>Signup period:</td>
-                        <td>{{tournament.signup_start}} to {{tournament.signup_end}}</td>
-                    </tr>
-                </table>
+        <div class="jumbotron container">
+            <h2 class="text-center">{{tournament.name}}</h2>
+            <div *ngIf="isStarted">
+                <span><b>Tournament is active.</b></span>
+            </div>
+            <div *ngIf="!isStarted">
+                <span><b>Signups ending in: </b></span><app-countdown id="countdown" [target_date]="tournament.signup_end"></app-countdown>
             </div>
         </div>
-        <div class="card bg-light" *ngIf="isOrganizer">
-            <button class="btn" (click)="startTournament()" *ngIf="!isStarted">
-                Start tournament
-            </button>
-            <button class="btn" *ngIf="isStarted" (click)="goOverview()">
-                Match schedule
-            </button>
-            <button *ngIf="!isStarted" class="btn btn-primary" (click)="invitableListState = 'active'; getTeamList()">
-                Invite players
-            </button>
+
+        <div class="jumbotron container">
+            {{tournament.description}}
+
         </div>
 
-        <div class="card bg-light" *ngIf="!isOrganizer">
-            <div class="card-header">Organiser: {{tournament.organiser.username}}</div>
-            <div class="card-body">
-                <button class="btn guest" *ngIf="isStarted" (click)="goOverview()">
+        <div class="card-group">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <td>Tournament date:</td>
+                            <td>{{tournament.tournament_start}}</td>
+                        </tr>
+                        <tr>
+                            <td>Tournament type:</td>
+                            <td>{{tournament.tournament_typename}}</td>
+                        </tr>
+                        <tr>
+                            <td>Signup type:</td>
+                            <td>{{tournament.signup_typename}}</td>
+                        </tr>
+                        <tr>
+                            <td>Team size:</td>
+                            <td>{{tournament.max_team_size}}</td>
+                        </tr>
+                        <tr>
+                            <td>Signup period:</td>
+                            <td>{{tournament.signup_start}} to {{tournament.signup_end}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card bg-light" *ngIf="isOrganizer">
+                <button class="btn" (click)="startTournament()" *ngIf="!isStarted">
+                    Start tournament
+                </button>
+                <button class="btn" *ngIf="isStarted" (click)="goOverview()">
                     Match schedule
                 </button>
+                <button *ngIf="!isStarted" class="btn btn-primary" (click)="invitableListState = 'active'; getTeamList()">
+                    Invite players
+                </button>
+
+            </div>
+
+            <div class="card bg-light" *ngIf="!isOrganizer">
+                <div class="card-header">Organiser: {{tournament.organiser.username}}</div>
+                <div class="card-body">
+                    <button class="btn guest" *ngIf="isStarted" (click)="goOverview()">
+                        Match schedule
+                    </button>
+                    <div *ngIf="isNotInMatch && tournament.signup_typename != 'Invite only'">
+                            <div *ngIf="!additionalMembers">
+                                <button class="btn guest" (click)="enrollment()">
+                                    Sign up
+                                </button>
+                            </div>
+                            <br>
+                            <div *ngIf="additionalMembers" >
+                                <div *ngIf="allowedTeams !=0">
+                                    Sign up as team
+                                    <button *ngFor="let team of allowedTeams" class="btn guest" (click)="enrollAsTeam(team.id, tournament.id)">
+                                    {{team.name}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div #inviteElement>
-        <div class="card card-body mt-3"
-             [@invitables_expanded]="invitableListState"
-             [hidden]="invitableListState == 'inactive'">
-            <button class="btn btn-link" (click)="invitableListState = 'inactive'">Close</button>
+        <div #inviteElement>
+            <div class="card card-body mt-3"
+                 [@invitables_expanded]="invitableListState"
+                 [hidden]="invitableListState == 'inactive'">
+                <button class="btn btn-link" (click)="invitableListState = 'inactive'">Close</button>
 
-            <div *ngIf="!syncingTeams">
-                <input class="form-control" [(ngModel)]="searchString" placeholder="search">
-                <div id="invite-table-wrapper">
-                    <table class="table">
+                <div *ngIf="!syncingTeams">
+                    <input class="form-control" [(ngModel)]="searchString" placeholder="search">
+                    <div id="invite-table-wrapper">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr *ngFor="let team of teams | search : searchString">
+                                <td><input type="checkbox" (change)="inviteCheckedChange($event, team)"></td>
+                                <td>{{ team.name }}</td>
+                                <td>
+                                    <button class="btn btn-info" (click)="invite(team)" title="Send invite by email.">Invite</button>
+                                    <button class="btn btn-info" (click)="enroll(team)" title="Adds team to participants.">Enroll</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn" (click)="inviteChecked()">Invite checked teams</button>
+                </div>
+
+                <div *ngIf="syncingTeams">
+                    <h2 class="loading">Getting qualifying teams, please wait.</h2>
+                    <div class="loader"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card bg-light mt-3">
+            <div class="card-header text-center">
+                Enrolled teams
+            </div>
+            <div class="card-body">
+                <div id="team-table" class="table-responsive">
+                    <table class="table-hover">
                         <thead>
                         <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Actions</th>
+                            <th scope="col">Team name</th>
+                            <th scope="col" *ngIf="tournament.max_team_size > 1">Leader name</th>
+                            <th scope="col" *ngIf="tournament.max_team_size > 1">Additional members</th>
+                            <th scope="col">Actions</th>
                         </tr>
                         </thead>
-
                         <tbody>
-                        <tr *ngFor="let team of teams | search : searchString">
-                            <td><input type="checkbox" (change)="inviteCheckedChange($event, team)"></td>
-                            <td>{{ team.name }}</td>
+                        <tr *ngFor="let enrollment of tournament.enrollments">
+
+                            <td class="align-text-top">{{enrollment.team.name}}</td>
+                            <td class="align-text-top" *ngIf="tournament.max_team_size > 1">{{enrollment.team.team_leader.username}}
+                            </td>
+                            <td *ngIf="tournament.max_team_size > 1">
+                                <div *ngFor="let member of enrollment.team.team_members">{{member.user.username}}</div>
+                            </td>
                             <td>
-                                <button class="btn btn-info" (click)="invite(team)" title="Send invite by email.">Invite</button>
-                                <button class="btn btn-info" (click)="enroll(team)" title="Adds team to participants.">Enroll</button>
+                                <button class="btn btn-danger" (click)="unEnroll(enrollment)">Remove</button>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <button class="btn" (click)="inviteChecked()">Invite checked teams</button>
-            </div>
-
-            <div *ngIf="syncingTeams">
-                <h2 class="loading">Getting qualifying teams, please wait.</h2>
-                <div class="loader"></div>
             </div>
         </div>
     </div>
-
-    <div class="card bg-light mt-3">
-        <div class="card-header text-center">
-            Enrolled teams
-        </div>
-        <div class="card-body">
-            <div id="team-table" class="table-responsive">
-                <table class="table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">Team name</th>
-                        <th scope="col" *ngIf="tournament.max_team_size > 1">Leader name</th>
-                        <th scope="col" *ngIf="tournament.max_team_size > 1">Additional members</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let enrollment of tournament.enrollments">
-
-                        <td class="align-text-top">{{enrollment.team.name}}</td>
-                        <td class="align-text-top" *ngIf="tournament.max_team_size > 1">{{enrollment.team.team_leader.username}}
-                        </td>
-                        <td *ngIf="tournament.max_team_size > 1">
-                            <div *ngFor="let member of enrollment.team.team_members">{{member.user.username}}</div>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger" (click)="unEnroll(enrollment)">Remove</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 
 
