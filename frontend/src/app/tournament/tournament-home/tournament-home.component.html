@@ -69,7 +69,7 @@
             <td>{{tournament.tournament_typename}}</td>
             <td>{{tournament.signup_end}}</td>
             <td>
-              <button class="btn btn-info">
+              <button class="btn btn-info" [routerLink]="['/tournaments', tournament.id]">
                 Details
               </button>
             </td>
