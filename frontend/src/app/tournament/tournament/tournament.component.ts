@@ -66,6 +66,7 @@ export class TournamentComponent extends ATournament implements OnInit {
     ) {
         super(tournamentService);
         this.searchString = '';
+        this.isOrganizer = false;
     }
 
     ngOnInit() {
@@ -127,49 +128,49 @@ export class TournamentComponent extends ATournament implements OnInit {
         this.router.navigate([`tournaments/overview/${this.tournament.id}`]);
     }
 
-    public checkEnrollment(){
+    public checkEnrollment() {
         this.api.get('tournament/checkEnrollment/' + this.tournament.id).subscribe(
             data => {
-                if(data['response'] == 'Found'){
+                if (data['response'] === 'Found') {
                     this.isNotInMatch = false;
                 } else {
                     this.isNotInMatch = true;
-                };
+                }
             }, err => {
-                console.log("Something has gone wrong");
+                console.log('Something has gone wrong');
             }
         );
         return false;
     }
-    checkTrueOrFalse(){
+    checkTrueOrFalse() {
         console.log(this.isNotInMatch);
     }
 
-    enrollment(){
+    enrollment() {
         this.api.get('tournament/enroll/' + this.tournament.id).subscribe(
             succes => {
-                this.toastr.success("U bent aangemeld.");
+                this.toastr.success('U bent aangemeld.');
                 this.isNotInMatch = false;
             },
             failure => {
-                this.toastr.error("Zie console.");
+                this.toastr.error('Zie console.');
             }
          );
     }
 
-    enrollAsTeam(team_id){
+    enrollAsTeam(team_id) {
         this.api.get('tournament/enroll/' + this.tournament.id + '/' + team_id).subscribe(
             succes => {
-                this.toastr.success("U bent aangemeld.");
+                this.toastr.success('U bent aangemeld.');
                 this.isNotInMatch = false;
             },
             failure => {
-                this.toastr.error("Zie console.");
+                this.toastr.error('Zie console.');
             }
          );
     }
 
-    getQualifyingByUser(){
+    getQualifyingByUser() {
         this.tournamentService.getQualifyingByUser(this.tournament.id).subscribe(
             data => {
                 this.allowedTeams = data;
@@ -177,7 +178,7 @@ export class TournamentComponent extends ATournament implements OnInit {
         );
     }
 
-    checkGetTeam(a){
+    checkGetTeam(a) {
         console.log(a);
     }
 

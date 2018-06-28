@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="card bg-light" *ngIf="isOrganizer">
-                <button class="btn" (click)="startTournament()" *ngIf="!isStarted">
+                <button class="btn btn-success" (click)="startTournament()" *ngIf="!isStarted">
                     Start tournament
                 </button>
                 <button class="btn" *ngIf="isStarted" (click)="goOverview()">
@@ -110,7 +110,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <button class="btn" (click)="inviteChecked()">Invite checked teams</button>
+                    <button class="btn btn-success" (click)="inviteChecked()">Enroll checked teams</button>
                 </div>
 
                 <div *ngIf="syncingTeams">
@@ -144,7 +144,7 @@
                             <td *ngIf="tournament.max_team_size > 1">
                                 <div *ngFor="let member of enrollment.team.team_members">{{member.user.username}}</div>
                             </td>
-                            <td>
+                            <td *ngIf="isOrganizer">
                                 <button class="btn btn-danger" (click)="unEnroll(enrollment)">Remove</button>
                             </td>
                         </tr>

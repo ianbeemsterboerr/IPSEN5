@@ -15,7 +15,6 @@
     <table class="table">
       <thead>
         <tr>
-          <th>X</th>
           <th>Naam</th>
           <th>Type</th>
           <th>Signup einde</th>
@@ -25,9 +24,6 @@
 
       <tbody>
         <tr *ngFor="let tournament of tournaments">
-          <td>
-            <input type="checkbox">
-          </td>
           <td>{{tournament.name}}</td>
           <td>{{tournament.tournament_typename}}</td>
           <td>{{tournament.signup_end}}</td>
@@ -44,14 +40,13 @@
 
 <br>
 <!-- Tournaments user has been invited for -->
-<div *ngIf="tournamentsInvitedFor.length > 0">
+<div *ngIf="tournamentsInvitedFor">
   <h1 class="text-light">Tournaments you have been invited for</h1>
   <div id="tournament-list" class="mx-auto w-100 rounded p-1">
     <div class="p-2">
       <table class="table">
         <thead>
           <tr>
-            <th>X</th>
             <th>Naam</th>
             <th>Type</th>
             <th>Signup einde</th>
@@ -62,9 +57,6 @@
 
         <tbody>
           <tr *ngFor="let tournament of tournamentsInvitedFor">
-            <td>
-              <input type="checkbox">
-            </td>
             <td>{{tournament.name}}</td>
             <td>{{tournament.tournament_typename}}</td>
             <td>{{tournament.signup_end}}</td>
