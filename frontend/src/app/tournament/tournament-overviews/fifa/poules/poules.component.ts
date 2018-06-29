@@ -28,9 +28,6 @@ export class PoulesComponent extends ATournament implements OnInit {
 
   ngOnInit() {
     this.loadTournament();
-    if (this.tournament.matches) {
-      this.sortPoules();
-    }
   }
   loadTournament() {
     this.poules = [];
@@ -54,6 +51,8 @@ export class PoulesComponent extends ATournament implements OnInit {
         }
       }
     }
+
+    this.sortPoules()
   }
   getMatches() {
     return this.tournament.matches;
@@ -140,24 +139,44 @@ export class PoulesComponent extends ATournament implements OnInit {
     }
   }
   sortPoule(teams: Team[]) {
-    let teamsSorted = [];
-    teamsSorted.push(teams.pop());
-
-    for (let team of teams) {
-      for (let sortedTeam of teamsSorted) {
-        if (this.getWins(team) > this.getWins(sortedTeam)) {
-          teamsSorted.splice(teamsSorted.indexOf(sortedTeam), 0, team);
-          break;
-        } else if ((this.getGoals(team) > this.getGoals(sortedTeam)) && (this.getWins(team) === this.getWins(sortedTeam))) {
-          teamsSorted.splice(teamsSorted.indexOf(sortedTeam), 0, team);
-          break;
+    teams.sort(
+        (a: Team, b:Team) =>
+        {
+          if (this.getWins(a) < this.getWins(b)) {
+            return -1;
+          } else if (this.getWins(a) > this.getWins(b)) {
+            return 1;
+          } else {
+            // equal score
+              if (this.getGoals(a) < this.getGoals(b)) {
+                return -1;
+              } else if (this.getGoals(a) > this.getGoals(b)) {
+                return 1;
+              } else {
+                return a.name.localeCompare(b.name);
+              }
+          }
         }
-      }
-      if (!teamsSorted.includes(team)) {
-        teamsSorted.push(team);
-      }
-    }
-    return teamsSorted;
+    );
+
+    // let teamsSorted = [];
+    // teamsSorted.push(teams.pop());
+    //
+    // for (let team of teams) {
+    //   for (let sortedTeam of teamsSorted) {
+    //     if (this.getWins(team) > this.getWins(sortedTeam)) {
+    //       teamsSorted.splice(teamsSorted.indexOf(sortedTeam), 0, team);
+    //       break;
+    //     } else if ((this.getGoals(team) > this.getGoals(sortedTeam)) && (this.getWins(team) === this.getWins(sortedTeam))) {
+    //       teamsSorted.splice(teamsSorted.indexOf(sortedTeam), 0, team);
+    //       break;
+    //     }
+    //   }
+    //   if (!teamsSorted.includes(team)) {
+    //     teamsSorted.push(team);
+    //   }
+    // }
+    return teams;
   }
   toBracket() {
     let winners = [];

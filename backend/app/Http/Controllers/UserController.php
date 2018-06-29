@@ -90,11 +90,18 @@ class UserController extends Controller
         $newUser->password = password_hash($data['password'], PASSWORD_BCRYPT);
         $newUser->save();
 
-        $newUser->teams()->create(
+        $team = $newUser->teams()->create(
             ['name' => $newUser->username,
             'size' => 1,
             'max_size' => 1
         ]);
+
+        $team->teamMembers()->create(
+            [
+                'user_id' => $newUser->id
+            ]
+        );
+
         return $newUser;
     }
 }
