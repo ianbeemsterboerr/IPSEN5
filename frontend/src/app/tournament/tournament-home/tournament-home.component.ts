@@ -49,6 +49,10 @@ export class TournamentHomeComponent implements OnInit {
       this.tournamentService.enroll(tournament.inviteteamid, tournament.id).subscribe(
         data => {
           this.toastr.success('Succesfully enrolled for ' + tournament.name + '!', 'Success!');
+          const index = this.tournamentsInvitedFor.indexOf(tournament, 0);
+          if (index > -1) {
+            this.tournamentsInvitedFor.splice(index, 1);
+         }
         }, err => {
           this.errorHandler.handleError(err);
         }
